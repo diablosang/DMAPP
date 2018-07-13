@@ -1,0 +1,15 @@
+﻿html, 
+body,
+.dx-viewport {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+input[readonly]
+{
+    background-color:rgb(245,245,245);
+}

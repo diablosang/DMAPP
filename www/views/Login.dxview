@@ -1,0 +1,37 @@
+<div data-options="dxView : { name: 'Login', title: '' } " >
+  <div id="divContent" data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background" style="background-repeat:no-repeat;background-position:center;">
+    <div class="indicator" data-bind="dxLoadIndicator: { visible: indicatorVisible }"></div>
+      <!--<img id="logoImg" style="margin-top:20px;" src="" onerror="javascript:this.src='images/logo.png'"  width="100%" />-->
+      <div class="Logindiv">
+          <div style="margin-top:20px;" class="dx-fieldset">
+              <div class="dx-field">
+                  <div class="dx-field-label"></div>
+                  <div id="txtUser" style="width:100%;" class="dx-field-value" data-bind="dxTextBox: {
+                 maxLength: 24,
+                 placeholder: '请输入用户名',
+                 value:username
+               }"></div>
+              </div>
+              <div class="dx-field">
+                  <div id="txtPwd" style="width:100%;" class="dx-field-value" data-bind="dxTextBox: {
+                   mode: 'password',
+                   placeholder: '请输入密码',
+                   value:password
+                }"></div>
+              </div>
+              <div id="btnLogin" class="Login_Btn" data-bind="dxButton: { text: '登录',onClick:onLoginClick}"></div>
+              <div id="btnSetting" class="Login_Btn" data-bind="dxButton: { text: '设置',onClick:onSettingClick}"></div>
+              <table width="100%" style="margin-top:35px">
+                  <tr>
+                      <td width="100%" align="center">
+                          <div>
+                              <div id="appver">0.8.0</div>
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+      </div>
+      
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<div data-options="dxView : { name: 'M_DOC', title: 'M_DOC' } " >
+    <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
+        <div id="gridDOC" data-bind="dxDataGrid: gridDOCOption"></div>
+    </div>
+</div>
