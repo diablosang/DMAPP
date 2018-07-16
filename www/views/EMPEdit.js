@@ -250,7 +250,6 @@
                     }
                 }
                 
-                viewModel.keepCache = true;
                 viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {

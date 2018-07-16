@@ -323,7 +323,7 @@
                     label: { text: "类型" },
                     editorType: "dxLookup",
                     editorOptions: {
-                        displayExpr: "DES1",
+                        displayExpr: "DES",
                         valueExpr: "IDLINE",
                         dataSource: [
                             { IDLINE: "2", DES: "巡检" },
@@ -499,6 +499,7 @@
         var url;
         var idata = {};
         var groupid = "";
+        
         if (params.DEVPARAM == "REPAIR") {
             groupid = "GTURP";
         }
@@ -507,13 +508,19 @@
         }
 
         if (params.NEW == "1") {
+            var typeRoe = "1";
+            if (params.DEVPARAM == "APPLY") {
+                typeRoe = "2";
+            }
+
             url = $("#WebApiServerURL")[0].value + "/Api/Asapment/NewDocSimple"
             var postData = {
                 userName: u,
                 func: "EMS_T_ROE",
                 group: "GNDRF",
                 initdata: {
-                    CODE_EQP: params.CODE_EQP
+                    CODE_EQP: params.CODE_EQP,
+                    TYPE_ROE:typeRoe
                 }
             }
         }
@@ -562,7 +569,6 @@
                     }
                 }
 
-                viewModel.keepCache = true;
                 viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -578,263 +584,21 @@
     }
 
     function BarItemClick(e) {
-        switch (e.itemData.name) {
-            case "BTNSTART": Start(); break;
-            case "BTNEND": Finish(); break;
-            case "BTNUP": Up(); break;
-            case "BTNOUT": Out(); break;
-            default: {
-                if (e.itemData.needComment == "1") {
-                    this.commentVisible(true);
-                    this.comment(e.itemData.options.text);
-                    this.commentButton(e.itemData.name);
-                }
-                else {
-                    if (e.itemData.EXTPROP != null) {
-                        if (e.itemData.EXTPROP.RUNAT == "DEVICE") {
-                            ButtonClickDevice(e.itemData);
-                            return;
-                        }
-                    }
-
-                    ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
-                }
-                break;
-            }
+        if (e.itemData.needComment == "1") {
+            this.commentVisible(true);
+            this.comment(e.itemData.options.text);
+            this.commentButton(e.itemData.name);
         }
-    }
-
-    function Start() {
-        viewModel.indicatorVisible(true);
-        var u = sessionStorage.getItem("username");
-        var form = $("#formMain").dxForm("instance");
-        var formData = form.option("formData");
-        var status = formData.STATUS;
-        viewModel.started = true;
-        var date = GetDateTimeString();
-
-        if (status == "TURP") {
-            if (formData.DATE_BEG == null) {
-                form.updateData("DATE_BEG", date);
-                form.updateData("MR_ROE", u);
-            }
-        }
-        else if (status == "TERP") {
-            if (formData.DATE_BEGE == null) {
-                form.updateData("DATE_BEGE", date);
-                form.updateData("ENGR_ROE", u);
-            }
-
-        }
-        else if (status == "TMRP") {
-            if (formData.DATE_BEGM == null) {
-                form.updateData("DATE_BEGM", date);
-                form.updateData("SUPR_ROE", u);
-            }
-
-        }
-
-        var postData = {
-            userName: u,
-            command: "ROE.START"
-        }
-        var url = $("#WebApiServerURL")[0].value + "/Api/IRCZ/Command";
-        $.ajax({
-            type: 'POST',
-            data: postData,
-            url: url,
-            cache: false,
-            success: function (data, textStatus) {
-                SetStatus(viewModel);
-                viewModel.indicatorVisible(false);
-                DevExpress.ui.notify("维修开始", "success", 1000);
-            },
-            error: function (xmlHttpRequest, textStatus, errorThrown) {
-                viewModel.indicatorVisible(false);
-                if (xmlHttpRequest.responseText == "NO SESSION") {
-                    ServerError(xmlHttpRequest.responseText);
-                }
-                else {
-                    DevExpress.ui.notify("错误", "error", 1000);
+        else {
+            if (e.itemData.EXTPROP != null) {
+                if (e.itemData.EXTPROP.RUNAT == "DEVICE") {
+                    ButtonClickDevice(e.itemData);
+                    return;
                 }
             }
-        });
 
-
-
-    }
-
-    function Finish() {
-        viewModel.indicatorVisible(true);
-        var u = sessionStorage.getItem("username");
-        var form = $("#formMain").dxForm("instance");
-        var formData = form.option("formData");
-        var status = formData.STATUS;
-        viewModel.started = true;
-        var date = GetDateTimeString();
-
-        if (status == "TURP") {
-            if (formData.DATE_BEG == null || formData.DESC_MA == "" || formData.DESC_MA == null || formData.DESC_MC == "" || formData.DESC_MC == null) {
-                DevExpress.ui.notify("请填写必须内容", "error", 2000);
-                return;
-            }
-
-            form.updateData("DATE_END", date);
+            ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
         }
-        else if (status == "TERP") {
-            if (formData.DATE_BEGE == null || formData.DESC_MAE == "" || formData.DESC_MAE == null || formData.DESC_MCE == "" || formData.DESC_MCE == null) {
-                DevExpress.ui.notify("请填写必须内容", "error", 2000);
-                return;
-            }
-
-            form.updateData("DATE_ENDE", date);
-        }
-        else if (status == "TMRP") {
-            if (formData.DATE_BEGM == null || formData.DESC_MAM == "" || formData.DESC_MAM == null || formData.DESC_MCM == "" || formData.DESC_MCM == null) {
-                DevExpress.ui.notify("请填写必须内容", "error", 2000);
-                return;
-            }
-
-            form.updateData("DATE_ENDM", date);
-        }
-
-        form.updateData("STATUS", "TCOF");
-
-        var postData = {
-            userName: u,
-            command: "ROE.FINISH"
-        }
-        var url = $("#WebApiServerURL")[0].value + "/Api/IRCZ/Command";
-        $.ajax({
-            type: 'POST',
-            data: postData,
-            url: url,
-            cache: false,
-            success: function (data, textStatus) {
-                viewModel.indicatorVisible(false);
-                DevExpress.ui.notify("维修完成", "success", 1000);
-                var cache = DMAPP.app.viewCache;
-                cache.removeView(viewModel.viewKey);
-                (new DevExpress.framework.dxCommand({ onExecute: "#_back" })).execute();
-            },
-            error: function (xmlHttpRequest, textStatus, errorThrown) {
-                viewModel.indicatorVisible(false);
-                if (xmlHttpRequest.responseText == "NO SESSION") {
-                    ServerError(xmlHttpRequest.responseText);
-                }
-                else {
-                    DevExpress.ui.notify("错误", "error", 1000);
-                }
-            }
-        });
-
-
-
-    }
-
-    function Up() {
-        viewModel.indicatorVisible(true);
-        var u = sessionStorage.getItem("username");
-        var form = $("#formMain").dxForm("instance");
-        var formData = form.option("formData");
-        var status = formData.STATUS;
-        viewModel.started = true;
-        var date = GetDateTimeString();
-        var toStatus = "";
-        if (status == "TURP") {
-            if (formData.DATE_BEG == null) {
-                DevExpress.ui.notify("维修尚未开始", "error", 2000);
-                return;
-            }
-            form.updateData("DATE_END", date);
-            toStatus = "TERP";
-        }
-        else if (status == "TERP") {
-            if (formData.DATE_BEGE == null) {
-                DevExpress.ui.notify("维修尚未开始", "error", 2000);
-                return;
-            }
-
-            form.updateData("DATE_ENDE", date);
-            toStatus = "TMRP";
-        }
-        else if (status == "TMRP") {
-            if (formData.DATE_BEGM == null) {
-                DevExpress.ui.notify("维修尚未开始", "error", 2000);
-                return;
-            }
-
-            form.updateData("DATE_ENDM", date);
-            toStatus = "DSUP";
-        }
-
-        var postData = {
-            userName: u,
-            command: "ROE.UP",
-            status: toStatus
-        }
-        var url = $("#WebApiServerURL")[0].value + "/Api/IRCZ/Command";
-        $.ajax({
-            type: 'POST',
-            data: postData,
-            url: url,
-            cache: false,
-            success: function (data, textStatus) {
-                viewModel.indicatorVisible(false);
-                DevExpress.ui.notify("上报完成", "success", 1000);
-                var cache = DMAPP.app.viewCache;
-                cache.removeView(viewModel.viewKey);
-                (new DevExpress.framework.dxCommand({ onExecute: "#_back" })).execute();
-            },
-            error: function (xmlHttpRequest, textStatus, errorThrown) {
-                viewModel.indicatorVisible(false);
-                if (xmlHttpRequest.responseText == "NO SESSION") {
-                    ServerError(xmlHttpRequest.responseText);
-                }
-                else {
-                    DevExpress.ui.notify("错误", "error", 1000);
-                }
-            }
-        });
-    }
-
-    function Out() {
-        viewModel.indicatorVisible(true);
-        var u = sessionStorage.getItem("username");
-        var form = $("#formMain").dxForm("instance");
-        var formData = form.option("formData");
-        var status = formData.STATUS;
-        viewModel.started = true;
-        var date = GetDateTimeString();
-        var toStatus = "";
-
-        var postData = {
-            userName: u,
-            command: "ROE.OUT"
-        }
-        var url = $("#WebApiServerURL")[0].value + "/Api/IRCZ/Command";
-        $.ajax({
-            type: 'POST',
-            data: postData,
-            url: url,
-            cache: false,
-            success: function (data, textStatus) {
-                viewModel.indicatorVisible(false);
-                DevExpress.ui.notify("委外成功", "success", 1000);
-                var cache = DMAPP.app.viewCache;
-                cache.removeView(viewModel.viewKey);
-                (new DevExpress.framework.dxCommand({ onExecute: "#_back" })).execute();
-            },
-            error: function (xmlHttpRequest, textStatus, errorThrown) {
-                viewModel.indicatorVisible(false);
-                if (xmlHttpRequest.responseText == "NO SESSION") {
-                    ServerError(xmlHttpRequest.responseText);
-                }
-                else {
-                    DevExpress.ui.notify("错误", "error", 1000);
-                }
-            }
-        });
     }
 
     function AddNewRow() {

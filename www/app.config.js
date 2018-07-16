@@ -1,7 +1,8 @@
 // NOTE object below must be a valid JSON
 window.DMAPP = $.extend(true, window.DMAPP, {
   "config": {
-    "layoutSet": "navbar",
+      //"layoutSet": "navbar",
+      "layoutSet": "simple",
     "navigation": [
       {
         "title": "车间",

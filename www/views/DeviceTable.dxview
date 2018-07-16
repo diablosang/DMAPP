@@ -9,10 +9,11 @@
                     <td width="100px" align="center" style="background-color:rgb(238, 121, 89)">维修</td>
                     <td width="100px" align="center" style="background-color:red">大修</td>
                     <td width="100px" align="center" style="background-color:rgb(245,245,245)">空闲中</td>
+                    <td width="100px" align="center"><div id="btnLogoff" class="Login_Btn" data-bind="dxButton: { text: '注销', onClick:onLogoffClick}"></div></td>
                 </tr>
             </table>
         </div>
-        <div style="position:absolute;top:35px;bottom:0;overflow-y:auto;height:auto">
+        <div style="position:absolute;top:50px;bottom:0;overflow-y:auto;height:auto">
             <table id="tbDevice" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>
         </div>  
     </div>
