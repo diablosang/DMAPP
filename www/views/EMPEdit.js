@@ -57,10 +57,10 @@
             }
         },
         viewHidden: function (e) {
-            if (viewModel.keepCache == false) {
-                var cache = DMAPP.app.viewCache;
-                cache.removeView(e.viewInfo.key);
-            }
+            //if (viewModel.keepCache == false) {
+            //    var cache = DMAPP.app.viewCache;
+            //    cache.removeView(e.viewInfo.key);
+            //}
         },
         formOption: {
             colCount: 3,
@@ -126,7 +126,7 @@
             ],
             editing: {
                 allowUpdating: true,
-                mode:"row"
+                mode:"cell"
             },
             selection: {
                 mode: "single"
@@ -249,7 +249,8 @@
                         gridDetail.refresh();
                     }
                 }
-                
+
+                viewModel.keepCache = true;
                 viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -281,8 +282,16 @@
                 }
             }
 
-            ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+            ValidChange();
+            setTimeout(function () {
+                ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+            }, 200);
         }
+    }
+
+    function ValidChange() {
+        var gridDetail = $("#gridDetail").dxDataGrid("instance");
+        gridDetail.closeEditCell();
     }
 
     return viewModel;

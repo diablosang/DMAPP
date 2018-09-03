@@ -6,6 +6,8 @@
         indicatorVisible: ko.observable(false),
         command: ko.observable(""),
         parentMenu: ko.observable(""),
+        popUserVisible: ko.observable(false),
+        popArgu: ko.observable({}),
         viewShown: function () {
             this.title(params.CODE_EQP);
             try {
@@ -112,17 +114,66 @@
                     this.parentMenu("");
                     GetMenu(this, params);
                 }
+                else if (e.itemData.DEVOBJ == "COMMAND") {
+                    Command(e);
+                }
                 else {
                     var view = e.itemData.DEVOBJ + "?NEW=1&DEVPARAM=" + e.itemData.DEVPARAM + "&CODE_EQP=" + params.CODE_EQP;
                     var form = $("#formDevice").dxForm("instance");
                     var formData = form.option("formData");
                     view = view + "&CODE_OP=" + formData.CODE_OP;
+                    viewModel.popUserVisible(false);
                     DMAPP.app.navigate(view);
+
+                    //viewModel.popArgu(e);
+                    //viewModel.popUserVisible(true);
                 }
             },
         },
         buttonClick: function (e) {
 
+        },
+        onPopCancelClick:function(e){
+            this.popUserVisible(false);
+        },
+        onPopOKClick: function (e) {
+            var u = sessionStorage.getItem("username");
+            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+            var argu = this.popArgu();
+            var view = argu.itemData.DEVOBJ + "?NEW=1&DEVPARAM=" + argu.itemData.DEVPARAM + "&CODE_EQP=" + params.CODE_EQP;
+
+            var popUser = $("#txtPopUser").dxTextBox("instance").option("value");
+            var popPwd = $("#txtPopPwd").dxTextBox("instance").option("value");
+            var popParam = popUser + ";" + popPwd+";"+argu.itemData.CODE_MENU;
+            var postData = {
+                userName: u,
+                methodName: "EMS.EMS.CheckValid",
+                param: popParam
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: postData,
+                url: url,
+                async:false,
+                cache: false,
+                success: function (data, textStatus) {                  
+                    var form = $("#formDevice").dxForm("instance");
+                    var formData = form.option("formData");
+                    view = view + "&CODE_OP=" + formData.CODE_OP;
+                    viewModel.popUserVisible(false);
+                    DMAPP.app.navigate(view);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    viewModel.indicatorVisible(false);
+                    if (xmlHttpRequest.responseText == "NO SESSION") {
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                    else {
+                        DevExpress.ui.notify("无法读取数据", "error", 1000);
+                    }
+                }
+            });
         }
     };
 
@@ -215,6 +266,124 @@
         });
     }
 
+    function Command(e) {
+        switch (e.itemData.CODE_MENU) {
+            case "REP_START": REP_START(); break;
+            case "REP_END": REP_END(); break;
+            case "REP_RESULT": REP_RESULT(); break;
+        }
+    }
+
+    function REP_START() {
+        var closeDialog = DevExpress.ui.dialog.custom({
+            title: SysMsg.info,
+            message: "您确定要报修吗？",
+            buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
+        });
+
+        closeDialog.show().done(function (dialogResult) {
+            if (dialogResult == true) {
+                var u = sessionStorage.getItem("username");
+                var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+                var postData = {
+                    userName: u,
+                    methodName: "EMS.EMS_REP.Start",
+                    param: params.CODE_EQP
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: postData,
+                    url: url,
+                    async: false,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        DevExpress.ui.notify("报修成功", "success", 1000);
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        viewModel.indicatorVisible(false);
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                });
+            }
+        });
+    }
+
+    function REP_END() {
+        var closeDialog = DevExpress.ui.dialog.custom({
+            title: SysMsg.info,
+            message: "您确定要报告设备修复？",
+            buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
+        });
+
+        closeDialog.show().done(function (dialogResult) {
+            if (dialogResult == true) {
+                var u = sessionStorage.getItem("username");
+                var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+                var postData = {
+                    userName: u,
+                    methodName: "EMS.EMS_REP.End",
+                    param: params.CODE_EQP
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: postData,
+                    url: url,
+                    async: false,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        DevExpress.ui.notify("设备修复完成", "success", 1000);
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        viewModel.indicatorVisible(false);
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                });
+            }
+        });
+    }
+
+    function REP_RESULT() {
+        var closeDialog = DevExpress.ui.dialog.custom({
+            title: SysMsg.info,
+            message: "您确定要报告设备修复？",
+            buttons: [{ text: "完成", value: true, onClick: function () { return true; } }, { text: "返修", value: false, onClick: function () { return false; } }]
+        });
+
+        closeDialog.show().done(function (dialogResult) {
+            var m;
+            if (dialogResult == true) {
+                m = "Finish";
+            }
+            else {
+                m = "Return";
+            }
+
+            var u = sessionStorage.getItem("username");
+            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+            var postData = {
+                userName: u,
+                methodName: "EMS.EMS_REP."+m,
+                param: params.CODE_EQP
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: postData,
+                url: url,
+                async: false,
+                cache: false,
+                success: function (data, textStatus) {
+                    DevExpress.ui.notify("执行成功", "success", 1000);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    viewModel.indicatorVisible(false);
+                    ServerError(xmlHttpRequest.responseText);
+                }
+            });
+        });
+    }
 
     return viewModel;
 };

@@ -13,7 +13,7 @@
             }
             else {
                 url = $("#WebApiServerURL")[0].value;
-                serviceURL(url);
+                this.serviceURL(url);
             }
         },
         onSaveClick: function () {

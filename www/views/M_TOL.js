@@ -1,10 +1,11 @@
-﻿DMAPP.M_EMP = function (params) {
+﻿DMAPP.M_TOL = function (params) {
     "use strict";
+
     var viewModel = {
         title: ko.observable(""),
         indicatorVisible: ko.observable(false),
         command: ko.observable(""),
-        parentMenu: ko.observable("M_MAT"),
+        parentMenu: ko.observable("M_TOL"),
         popUserVisible: ko.observable(false),
         popArgu: ko.observable({}),
         viewShown: function () {
@@ -17,48 +18,42 @@
                 DevExpress.ui.notify("该单据未包含明细信息", "error", 1000);
             }
         },
-        gridEMPOption: {
+        gridTOLOption: {
             dateSerializationFormat: "yyyy-MM-dd",
-            keyExpr:"ID_EMP",
+            keyExpr: "SID",
             columnAutoWidth: true,
             columns: [
-                       { dataField: "ID_EMP", caption: "单号", allowEditing: false, allowSorting: false },
-                       { dataField: "DATE_PLAN", caption: "计划开始日期", allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd" },
-                       { dataField: "DATE_EPLAN", caption: "计划结束日期", allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd" },
+                       { dataField: "SID", caption: "单号", allowEditing: false, allowSorting: false },
+                       { dataField: "CODE_ITEM", caption: "物料号", allowEditing: false, allowSorting: false },
+                       { dataField: "DESC_ITEM", caption: "物料描述", allowEditing: false, allowSorting: false },
+                       { dataField: "SPEC_ITEM", caption: "规格", allowEditing: false, allowSorting: false },
+                       { dataField: "MODEL_ITEM", caption: "型号", allowEditing: false, allowSorting: false },
+                       { dataField: "USER_APPLY", caption: "申领人", allowEditing: false, allowSorting: false },
+                       { dataField: "DATE_APPLY", caption: "申请日期", allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd" },
+                       { dataField: "QTY_APPLY", caption: "申领数量", allowEditing: false, allowSorting: false },
                        {
-                           dataField: "PERIOD_EMP", caption: "周期", allowEditing: false, allowSorting: false,
+                           dataField: "TYPE", caption: "类型", allowEditing: false, allowSorting: false,
                            lookup: {
                                dataSource: [
-                                   { IDLINE: "03", DES: "季度" },
-                                   { IDLINE: "06", DES: "半年" },
-                                   { IDLINE: "12", DES: "整年" },
+                                   { IDLINE: "NEW", DES: "新建" },
+                                   { IDLINE: "REPLACE", DES: "更换" }
                                ],
                                displayExpr: "DES",
                                valueExpr: "IDLINE",
                            }
-                       },
-                        {
-                            dataField: "STATUS", caption: "状态", allowEditing: false, allowSorting: false,
-                            lookup: {
-                                dataSource: [
-                                    { IDLINE: "TSPT", DES: "待保养" },
-                                    { IDLINE: "TCOF", DES: "生产主管确认" },
-                                    { IDLINE: "TDCF", DES: "设备主管确认" },
-                                    { IDLINE: "TECF", DES: "工程师确认" }
-                                ],
-                                displayExpr: "DES",
-                                valueExpr: "IDLINE",
-                            }
-                        }
+                       }
             ],
             selection: {
                 mode: "single"
             },
             paging: {
                 enabled: false
+            },
+            onSelectionChanged: function (e) {
+
             }
         },
-        tileEMPOption: {
+        tileTOLOption: {
             items: [],
             direction: 'vertical',
             height: "100%",
@@ -73,11 +68,11 @@
             onItemClick: function (e) {
                 viewModel.popArgu(e);
                 this.popUserVisible(true);
-                //if (e.itemData.DEVOBJ == "EMS_T_EMP") {
+                //if (e.itemData.DEVOBJ == "EMS_T_TOAP") {
                 //    switch (e.itemData.DEVPARAM) {
-                //        case "PM": PM(); break;
-                //        case "CONF": CONF(); break;
-                //        case "ECOF": ECOF(); break;
+                //        case "NEW": NEW(); break;
+                //        case "REPLACE": REPLACE(); break;
+                //        case "CLOSE": CLOSE(); break;
                 //    }
                 //}
             }
@@ -106,11 +101,11 @@
                 cache: false,
                 success: function (data, textStatus) {
                     viewModel.popUserVisible(false);
-                    if (e.itemData.DEVOBJ == "EMS_T_EMP") {
-                        switch (e.itemData.DEVPARAM) {
-                            case "PM": PM(); break;
-                            case "CONF": CONF(); break;
-                            case "ECOF": ECOF(); break;
+                    if (argu.itemData.DEVOBJ == "EMS_T_TOAP") {
+                        switch (argu.itemData.DEVPARAM) {
+                            case "NEW": NEW(); break;
+                            case "REPLACE": REPLACE(); break;
+                            case "CLOSE": CLOSE(); break;
                         }
                     }
                 },
@@ -130,7 +125,7 @@
     function GetWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetListWinbox?UserName=" + u + "&FUNCID=EMS_T_EMP@GPADLIST";
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetListWinbox?UserName=" + u + "&FUNCID=EMS_T_TOAP@GDREL";
 
         $.ajax({
             type: 'GET',
@@ -150,7 +145,7 @@
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetListData2";
-        var filterString = "CODE_EQP='" + params.CODE_EQP + "' and STATUS NOT IN ('NDRF','DCLS')";
+        var filterString = "CODE_EQP='" + params.CODE_EQP + "' and STATUS='DREL'";
         var postData = {
             user: u,
             page: 0,
@@ -168,7 +163,7 @@
                     gridData.push(data[i]);
                 }
 
-                var grid = $("#gridEMP").dxDataGrid("instance");
+                var grid = $("#gridTOL").dxDataGrid("instance");
 
                 grid.option({
                     dataSource: gridData
@@ -200,7 +195,7 @@
             url: url,
             cache: false,
             success: function (data, textStatus) {
-                var tile = $("#tileEMP").dxTileView("instance");
+                var tile = $("#tileTOL").dxTileView("instance");
                 var items = data;
                 //if (viewModel.parentMenu() != "") {
                 //    var back = { CODE_MENU: "SYS_BACK", DESC_CH: "返回上一层", DEVOBJ: "BACK", DSPIDX: 99 };
@@ -224,72 +219,65 @@
         });
     }
 
-    function PM() {
-        var grid = $("#gridEMP").dxDataGrid("instance");
-        var data = grid.getSelectedRowsData();
-        if (data.length == 0) {
-            return;
-        }
-        var ID_EMP = data[0].ID_EMP;
-
-        if (ID_EMP == null || ID_EMP == "") {
-            return;
-        }
-
-        var STATUS = data[0].STATUS;
-        if (STATUS != "TSPT") {
-            DevExpress.ui.notify("维修单的状态不匹配", "error", 1000);
-            return;
-        }
-
-        var view = "EMPEdit?NEW=0&CODE_EQP=" + params.CODE_EQP + "&DEVPARAM=PM&ID_EMP=" + ID_EMP;
+    function NEW() {
+        var view = "EMS_T_TOAP?NEW=0&CODE_EQP=" + params.CODE_EQP;
         DMAPP.app.navigate(view);
     }
 
-    function CONF() {
-        var grid = $("#gridEMP").dxDataGrid("instance");
-        var data = grid.getSelectedRowsData();
-        if (data.length == 0)
-        {
-            return;
-        }
-        var ID_EMP = data[0].ID_EMP;
-
-        if (ID_EMP == null || ID_EMP == "") {
-            return;
-        }
-
-        var STATUS = data[0].STATUS;
-        if (STATUS != "TCOF") {
-            DevExpress.ui.notify("维修单的状态不匹配", "error", 1000);
-            return;
-        }
-      
-        var view = "EMPEdit?NEW=0&CODE_EQP=" + params.CODE_EQP + "&DEVPARAM=CONF&ID_EMP=" + ID_EMP;
+    function REPLACE() {
+        var view = "TOAPReplace?NEW=0&CODE_EQP=" + params.CODE_EQP;
         DMAPP.app.navigate(view);
     }
 
-    function ECOF() {
-        var grid = $("#gridEMP").dxDataGrid("instance");
-        var data = grid.getSelectedRowsData();
-        if (data.length == 0) {
-            return;
-        }
-        var ID_EMP = data[0].ID_EMP;
+    function CLOSE() {
+        var closeDialog = DevExpress.ui.dialog.custom({
+            title: SysMsg.info,
+            message: "您确定要取消吗？",
+            buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
+        });
 
-        if (ID_EMP == null || ID_EMP == "") {
-            return;
-        }
+        closeDialog.show().done(function (dialogResult) {
+            if (dialogResult == true) {
+                var u = sessionStorage.getItem("username");
+                var grid = $("#gridTOL").dxDataGrid("instance");
+                var data = grid.getSelectedRowsData();
+                if (data.length == 0) {
+                    return;
+                }
+                var SID = data[0].SID;
 
-        var STATUS = data[0].STATUS;
-        if (STATUS != "TDCF" && STATUS != "TECF") {
-            DevExpress.ui.notify("维修单的状态不匹配", "error", 1000);
-            return;
-        }
+                if (SID == null || SID == "") {
+                    return;
+                }
 
-        var status = data[0].STATUS;
-        var view = "EMPEdit?NEW=0&CODE_EQP=" + params.CODE_EQP + "&DEVPARAM=ECOF&ID_EMP=" + ID_EMP+"&STATUS="+status;
-        DMAPP.app.navigate(view);
+                var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+                var postData = {
+                    userName: u,
+                    methodName: "EMS.EMS_T_TOAP.Close",
+                    param: SID
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: postData,
+                    url: url,
+                    async: false,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        BindData(viewModel);
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        viewModel.indicatorVisible(false);
+                        if (xmlHttpRequest.responseText == "NO SESSION") {
+                            ServerError(xmlHttpRequest.responseText);
+                        }
+                        else {
+                            DevExpress.ui.notify("无法读取数据", "error", 1000);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     return viewModel;

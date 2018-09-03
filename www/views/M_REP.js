@@ -6,6 +6,8 @@
         indicatorVisible: ko.observable(false),
         command: ko.observable(""),
         parentMenu: ko.observable("M_REP"),
+        popUserVisible: ko.observable(false),
+        popArgu: ko.observable({}),
         viewShown: function () {
             this.title(params.CODE_EQP);
             try {
@@ -74,15 +76,53 @@
                     "</div><div class=\"BKImage\" style=\"background-image: url('" + url + "/images/JGBR/" + itemData.CODE_MENU + ".jpg')\"></div>");
             },
             onItemClick: function (e) {
-                if (e.itemData.DEVOBJ == "EMS_T_ROE") {
-                    switch(e.itemData.DEVPARAM){
-                        case "START":START();break;
-                        case "APPLY": APPLY(); break;
-                        case "REPAIR": REPAIR(); break;
-                        case "CONFIRM": CONFIRM(); break;
+                viewModel.popArgu(e);
+                this.popUserVisible(true);
+            }
+        },
+        onPopCancelClick: function (e) {
+            this.popUserVisible(false);
+        },
+        onPopOKClick: function (e) {
+            var u = sessionStorage.getItem("username");
+            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+            var argu = this.popArgu();
+            var popUser = $("#txtPopUser").dxTextBox("instance").option("value");
+            var popPwd = $("#txtPopPwd").dxTextBox("instance").option("value");
+            var popParam = popUser + ";" + popPwd + ";" + argu.itemData.CODE_MENU;
+            var postData = {
+                userName: u,
+                methodName: "EMS.EMS.CheckValid",
+                param: popParam
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: postData,
+                url: url,
+                async: false,
+                cache: false,
+                success: function (data, textStatus) {
+                    viewModel.popUserVisible(false);
+                    if (argu.itemData.DEVOBJ == "EMS_T_ROE") {
+                        switch (argu.itemData.DEVPARAM) {
+                            case "START": START(); break;
+                            case "APPLY": APPLY(); break;
+                            case "REPAIR": REPAIR(); break;
+                            case "CONFIRM": CONFIRM(); break;
+                        }
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    viewModel.indicatorVisible(false);
+                    if (xmlHttpRequest.responseText == "NO SESSION") {
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                    else {
+                        DevExpress.ui.notify("无法读取数据", "error", 1000);
                     }
                 }
-            }
+            });
         }
     };
 

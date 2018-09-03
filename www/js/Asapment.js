@@ -126,15 +126,24 @@ function MainValueChanged(viewModel, e) {
 
     $.ajax({
         type: 'POST',
+        async:false,
         url: url,
         data: postData,
         cache: false,
         success: function (data, textStatus) {
             if (data.DATA != null) {
-                var dr = data.DATA[0];
-                var form = $("#formMain").dxForm("instance");
-                form.option("formData", dr);
-                form.repaint();
+                viewModel.keepCache = false;
+                try {
+                    var dr = data.DATA[0];
+                    var form = $("#formMain").dxForm("instance");
+                    form.option("formData", dr);
+                    form.repaint();
+                }
+                catch (e) {
+
+                }
+                
+                viewModel.keepCache = true;
             }
             loadIndicator.option("visible", false);
         },
@@ -167,6 +176,7 @@ function GridRowUpdated(viewModel,gridName,e) {
     $.ajax({
         type: 'POST',
         url: url,
+        asyn:false,
         data: postData,
         cache: false,
         success: function (data, textStatus) {
@@ -311,6 +321,7 @@ function UpdateDataWindow(viewModel) {
 
     $.ajax({
         type: 'POST',
+        async:false,
         url: url,
         data: postData,
         cache: false,
@@ -382,13 +393,15 @@ function ButtonClick(viewModel, BLOCKID, BTNID, comment, params) {
     var u = sessionStorage.getItem("username");
     var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/ButtonClick2?UserName=" + u + "&BLOCKID=" + BLOCKID + "&BTNID=" + BTNID + "&COMMENT=" + comment;
     url = encodeURI(url);
+    var result;
+
     $.ajax({
         type: 'GET',
         url: url,
         async:false,
         cache: false,
         success: function (data, textStatus) {
-            if (data.Close == "1") {
+            if (data.Close == "1" && params._noback !="1") {
                 var cache = DMAPP.app.viewCache;
                 cache.removeView(viewModel.viewKey);
                 (new DevExpress.framework.dxCommand({ onExecute: "#_back" })).execute();
@@ -400,13 +413,16 @@ function ButtonClick(viewModel, BLOCKID, BTNID, comment, params) {
                 DevExpress.ui.notify(data.Message, "success", 2000);
             }
             viewModel.indicatorVisible(false);
-
+            result=true;
         },
         error: function (xmlHttpRequest, textStatus, errorThrown) {
             viewModel.indicatorVisible(false);
             ServerError(xmlHttpRequest.responseText);
+            result=false;
         }
     });
+
+    return result;
 }
 
 function GetDateTimeString() {

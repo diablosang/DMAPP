@@ -1,12 +1,12 @@
-<div data-options="dxView : { name: 'M_REP', title: 'M_REP' } " >
+<div data-options="dxView : { name: 'M_TOL', title: '刀具申领' } ">
     <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
         <div class="indicator" data-bind="dxLoadIndicator: { visible: indicatorVisible }"></div>
-        <div id="divP" style="float:left;width:413px;height:100%;background-color:#acd8fb;">
-            <div id="tileREP" data-bind="dxTileView: tileREPOption">
+        <div id="divP" style="float:left;width:212px;height:100%;background-color:#acd8fb;">
+            <div id="tileTOL" data-bind="dxTileView: tileTOLOption">
             </div>
         </div>
         <div style="overflow:hidden;">
-            <div id="gridREP" data-bind="dxDataGrid: gridREPOption"></div>
+            <div id="gridTOL" data-bind="dxDataGrid: gridTOLOption"></div>
         </div>
         <div id="popUser" data-bind="dxPopup: { title: '身份验证', showTitle: true, visible:popUserVisible,height:250}">
             <div>

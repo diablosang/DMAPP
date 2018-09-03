@@ -94,10 +94,10 @@
             }
         },
         viewHidden: function (e) {
-            if (viewModel.keepCache == false) {
-                var cache = DMAPP.app.viewCache;
-                cache.removeView(this.viewKey);
-            }
+            //if (viewModel.keepCache == false) {
+            //    var cache = DMAPP.app.viewCache;
+            //    cache.removeView(this.viewKey);
+            //}
         },
         formOption: {
             colCount: 3,
@@ -121,7 +121,7 @@
             editing: {
                 allowUpdating: true,
                 allowDeleting: true,
-                mode: "row"
+                mode: "cell"
             },
             selection: {
                 mode: "single"
@@ -162,13 +162,16 @@
                { dataField: "SPEC_ITEM", caption: "规格", allowEditing: false, allowSorting: false, width: 100 },
                { dataField: "MODEL_ITEM", caption: "型号", allowEditing: false, allowSorting: false, width: 100 },
                { dataField: "QTY_REQ", caption: "需求数量", allowEditing: true, allowSorting: false, width: 100 },
+               { dataField: "QTY_ISS", caption: "实发数量", allowEditing: false, allowSorting: false, width: 100 },              
+               { dataField: "QTY_SP", caption: "自备数量", allowEditing: false, allowSorting: false, width: 100 },
                { dataField: "CODE_LOC", caption: "货架", allowEditing: true, allowSorting: false, width: 100 },
-               { dataField: "REMARK", caption: "备注", allowEditing: true, allowSorting: false, width: 100 },
+               { dataField: "F_WH", caption: "仓库申领", allowEditing: true, allowSorting: false, width: 100, dataType: "boolean" }
+               //{ dataField: "REMARK", caption: "备注", allowEditing: true, allowSorting: false, width: 100 },
             ],
             editing: {
                 allowDeleting: true,
                 allowUpdating: true,
-                mode: "row"
+                mode: "cell"
             },
             selection: {
                 mode: "single"
@@ -210,7 +213,7 @@
             editing: {
                 allowUpdating: true,
                 allowDeleting: true,
-                mode: "row"
+                mode: "cell"
             },
             selection: {
                 mode: "single"
@@ -569,6 +572,7 @@
                     }
                 }
 
+                viewModel.keepCache = true;
                 viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -597,7 +601,12 @@
                 }
             }
 
-            ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+
+            ValidChange();
+            setTimeout(function () {
+                ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+            }, 200);
+            
         }
     }
 
@@ -640,6 +649,15 @@
                 ServerError(xmlHttpRequest.responseText);
             }
         });
+    }
+
+    function ValidChange() {
+        var gridFLOC = $("#gridFLOC").dxDataGrid("instance");
+        var gridITEM = $("#gridITEM").dxDataGrid("instance");
+        var gridROEP = $("#gridROEP").dxDataGrid("instance");
+        gridFLOC.closeEditCell();
+        gridITEM.closeEditCell();
+        gridROEP.closeEditCell();
     }
 
     return viewModel;

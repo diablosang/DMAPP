@@ -11,6 +11,8 @@
             <div><br /></div>
             <div id="btnScan" class="Login_Btn" data-bind="dxButton: { text: '扫描', onClick:onScan}"></div>
         </div>
-       
+        <div data-bind="dxFileUploader: {accept: 'image/*' }"></div>
+        <div style="width: 0px;height: 0px;border-width: 40px;border-style: solid;border-color: red green blue white;">
+        </div>
     </div>
 </div>

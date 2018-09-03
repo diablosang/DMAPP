@@ -101,7 +101,7 @@
                     localStorage.setItem("username", u);
                     localStorage.setItem("password", p);
                     viewModel.indicatorVisible(false);
-                    var view = "WorkShop";
+                    var view = appStartView;
                     var option = { root: true };
                     DMAPP.app.navigate(view, option);
 
@@ -130,7 +130,7 @@
                     localStorage.setItem("username", u);
                     localStorage.setItem("password", p);
                     viewModel.indicatorVisible(false);
-                    var view = "WorkShop";
+                    var view = appStartView;
                     var option = { root: true };
                     DMAPP.app.navigate(view, option);
 

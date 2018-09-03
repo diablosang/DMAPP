@@ -13,7 +13,7 @@
                 </tr>
             </table>
         </div>
-        <div style="position:absolute;top:50px;bottom:0;overflow-y:auto;height:auto">
+        <div style="position:absolute;top:50px;bottom:0;overflow-y:auto;height:auto;width:100%">
             <table id="tbDevice" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>
         </div>  
     </div>

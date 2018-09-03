@@ -1,17 +1,18 @@
-// NOTE object below must be a valid JSON
+﻿// NOTE object below must be a valid JSON
+var appStartView = "WorkShop2";
+
 window.DMAPP = $.extend(true, window.DMAPP, {
   "config": {
-      //"layoutSet": "navbar",
-      "layoutSet": "simple",
+    "layoutSet": "simple",
     "navigation": [
       {
         "title": "车间",
-        "onExecute": "#WorkShop",
+        "onExecute": "#" + appStartView,
         "icon": "menu"
       },
       {
         "title": "测试",
-        "onExecute": "#M_REP?CODE_EQP=G24",
+        "onExecute": "#EMSChart?CODE_EQP=SXD02",
         "icon": "preferences"
       },
       {

@@ -23,6 +23,7 @@ var chsMsg = {
     upperFolder: "上级目录",
     rootFolder: "根目录",
     delSuccess: "删除成功",
+    subSuccess:"提交成功"
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -34,7 +35,8 @@ var engMsg = {
     scanFailed: "Scan failed: ",
     upperFolder: "Upper Folder",
     rootFolder: "Root Folder",
-    delSuccess: "Delete success"
+    delSuccess: "Delete success",
+    subSuccess: "Submit success"
 
 }
 
