@@ -1,27 +1,29 @@
-<div data-options="dxView : { name: 'EMSChart', title: '曲线图' } " >
+<div data-options="dxView : { name: 'EMSChart2', title: 'EMSChart2' } ">
     <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
         <div>
             <table>
                 <tr>
                     <td>日期：</td>
-                    <td><div id="dateFrom" data-bind="dxDateBox: {
+                    <td>
+                        <div id="dateFrom" data-bind="dxDateBox: {
                                 type: 'datetime',
                                 formatString: 'yyyy-MM-dd HH:mm:ss',
                                 pickerType: 'calendar',
-                                dateSerializationFormat: 'yyyy-MM-ddTHH:mm:ss'}"></div></td>
+                                dateSerializationFormat: 'yyyy-MM-ddTHH:mm:ss'}"></div>
+                    </td>
                     <td>至</td>
-                    <td><div id="dateTo" data-bind="dxDateBox: {
+                    <td>
+                        <div id="dateTo" data-bind="dxDateBox: {
                                 type: 'datetime',
                                 formatString: 'yyyy-MM-dd HH:mm:ss',
                                 pickerType: 'calendar',
                                 dateSerializationFormat: 'yyyy-MM-ddTHH:mm:ss'}"></div>
                     </td>
                     <td><div data-bind="dxButton: { text: '加载数据',onClick: buttonLoadClick }"></div></td>
-                    <td><div data-bind="dxButton: { text: '自动刷新',onClick: buttonAutoClick }"></div></td>
+                    <td><!--<div data-bind="dxButton: { text: '自动刷新',onClick: buttonAutoClick }"></div>--></td>
                     <td width="20px">&nbsp;</td>
-                    <td><div id="ckYL" data-bind="dxCheckBox: { value: true,text: '压力',onValueChanged: checkChanged}"></div></td>
-                    <td><div id="ckLP" data-bind="dxCheckBox: { value: true,text: '料盘',onValueChanged: checkChanged}"></div></td>
-                    <td><div id="ckZZ" data-bind="dxCheckBox: { value: true,text: '主轴',onValueChanged: checkChanged}"></div></td>
+                    <td><div id="ckSIZE" data-bind="dxCheckBox: { value: true,text: '尺寸',onValueChanged: checkChanged}"></div></td>
+                    <td><div id="ckSXL" data-bind="dxCheckBox: { value: true,text: '上下料',onValueChanged: checkChanged}"></div></td>
                 </tr>
             </table>
         </div>

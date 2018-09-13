@@ -1,5 +1,5 @@
 ﻿window.DMAPP = window.DMAPP || {};
-
+var keepAlive = false;
 
 $(function () {
     DevExpress.devices.current({ platform: "generic" });
@@ -84,7 +84,6 @@ $(function () {
 
 });
 
-
 Date.prototype.Format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1,
@@ -113,5 +112,6 @@ Date.prototype.Format = function (fmt) {
         }
     }
     return fmt;
-}
+};
+
 

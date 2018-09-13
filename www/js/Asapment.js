@@ -471,3 +471,54 @@ function GetDateString() {
     var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
     return currentdate;
 }
+
+function Logoff() {
+    var sessionStorage = window.sessionStorage;
+    var u = sessionStorage.getItem("username");
+
+    if (u == null) {
+        return;
+    }
+
+    keepAlive = false;
+
+    DMAPP.app.viewCache.clear();
+    sessionStorage.removeItem("username");
+    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logoff?UserName=" + u;
+    $.ajax({
+        type: 'GET',
+        url: url,
+        cache: false,
+        success: function (data, textStatus) {
+            var view = "Login/0";
+            var option = { root: true };
+            DMAPP.app.navigate(view, option);
+        },
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            ServerError(xmlHttpRequest.responseText);
+        }
+    });
+
+
+    return;
+}
+
+function KeepAlive() {
+    if (keepAlive == false) {
+        return;
+    }
+
+    var sessionStorage = window.sessionStorage;
+    var u = sessionStorage.getItem("username");
+    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/TestConnection?UserName=" + u;
+    $.ajax({
+        type: 'GET',
+        url: url,
+        cache: false,
+        success: function (data, textStatus) {
+            setTimeout(KeepAlive, 60000);
+        },
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+        }
+    });
+}

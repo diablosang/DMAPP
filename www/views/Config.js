@@ -23,32 +23,7 @@
             DevExpress.ui.notify(SysMsg.saveSuccess, "success", 1000);
         },
         onLogoffClick: function () {
-            var sessionStorage = window.sessionStorage;
-            var u = sessionStorage.getItem("username");
-
-            if (u == null) {
-                return;
-            }
-
-            DMAPP.app.viewCache.clear();
-            sessionStorage.removeItem("username");
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logoff?UserName=" + u;
-            $.ajax({
-                type: 'GET',
-                url: url,
-                cache: false,
-                success: function (data, textStatus) {
-                    var view = "Login/0";
-                    var option = { root: true };
-                    DMAPP.app.navigate(view, option);
-                },
-                error: function (xmlHttpRequest, textStatus, errorThrown) {
-                    ServerError(xmlHttpRequest.responseText);
-                }
-            });
-
-
-            return;
+            Logoff();
         },
         onScan: function () {
             try {

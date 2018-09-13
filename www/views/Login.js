@@ -103,6 +103,7 @@
                     viewModel.indicatorVisible(false);
                     var view = appStartView;
                     var option = { root: true };
+                    keepAlive = true;
                     DMAPP.app.navigate(view, option);
 
                 },
@@ -132,6 +133,8 @@
                     viewModel.indicatorVisible(false);
                     var view = appStartView;
                     var option = { root: true };
+                    keepAlive = true;
+                    KeepAlive();
                     DMAPP.app.navigate(view, option);
 
                 },
