@@ -7,7 +7,7 @@
         indicatorVisible: ko.observable(false),
         toolBarOption: {
             items: [
-                 { location: 'before', widget: 'button', name: 'BTNSUBMIT', options: { text: '提交' } },
+                 { location: 'before', widget: 'button', name: 'BTNSUBMIT', options: { text: SysMsg.submit } },
             ],
             onItemClick: function (e) {
                 BarItemClick(e);
@@ -45,7 +45,7 @@
                 GetWinbox(this, params);
             }
             catch (e) {
-                DevExpress.ui.notify("该单据未包含明细信息", "error", 1000);
+                DevExpress.ui.notify(SysMsg.noDetail, "error", 1000);
             }
         },
         viewHidden: function (e) {
@@ -57,6 +57,7 @@
         formOption: {
             items: [
                 {
+                    id: "CODE_OP",
                     label: { text: "加工工序" },
                     dataField: "CODE_OP",
                     editorOptions: {
@@ -66,6 +67,7 @@
                     colSpan: 1
                 },
                 {
+                    id: "ID_WO",
                     label: { text: "下料批号" },
                     dataField: "ID_WO",
                     //editorOptions: {
@@ -85,7 +87,7 @@
         },
         tileBarOption: {
             items: [
-                { DES: "提交", name: "BTNSUBMIT" }
+                { DES: SysMsg.submit, name: "BTNSUBMIT" }
             ],
             direction: 'vertical',
             height: "100%",
@@ -102,6 +104,21 @@
             },
         },
     };
+
+    function SetLanguage() {
+        var tile;
+        var form = $("#formMain").dxForm("instance");
+        if (DeviceLang() == "CHS") {
+            tile = params.CODE_EQP + "下料";
+        }
+        else {
+            tile = params.CODE_EQP + "Unloading";
+            form.itemOption("ID_WO", "label", { text: "Work Order No." });
+            form.itemOption("CODE_OP", "label", { text: "Operation Code" });
+        }
+
+        viewModel.title(tile);
+    }
 
     function GetWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
@@ -145,7 +162,7 @@
                     ServerError(xmlHttpRequest.responseText);
                 }
                 else {
-                    DevExpress.ui.notify("无法读取数据", "error", 1000);
+                    DevExpress.ui.notify(SysMsg.nodata, "error", 1000);
                 }
             }
         });

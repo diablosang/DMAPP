@@ -1,5 +1,5 @@
 ﻿var DeviceLang = function () {
-    //return "ENG";
+    return "ENG";
 
     if (navigator.language.indexOf("CN") >= 0 || navigator.language.indexOf("zh") >= 0) {
         return "CHS";
@@ -23,7 +23,41 @@ var chsMsg = {
     upperFolder: "上级目录",
     rootFolder: "根目录",
     delSuccess: "删除成功",
-    subSuccess:"提交成功"
+    subSuccess: "提交成功",
+    noDetail: "该单据未包含明细信息",
+    confirmREP: "您确定要报修吗？",
+    confirmREPFinish: "您确定要报告设备修复",
+    confirmREPResult: "请选择设备维修结论",
+    repFin: "完成",
+    repReturn: "返修",
+    confirmMAT1: "您确定要添加辅料",
+    confirmMAT2: "您确定要更换辅料",
+    goback: "返回上一层",
+    logoff: "注销",
+    inputEQP: "请输入设备代码",
+    submit: "提交",
+    nodata: "无法读取数据",
+    yl: "压力",
+    zz: "主轴转速",
+    lp: "料盘转速",
+    load: "加载数据",
+    cc: "尺寸",
+    sxl: "上下料",
+    sl: "上料",
+    xl: "下料",
+    fltj: "辅料添加",
+    flgh: "辅料更换",
+    mbcc: "目标尺寸",
+    cpjy: "产品检验",
+    cpjyjl: "产品检验结论",
+    fljy: "辅料检验",
+    fljyjl: "辅料检验结论",
+    yd: "圆度",
+    jl: "结论",
+    hg: "合格",
+    bhg: "不合格",
+    yj: "意见",
+    cslx:"参数类型"
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -36,8 +70,41 @@ var engMsg = {
     upperFolder: "Upper Folder",
     rootFolder: "Root Folder",
     delSuccess: "Delete success",
-    subSuccess: "Submit success"
-
+    subSuccess: "Submit success",
+    noDetail: "There does not exists detail infomation.",
+    confirmREP: "Are you sure you want to submit a repair application？",
+    confirmREPFinish: "Did you finished repair this equipment？",
+    confirmREPResult: "Please choose the conclusion",
+    repFin: "Finish",
+    repReturn: "Return",
+    confirmMAT1: "Are you sure you want to add cut media?",
+    confirmMAT2: "Are you sure you want to change coolant?",
+    goback: "Go back",
+    logoff: "Logoff",
+    inputEQP: "Input equipment code",
+    submit: "Submit",
+    nodata: "Failed to get data.",
+    yl: "Pressure",
+    zz: "RPM Spindle",
+    lp: "RPM Turntable",
+    load: "Load Data",
+    cc: "Size",
+    sxl: "Materials",
+    sl: "Loading",
+    xl: "Unloading",
+    fltj: "Add Cut Media",
+    flgh: "Change Coolant",
+    mbcc: "Standard Size",
+    cpjy: "Product QC",
+    cpjyjl: "Product QC Conclution",
+    fljy: "Material QC",
+    fljyjl: "Material QC Conclution",
+    yd: "Roundness",
+    jl: "Conclution",
+    hg: "Pass",
+    bhg: "Failed",
+    yj: "Comment",
+    cslx: "Type"
 }
 
 
@@ -271,7 +338,7 @@ var engMsg = {
                 Search: "Search",
                 Back: "Back",
                 OK: "OK",
-                "dxCollectionWidget-noDataText": "No data to display",
+                "dxCollectionWidget-noDataText": "",
                 "validation-required": "Required",
                 "validation-required-formatted": "{0} is required",
                 "validation-numeric": "Value must be a number",

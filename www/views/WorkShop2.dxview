@@ -1,22 +1,22 @@
 <div data-options="dxView : { name: 'WorkShop2', title: '车间' } " >
     <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
       <div style="height:20px;margin-top:10px">
-        <table style="font-size:larger;font-weight:bold">
+        <table style="font-size:larger;font-weight:bold;">
           <tr>
-            <td width="75px" align="center">图示:</td>
-            <td width="100px" align="center" style="background-color:rgb(51, 232, 37)">设备</td>
-            <td width="100px" align="center" style="background-color:yellow">质检</td>
-            <td width="100px" align="center" style="background-color:rgb(238, 121, 89)">转移</td>
-            <td width="100px" align="center" style="background-color:red">其它</td>
+            <td id="td1" width="75px" align="center">图示:</td>
+            <td id="td2" width="100px" align="center" style="background-color:rgb(51, 232, 37)">设备</td>
+            <td id="td3" width="100px" align="center" style="background-color:yellow">质检</td>
+            <td id="td4" width="100px" align="center" style="background-color:rgb(238, 121, 89)">转移</td>
+            <td id="td5" width="100px" align="center" style="background-color:red">其它</td>
             <td width="10px"></td>
             <td>
-              <div id="txtCODE_EQP" data-bind="dxTextBox: {placeholder:'请输入设备代码' }"></div>
+              <div id="txtCODE_EQP" data-bind="dxTextBox: {placeholder:SysMsg.inputEQP}"></div>
             </td>
             <td width="100px">
               <div data-bind="dxButton: { text: 'GO',onClick:buttonGoClick }"></div>
             </td>
             <td width="100px" align="center">
-              <div id="btnLogoff" class="Login_Btn" data-bind="dxButton: { text: '注销', onClick:onLogoffClick}"></div>
+              <div id="btnLogoff" class="Login_Btn" data-bind="dxButton: { text: SysMsg.logoff, onClick:onLogoffClick}"></div>
             </td>
           </tr>
         </table>

@@ -7,7 +7,7 @@
         indicatorVisible: ko.observable(false),
         toolBarOption: {
             items: [
-                 { location: 'before', widget: 'button', name: 'A31', options: { text: '提交' } },
+                 { location: 'before', widget: 'button', name: 'A31', options: { text: SysMsg.submit } },
             ],
             onItemClick: function (e) {
                 BarItemClick(e);
@@ -16,20 +16,7 @@
         winbox: {},
         keepCache: false,
         viewShown: function (e) {
-            var par = "";
-            if (params.DEVPARAM == "31") {
-                par = "压力";
-            }
-            else if (params.DEVPARAM == "32") {
-                par = "主轴转速";
-            }
-            else if (params.DEVPARAM == "33") {
-                par = "料盘转速";
-            }
-
-            var tile = params.CODE_EQP +"设置参数-"+ par;
-            viewModel.title(tile);
-
+            SetLanguage();
 
             this.viewKey = e.viewInfo.key;
             if (viewModel.keepCache == true) {
@@ -70,6 +57,7 @@
         formOption: {
             items: [
                 {
+                    id: "TYPE_OP",
                     label: { text: "参数类型" },
                     dataField: "TYPE_OP",
                     editorType: "dxLookup",
@@ -77,14 +65,25 @@
                         readOnly: true,
                         displayExpr: "DES1",
                         valueExpr: "IDLINE",
-                        dataSource: [
-                            { IDLINE: "31", DES1: "压力" },
-                            { IDLINE: "32", DES1: "主轴转速" },
-                            { IDLINE: "33", DES1: "料盘转速" }
-                        ]
+                        dataSource: (function () {
+                            if (DeviceLang() == "CHS") {
+                                return [
+                                    { IDLINE: "31", DES1: "压力" },
+                                    { IDLINE: "32", DES1: "主轴转速" },
+                                    { IDLINE: "33", DES1: "料盘转速" }
+                                ];
+                            } else {
+                                return [
+                                    { IDLINE: "31", DES1: "Pressure" },
+                                    { IDLINE: "32", DES1: "RPM Spindle" },
+                                    { IDLINE: "33", DES1: "RPM Turntable" }
+                                ];
+                            }
+                        })()
                     }
                 },
                 {
+                    id: "VAL_PAR",
                     label: { text: "参数值" },
                     dataField: "VAL_PAR",
                     editorType: "dxNumberBox",
@@ -99,7 +98,7 @@
         },
         tileBarOption: {
             items: [
-                { DES: "提交", name: "BTNSUBMIT" }
+                { DES: SysMsg.submit, name: "BTNSUBMIT" }
             ],
             direction: 'vertical',
             height: "100%",
@@ -116,6 +115,42 @@
             },
         },
     };
+
+    function SetLanguage() {
+        var par = "";
+        var form = $("#formMain").dxForm("instance");
+        if (DeviceLang() == "CHS") {
+            if (params.DEVPARAM == "31") {
+                par = "压力";
+            }
+            else if (params.DEVPARAM == "32") {
+                par = "主轴转速";
+            }
+            else if (params.DEVPARAM == "33") {
+                par = "料盘转速";
+            }
+
+            var tile = params.CODE_EQP + "设置参数-" + par;
+            viewModel.title(tile);
+        }
+        else {
+            if (params.DEVPARAM == "31") {
+                par = "Pressure";
+            }
+            else if (params.DEVPARAM == "32") {
+                par = "RPM Spindle";
+            }
+            else if (params.DEVPARAM == "33") {
+                par = "RPM Turntable";
+            }
+
+            var tile = params.CODE_EQP + "Machine Data - " + par;
+            viewModel.title(tile);
+
+            form.itemOption("TYPE_OP", "label", { text: "Type" });
+            form.itemOption("VAL_PAR", "label", { text: "Value" });
+        }
+    }
 
     function GetWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
@@ -156,12 +191,7 @@
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);
-                if (xmlHttpRequest.responseText == "NO SESSION") {
-                    ServerError(xmlHttpRequest.responseText);
-                }
-                else {
-                    DevExpress.ui.notify("无法读取数据", "error", 1000);
-                }
+                ServerError(xmlHttpRequest.responseText);
             }
         });
     }

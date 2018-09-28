@@ -8,8 +8,6 @@
         indicatorVisible:ko.observable(false),
         viewShown: function () {
             SetLanguage();
-
-
             var localStorage = window.localStorage;
 
             var url = localStorage.getItem("dmappurl");
@@ -104,6 +102,7 @@
                     var view = appStartView;
                     var option = { root: true };
                     keepAlive = true;
+                    KeepAlive();
                     DMAPP.app.navigate(view, option);
 
                 },
@@ -216,12 +215,14 @@
             $("#txtUser").dxTextBox("instance").option("placeholder", "请输入用户名");
             $("#txtPwd").dxTextBox("instance").option("placeholder", "请输入密码");
             $("#btnLogin").dxButton("instance").option("text", "登录");
+            $("#btnSetting").dxButton("instance").option("text", "设置");
         }
         else {
             viewModel.title("Logon");
             $("#txtUser").dxTextBox("instance").option("placeholder", "Please input user name");
             $("#txtPwd").dxTextBox("instance").option("placeholder", "Please input password");
             $("#btnLogin").dxButton("instance").option("text", "Login");
+            $("#btnSetting").dxButton("instance").option("text", "Setting");
         }
     }
 };

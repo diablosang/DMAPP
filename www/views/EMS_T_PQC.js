@@ -7,7 +7,7 @@
         indicatorVisible: ko.observable(false),
         toolBarOption: {
             items: [
-                 { location: 'before', widget: 'button', name: 'A31', options: { text: '提交' } },
+                 { location: 'before', widget: 'button', name: 'A31', options: { text: SysMsg.submit } },
             ],
             onItemClick: function (e) {
                 BarItemClick(e);
@@ -16,18 +16,19 @@
         winbox: {},
         keepCache: false,
         viewShown: function (e) {
+            SetLanguage();
             var par = "";
             if (params.DEVPARAM == "51") {
-                par = "产品检验";
+                par = SysMsg.cpjy;
             }
             else if (params.DEVPARAM == "52") {
-                par = "产品检验结论";
+                par = SysMsg.cpjyjl;
             }
             else if (params.DEVPARAM == "53") {
-                par = "辅料检验";
+                par = SysMsg.fljy;
             }
             else if (params.DEVPARAM == "54") {
-                par = "辅料检验结论";
+                par = SysMsg.fljyjl;
             }
 
             var tile = params.CODE_EQP + par;
@@ -61,7 +62,7 @@
                 GetWinbox(this, params);
             }
             catch (e) {
-                DevExpress.ui.notify("该单据未包含明细信息", "error", 1000);
+                DevExpress.ui.notify(SysMsg.noDetail, "error", 1000);
             }
         },
         viewHidden: function (e) {
@@ -73,7 +74,8 @@
         formOption: {
             items: [
                 {
-                    label: { text: "参数类型" },
+                    id:"TYPE_OP",
+                    label: { text: SysMsg.cslx },
                     dataField: "TYPE_OP",
                     editorType: "dxLookup",
                     editorOptions: {
@@ -81,10 +83,10 @@
                         displayExpr: "DES1",
                         valueExpr: "IDLINE",
                         dataSource: [
-                            { IDLINE: "51", DES1: "产品检验" },
-                            { IDLINE: "52", DES1: "产品检验结论" },
-                            { IDLINE: "53", DES1: "辅料检验" },
-                            { IDLINE: "54", DES1: "辅料检验结论" }
+                            { IDLINE: "51", DES1: SysMsg.cpjy },
+                            { IDLINE: "52", DES1: SysMsg.cpjyjl},
+                            { IDLINE: "53", DES1: SysMsg.fljy},
+                            { IDLINE: "54", DES1: SysMsg.fljyjl}
                         ]
                     }
                 }
@@ -97,7 +99,7 @@
         },
         tileBarOption: {
             items: [
-                { DES: "提交", name: "BTNSUBMIT" }
+                { DES: SysMsg.submit, name: "BTNSUBMIT" }
             ],
             direction: 'vertical',
             height: "100%",
@@ -114,6 +116,15 @@
             },
         },
     };
+
+    function SetLanguage() {
+        if (DeviceLang() == "CHS") {
+
+        }
+        else {
+
+        }
+    }
 
     function GetWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
@@ -145,13 +156,13 @@
 
                 if (params.DEVPARAM == "51" || params.DEVPARAM == "51") {
                     var item1 = {
-                        label: { text: "尺寸" },
+                        label: { text: SysMsg.cc },
                         dataField: "SIZE",
                         colSpan: 1
                     }
 
                     var item2 = {
-                        label: { text: "圆度" },
+                        label: { text: SysMsg.yd },
                         dataField: "ROUND",
                         colSpan: 1
                     }
@@ -160,22 +171,22 @@
                 }
                 else {
                     var item1 = {
-                        label: { text: "结论" },
+                        label: { text: SysMsg.jl },
                         dataField: "RESULT",
                         editorType: "dxLookup",
                         editorOptions: {
                             displayExpr: "DES1",
                             valueExpr: "IDLINE",
                             dataSource: [
-                                { IDLINE: "合格", DES1: "合格" },
-                                { IDLINE: "不合格", DES1: "不合格" },
+                                { IDLINE: "合格", DES1: SysMsg.hg },
+                                { IDLINE: "不合格", DES1:SysMsg.bhg },
                             ]
                         },
                         colSpan: 1
                     }
 
                     var item2 = {
-                        label: { text: "意见" },
+                        label: { text: SysMsg.yj },
                         dataField: "COMMENT",
                         colSpan: 1
                     }
@@ -201,7 +212,7 @@
                     ServerError(xmlHttpRequest.responseText);
                 }
                 else {
-                    DevExpress.ui.notify("无法读取数据", "error", 1000);
+                    DevExpress.ui.notify(SysMsg.nodata, "error", 1000);
                 }
             }
         });

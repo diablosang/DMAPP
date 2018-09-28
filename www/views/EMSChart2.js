@@ -2,7 +2,9 @@
     "use strict";
 
     var viewModel = {
+        title: ko.observable(""),
         viewShown: function (e) {
+            SetLanguage();
             this.viewKey = e.viewInfo.key;
             InitData();
         },
@@ -18,19 +20,28 @@
                 type: "line"
             },
             series: [
-                { name: "尺寸", type: "line", valueField: "SIZE" },
-                { name: "目标尺寸", type: "line", valueField: "SIZE_S" },
                 {
-                    name: "上料", type: "scatter", valueField: "T11", point: {
+                    name: SysMsg.cc, type: "line", valueField: "SIZE", point: {
+                        size: 7
+                    }, label: { visible: true, backgroundColor: "transparent", font: { color: "black" } }, ignoreEmptyPoints: true
+                },
+                {
+                    name: SysMsg.mbcc, type: "line", valueField: "SIZE_S", point: {
+                        visible: false,ignoreEmptyPoints: true
+                    }
+                },
+                {
+                    name: SysMsg.sl, type: "scatter", valueField: "T11", point: {
                         symbol: "triangleUp"
                     }
                 },
                 {
-                    name: "下料", type: "scatter", valueField: "T12", point: {
+                    name: SysMsg.xl, type: "scatter", valueField: "T12", point: {
                         symbol: "triangleDown"
                     }
                 },
-                {name: "加料", type: "scatter", valueField: "T13"},
+                { name: SysMsg.fltj, type: "scatter", valueField: "T13", point: { image: { url: "images/AA.png", width: 16, height: 16 } } },
+                { name: SysMsg.flgh, type: "scatter", valueField: "T14", point: { image: { url: "images/CC.png", width: 16, height: 16 } } },
             ],
             argumentAxis: {
                 argumentType: "datetime",
@@ -47,11 +58,11 @@
                 enabled: true,
                 argumentFormat:"MM-dd HH:mm",
                 customizeTooltip: function (e) {
-                    if (e.seriesName == "上料" || e.seriesName == "加料" || e.seriesName == "下料") {
+                    if (e.seriesName == SysMsg.sl || e.seriesName == SysMsg.xl || e.seriesName == SysMsg.fltj || e.seriesName == SysMsg.flgh) {
                         return { text: e.seriesName + "<br/>" + e.argumentText }
                     }
                     else {
-                        return { text: e.value }
+                        return { text: e.value+ "<br/>" + e.argumentText  }
                     }
                 }
             }
@@ -64,33 +75,56 @@
         }
     };
 
+    function SetLanguage() {
+        var title;
+        if (DeviceLang() == "CHS") {
+            title = params.CODE_EQP + "曲线图";
+        }
+        else {
+            title = params.CODE_EQP + " Chart";
+            $("#td1").text("Date");
+            $("#td2").text("To");
+        }
+        viewModel.title(title);
+    }
+
     function SetChartSeries() {
         var series = [];
         var ckSIZE = $("#ckSIZE").dxCheckBox("instance");
         var ckSXL = $("#ckSXL").dxCheckBox("instance");
 
         if (ckSIZE.option("value") == true) {
-            var ser = { name: "尺寸", type: "line", valueField: "SIZE" };
-            var ser2 = { name: "目标尺寸", type: "line", valueField: "SIZE_S" };
+            var ser = {
+                name: SysMsg.cc, type: "line", valueField: "SIZE", point: {
+                    size: 7
+                }, label: { visible: true, backgroundColor: "transparent", font: {color:"black"}  }, ignoreEmptyPoints:true
+            };
+            var ser2 = {
+                name: SysMsg.mbcc, type: "line", valueField: "SIZE_S", point: {
+                    visible: false
+                }, ignoreEmptyPoints: true
+            };
             series.push(ser);
             series.push(ser2);
         }
 
         if (ckSXL.option("value") == true) {
             var ser = {
-                name: "上料", type: "scatter", valueField: "T11", point: {
+                name: SysMsg.sl, type: "scatter", valueField: "T11", point: {
                     symbol: "triangleUp"
                 }
             };
             var ser2 = {
-                name: "下料", type: "scatter", valueField: "T12", point: {
+                name: SysMsg.xl, type: "scatter", valueField: "T12", point: {
                     symbol: "triangleDown"
                 }
             };
-            var ser3 ={name: "加料", type: "scatter", valueField: "T13"};
+            var ser3 = { name: SysMsg.fltj, type: "scatter", valueField: "T13", point: { image: { url: "images/AA.png", width: 16, height: 16 } } };
+            var ser4 = { name: SysMsg.flgh, type: "scatter", valueField: "T14", point: { image: { url: "images/CC.png", width: 16, height: 16 } } };
             series.push(ser);
             series.push(ser2);
             series.push(ser3);
+            series.push(ser4);
         }
 
         var charPar = $("#chartPar").dxChart("instance");
@@ -119,11 +153,11 @@
 
         var dFrom = dateFrom.option("value");
         var dTo = dateTo.option("value");
-
+        var offset = new Date().getTimezoneOffset();
         var postData = {
             userName: u,
             methodName: "EMS.EMS_CHART.GetPARData2",
-            param: params.CODE_EQP + ";" + dFrom + ";" + dTo
+            param: params.CODE_EQP + ";" + dFrom + ";" + dTo + ";" + offset
         }
 
         $.ajax({
@@ -136,6 +170,14 @@
                 var chartData = [];
                 for (var i = 0; i < data.length; i++) {
                     chartData.push(data[i]);
+                    //var item = {};
+                    //for (var key in data[i]) {
+                    //    if (data[i][key] != null) {
+                    //        item[key] = data[i][key];
+                    //    }
+                    //}
+                   
+                    //chartData.push(item);
                 }
 
                 var charPar = $("#chartPar").dxChart("instance");
@@ -147,7 +189,7 @@
                     ServerError(xmlHttpRequest.responseText);
                 }
                 else {
-                    DevExpress.ui.notify("无法读取数据", "error", 1000);
+                    DevExpress.ui.notify(SysMsg.nodata, "error", 1000);
                 }
             }
         });

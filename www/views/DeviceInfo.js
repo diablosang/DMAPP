@@ -10,18 +10,20 @@
         popArgu: ko.observable({}),
         viewShown: function () {
             this.title(params.CODE_EQP);
+            SetLanguage();
             try {
                 GetWinbox(this, params);
                 GetMenu(this, params);
             }
             catch (e) {
-                DevExpress.ui.notify("该单据未包含明细信息", "error", 1000);
+                DevExpress.ui.notify(SysMsg.noDetail, "error", 1000);
             }
         },
         formOption: {
             colCount: 2,
             items: [
                         {
+                            id:"CODE_EQP",
                             label: { text: "设备编号" },
                             editorOptions: {
                                 readOnly: true
@@ -30,17 +32,31 @@
                             colSpan: 1
                         },
                         {
+                            id:"STATUS_OP",
                             label: { text: "状态" },
                             editorType: "dxLookup",
                             editorOptions: {
                                 readOnly: true,
-                                dataSource: [
-                                    { IDLINE: 0, DES: "运行" },
-                                    { IDLINE: 1, DES: "维护" },
-                                    { IDLINE: 2, DES: "维修" },
-                                    { IDLINE: 3, DES: "大修" },
-                                    { IDLINE: 4, DES: "空闲中" }
-                                ],
+                                dataSource: (function () {
+                                    if (DeviceLang() == "CHS") {
+                                        return [
+                                            { IDLINE: 0, DES: "运行" },
+                                            { IDLINE: 1, DES: "维护" },
+                                            { IDLINE: 2, DES: "维修" },
+                                            { IDLINE: 3, DES: "大修" },
+                                            { IDLINE: 4, DES: "空闲中" }
+                                        ];
+                                    }
+                                    else {
+                                        return [
+                                            { IDLINE: 0, DES: "Running" },
+                                            { IDLINE: 1, DES: "Maintenance" },
+                                            { IDLINE: 2, DES: "Repair" },
+                                            { IDLINE: 3, DES: "Overhaul" },
+                                            { IDLINE: 4, DES: "Free" }
+                                        ];
+                                    }
+                                })(),
                                 displayExpr: "DES",
                                 valueExpr: "IDLINE"
                             },
@@ -48,6 +64,7 @@
                             colSpan: 1
                         },
                         {
+                            id:"POSITION",
                             label: { text: "位置" },
                             editorOptions: {
                                 readOnly: true
@@ -65,18 +82,38 @@
                 {
                     dataField: "TYPE_OP", caption: "类型", allowEditing: false, allowSorting: false,
                     lookup: {
-                        dataSource: [
-                            { IDLINE: "11", DES: "上料" },
-                            { IDLINE: "12", DES: "下料" },
-                            { IDLINE: "13", DES: "加料" },
-                            { IDLINE: "31", DES: "压力" },
-                            { IDLINE: "32", DES: "主轴转速" },
-                            { IDLINE: "33", DES: "料盘转速" },
-                            { IDLINE: "51", DES: "产品检验" },
-                            { IDLINE: "52", DES: "产品检验结论" },
-                            { IDLINE: "53", DES: "辅料检验" },
-                            { IDLINE: "54", DES: "辅料检验结论" },
-                        ],
+                        dataSource: (function () {
+                            if (DeviceLang() == "CHS") {
+                                return [
+                                    { IDLINE: "11", DES: "上料" },
+                                    { IDLINE: "12", DES: "下料" },
+                                    { IDLINE: "13", DES: "辅料添加" },
+                                    { IDLINE: "14", DES: "辅料更换" },
+                                    { IDLINE: "31", DES: "压力" },
+                                    { IDLINE: "32", DES: "主轴转速" },
+                                    { IDLINE: "33", DES: "料盘转速" },
+                                    { IDLINE: "51", DES: "产品检验" },
+                                    { IDLINE: "52", DES: "产品检验结论" },
+                                    { IDLINE: "53", DES: "辅料检验" },
+                                    { IDLINE: "54", DES: "辅料检验结论" },
+                                ];
+                            }
+                            else {
+                                return [
+                                    { IDLINE: "11", DES: "Loading" },
+                                    { IDLINE: "12", DES: "Unloading" },
+                                    { IDLINE: "13", DES: "Add Cut Media" },
+                                    { IDLINE: "14", DES: "Change Coolant" },
+                                    { IDLINE: "31", DES: "Pressure" },
+                                    { IDLINE: "32", DES: "RPMspindle" },
+                                    { IDLINE: "33", DES: "RPMturntable" },
+                                    { IDLINE: "51", DES: "QC" },
+                                    { IDLINE: "52", DES: "QCR" },
+                                    { IDLINE: "53", DES: "Cut QC" },
+                                    { IDLINE: "54", DES: "Cut QCR" },
+                                ];
+                            }
+                        })(),
                         displayExpr: "DES",
                         valueExpr: "IDLINE",
                     }
@@ -102,7 +139,14 @@
             itemMargin: 10,
             itemTemplate: function (itemData, itemIndex, itemElement) {
                 var url = $("#WebApiServerURL")[0].value;
-                itemElement.append("<div class=\"ItemDesc\">" + itemData.DESC_CH +
+                var desc;
+                if (DeviceLang() == "CHS") {
+                    desc = itemData.DESC_CH;
+                }
+                else {
+                    desc = itemData.DESC_EN;
+                }
+                itemElement.append("<div class=\"ItemDesc\">" + desc +
                     "</div><div class=\"BKImage\" style=\"background-image: url('" + url + "/images/JGBR/" + itemData.CODE_MENU + ".jpg')\"></div>");
             },
             onItemClick: function(e){
@@ -177,6 +221,26 @@
         }
     };
 
+    function SetLanguage() {
+        var form = $("#formDevice").dxForm("instance");
+        if (DeviceLang() == "ENG") {
+            form.itemOption("CODE_EQP", "label", { text: "Equipment Code" });
+            form.itemOption("STATUS_OP", "label", { text: "Status" });
+            form.itemOption("POSITION", "label", { text: "Position" });
+        }
+
+        var grid = $("#gridDevice").dxDataGrid("instance");
+        if (DeviceLang() == "ENG") {
+            grid.columnOption("ID_WO", "caption", "Work Order No");
+            grid.columnOption("TYPE_OP", "caption", "OP Type");
+            grid.columnOption("CODE_ITEM", "caption", "Item Code");
+            grid.columnOption("DESC_ITEM", "caption", "Item Description");
+            grid.columnOption("QTY_ORD", "caption", "Planed Quantity");
+            grid.columnOption("DATE_START", "caption", "Plan Date");
+        }
+
+    }
+
     function GetWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
@@ -245,7 +309,7 @@
                 var tile = $("#tileMenu").dxTileView("instance");
                 var items = data;
                 if(viewModel.parentMenu()!=""){
-                    var back = { CODE_MENU: "SYS_BACK", DESC_CH: "返回上一层", DEVOBJ: "BACK", DSPIDX: 99 };
+                    var back = { CODE_MENU: "SYS_BACK", DESC_CH: SysMsg.goback, DEVOBJ: "BACK", DSPIDX: 99 };
                     items.push(back);
                 }
 
@@ -271,13 +335,15 @@
             case "REP_START": REP_START(); break;
             case "REP_END": REP_END(); break;
             case "REP_RESULT": REP_RESULT(); break;
+            case "PRO_MAT1": PRO_MAT1(); break;
+            case "PRO_MAT2": PRO_MAT2(); break;
         }
     }
 
     function REP_START() {
         var closeDialog = DevExpress.ui.dialog.custom({
             title: SysMsg.info,
-            message: "您确定要报修吗？",
+            message: SysMsg.confirmREP,
             buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
         });
 
@@ -298,7 +364,7 @@
                     async: false,
                     cache: false,
                     success: function (data, textStatus) {
-                        DevExpress.ui.notify("报修成功", "success", 1000);
+                        DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
                     },
                     error: function (xmlHttpRequest, textStatus, errorThrown) {
                         viewModel.indicatorVisible(false);
@@ -312,7 +378,7 @@
     function REP_END() {
         var closeDialog = DevExpress.ui.dialog.custom({
             title: SysMsg.info,
-            message: "您确定要报告设备修复？",
+            message: SysMsg.confirmREPFinish,
             buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
         });
 
@@ -333,7 +399,7 @@
                     async: false,
                     cache: false,
                     success: function (data, textStatus) {
-                        DevExpress.ui.notify("设备修复完成", "success", 1000);
+                        DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
                     },
                     error: function (xmlHttpRequest, textStatus, errorThrown) {
                         viewModel.indicatorVisible(false);
@@ -347,8 +413,8 @@
     function REP_RESULT() {
         var closeDialog = DevExpress.ui.dialog.custom({
             title: SysMsg.info,
-            message: "您确定要报告设备修复？",
-            buttons: [{ text: "完成", value: true, onClick: function () { return true; } }, { text: "返修", value: false, onClick: function () { return false; } }]
+            message: SysMsg.confirmREPResult,
+            buttons: [{ text: SysMsg.repFin, value: true, onClick: function () { return true; } }, { text: SysMsg.repReturn, value: false, onClick: function () { return false; } }]
         });
 
         closeDialog.show().done(function (dialogResult) {
@@ -375,13 +441,83 @@
                 async: false,
                 cache: false,
                 success: function (data, textStatus) {
-                    DevExpress.ui.notify("执行成功", "success", 1000);
+                    DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
                 },
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
                     viewModel.indicatorVisible(false);
                     ServerError(xmlHttpRequest.responseText);
                 }
             });
+        });
+    }
+
+    function PRO_MAT1() {
+        var closeDialog = DevExpress.ui.dialog.custom({
+            title: SysMsg.info,
+            message: SysMsg.confirmMAT1,
+            buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
+        });
+
+        closeDialog.show().done(function (dialogResult) {
+            if (dialogResult == true) {
+                var u = sessionStorage.getItem("username");
+                var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+                var postData = {
+                    userName: u,
+                    methodName: "EMS.EMS_PRO_MAT.Add",
+                    param: params.CODE_EQP + ";" + params.CODE_OP
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: postData,
+                    url: url,
+                    async: false,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        viewModel.indicatorVisible(false);
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                });
+            }
+        });
+    }
+
+    function PRO_MAT2() {
+        var closeDialog = DevExpress.ui.dialog.custom({
+            title: SysMsg.info,
+            message: SysMsg.confirmMAT2,
+            buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
+        });
+
+        closeDialog.show().done(function (dialogResult) {
+            if (dialogResult == true) {
+                var u = sessionStorage.getItem("username");
+                var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+                var postData = {
+                    userName: u,
+                    methodName: "EMS.EMS_PRO_MAT.Replace",
+                    param: params.CODE_EQP + ";" + params.CODE_OP
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: postData,
+                    url: url,
+                    async: false,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        viewModel.indicatorVisible(false);
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                });
+            }
         });
     }
 

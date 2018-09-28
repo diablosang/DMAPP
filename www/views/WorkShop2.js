@@ -53,8 +53,6 @@
                     ServerError(xmlHttpRequest.responseText);
                 }
             });
-
-
             return;
         },
         buttonGoClick: function (e) {
@@ -190,6 +188,12 @@
         }
         else {
             viewModel.title("Product Line");
+            $("#td1").text("Legend:");
+            $("#td2").text("Equipment");
+            $("#td3").text("QC");
+            $("#td4").text("Transfer");
+            $("#td5").text("Other");
+            
         }
     }
 

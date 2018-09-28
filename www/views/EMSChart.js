@@ -2,7 +2,9 @@
     "use strict";
 
     var viewModel = {
+        title: ko.observable(""),
         viewShown: function (e) {
+            SetLanguage();
             this.viewKey = e.viewInfo.key;
             InitData();
         },
@@ -18,9 +20,9 @@
                 type: "line"
             },
             series: [
-                { name: "压力", type: "line", valueField: "YL" },
-                { name: "料盘转速", type: "line", valueField: "LP" },
-                { name: "主轴转速", type: "line", valueField: "ZZ" },
+                { name: SysMsg.yl, type: "line", valueField: "YL" },
+                { name: SysMsg.lp, type: "line", valueField: "LP" },
+                { name: SysMsg.zz, type: "line", valueField: "ZZ" },
             ],
             argumentAxis: {
                 argumentType: "datetime",
@@ -45,6 +47,19 @@
         }
     };
 
+    function SetLanguage() {
+        var title;
+        if (DeviceLang() == "CHS") {
+            title = params.CODE_EQP + "曲线图";
+        }
+        else {
+            title = params.CODE_EQP + " Chart";
+            $("#td1").text("Date");
+            $("#td2").text("To");
+        }
+        viewModel.title(title);
+    }
+
     function SetChartSeries() {
         var series = [];
         var ckYL = $("#ckYL").dxCheckBox("instance");
@@ -52,17 +67,17 @@
         var ckLP = $("#ckLP").dxCheckBox("instance");
 
         if (ckYL.option("value") == true){
-            var ser = { name: "压力", type: "line", valueField: "YL" };
+            var ser = { name: SysMsg.yl, type: "line", valueField: "YL" };
             series.push(ser);
         }
 
         if (ckZZ.option("value") == true) {
-            var ser = { name: "主轴", type: "line", valueField: "ZZ" };
+            var ser = { name: SysMsg.zz, type: "line", valueField: "ZZ" };
             series.push(ser);
         }
 
         if (ckLP.option("value") == true) {
-            var ser = { name: "料盘", type: "line", valueField: "LP" };
+            var ser = { name: SysMsg.lp, type: "line", valueField: "LP" };
             series.push(ser);
         }
 
@@ -92,11 +107,11 @@
 
         var dFrom = dateFrom.option("value");
         var dTo = dateTo.option("value");
-
+        var offset = new Date().getTimezoneOffset();
         var postData = {
             userName: u,
             methodName: "EMS.EMS_CHART.GetPARData",
-            param: params.CODE_EQP + ";" + dFrom + ";" + dTo
+            param: params.CODE_EQP + ";" + dFrom + ";" + dTo + ";" + offset
         }
 
         $.ajax({
@@ -121,7 +136,7 @@
                     ServerError(xmlHttpRequest.responseText);
                 }
                 else {
-                    DevExpress.ui.notify("无法读取数据", "error", 1000);
+                    DevExpress.ui.notify(SysMsg.nodata, "error", 1000);
                 }
             }
         });

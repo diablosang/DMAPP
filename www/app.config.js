@@ -12,7 +12,7 @@ window.DMAPP = $.extend(true, window.DMAPP, {
       },
       {
         "title": "测试",
-        "onExecute": "#EMSChart?CODE_EQP=SXD02",
+        "onExecute": "#EMSChart2?CODE_EQP=G-03",
         "icon": "preferences"
       },
       {
