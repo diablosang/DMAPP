@@ -27,7 +27,7 @@
                 return;
             }
 
-            BindData(this);
+            BindData(this); 
         },
         onLogoffClick: function () {
             var sessionStorage = window.sessionStorage;
