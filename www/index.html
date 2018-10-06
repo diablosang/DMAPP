@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <!--<link rel="dx-theme" data-theme="android5.light" href="css/dx.android5.light.css" data-active="false"/>-->
@@ -71,69 +71,69 @@
     <script type="text/javascript">
         DevExpress.config({ forceIsoDateParsing: true });
 
-        var onDeviceReady = function () {
-            initiateUI();
-        };
-        var getRegistrationID = function () {
-            window.plugins.jPushPlugin.getRegistrationID(onGetRegistrationID);
-        };
-        var onGetRegistrationID = function (data) {
-            try {
-                if (data.length == 0) {
-                    var t1 = window.setTimeout(getRegistrationID, 1000);
-                }
-                var chn = data;
-                var sessionStorage = window.sessionStorage;
-                sessionStorage.removeItem("baiduchn");
-                sessionStorage.setItem("baiduchn", chn);
-            } catch (exception) {
-                DevExpress.ui.notify(exception, "error", 3000);
-            }
-        };
+        //var onDeviceReady = function () {
+        //    initiateUI();
+        //};
+        //var getRegistrationID = function () {
+        //    window.plugins.jPushPlugin.getRegistrationID(onGetRegistrationID);
+        //};
+        //var onGetRegistrationID = function (data) {
+        //    try {
+        //        if (data.length == 0) {
+        //            var t1 = window.setTimeout(getRegistrationID, 1000);
+        //        }
+        //        var chn = data;
+        //        var sessionStorage = window.sessionStorage;
+        //        sessionStorage.removeItem("baiduchn");
+        //        sessionStorage.setItem("baiduchn", chn);
+        //    } catch (exception) {
+        //        DevExpress.ui.notify(exception, "error", 3000);
+        //    }
+        //};
 
-        var onOpenNotification = function (event) {
+        //var onOpenNotification = function (event) {
 
-        };
-        var onReceiveNotification = function (event) {
-            var alertContent;
-            if (device.platform == "Android") {
-                alertContent = event.alert;
-            } else {
-                alertContent = event.aps.alert;
-                DevExpress.ui.notify(alertContent, "info", 3000);
-            }
-        };
-        var onReceiveMessage = function (event) {
-            var message;
-            if (device.platform == "Android") {
-                message = event.message;
-            } else {
-                message = event.content;
-            }
-            DevExpress.ui.notify(message, "info", 3000);
-        };
-        var initiateUI = function () {
-            try {
-                window.plugins.jPushPlugin.init();
-                window.setTimeout(getRegistrationID, 1000);
-                if (device.platform != "Android") {
-                    window.plugins.jPushPlugin.setDebugModeFromIos();
-                    window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
-                } else {
-                    //window.plugins.jPushPlugin.setDebugMode(true);
-                    //window.plugins.jPushPlugin.setStatisticsOpen(true);
-                }
+        //};
+        //var onReceiveNotification = function (event) {
+        //    var alertContent;
+        //    if (device.platform == "Android") {
+        //        alertContent = event.alert;
+        //    } else {
+        //        alertContent = event.aps.alert;
+        //        DevExpress.ui.notify(alertContent, "info", 3000);
+        //    }
+        //};
+        //var onReceiveMessage = function (event) {
+        //    var message;
+        //    if (device.platform == "Android") {
+        //        message = event.message;
+        //    } else {
+        //        message = event.content;
+        //    }
+        //    DevExpress.ui.notify(message, "info", 3000);
+        //};
+        //var initiateUI = function () {
+        //    try {
+        //        window.plugins.jPushPlugin.init();
+        //        window.setTimeout(getRegistrationID, 1000);
+        //        if (device.platform != "Android") {
+        //            window.plugins.jPushPlugin.setDebugModeFromIos();
+        //            window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+        //        } else {
+        //            //window.plugins.jPushPlugin.setDebugMode(true);
+        //            //window.plugins.jPushPlugin.setStatisticsOpen(true);
+        //        }
 
 
-            } catch (exception) {
-                DevExpress.ui.notify(exception, "error", 3000);
-            }
-        };
+        //    } catch (exception) {
+        //        DevExpress.ui.notify(exception, "error", 3000);
+        //    }
+        //};
 
-        document.addEventListener("deviceready", onDeviceReady, false);
-        document.addEventListener("jpush.openNotification", onOpenNotification, false);
-        document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
-        document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+        //document.addEventListener("deviceready", onDeviceReady, false);
+        //document.addEventListener("jpush.openNotification", onOpenNotification, false);
+        //document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+        //document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
     </script>
 
     <script type="text/javascript" src="views/EMS_PRO_START.js"></script>
