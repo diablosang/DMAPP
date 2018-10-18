@@ -135,7 +135,7 @@
         var now = new Date();
         var nowSTR = now.Format("yyyy-MM-ddTHH:mm:ss");
         var nowM8 = now;
-        nowM8.setTime(nowM8.getTime() - 60 * 60 * 1000 * 8);
+        nowM8.setTime(nowM8.getTime() - 60 * 60 * 1000 * 24);
         var nowSTRM8 = nowM8.Format("yyyy-MM-ddTHH:mm:ss");
 
         var dateFrom = $("#dateFrom").dxDateBox("instance");
