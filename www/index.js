@@ -28,6 +28,13 @@ $(function () {
             e.cancel = true;
             exitApp();
         }
+
+        if (DMAPP.app.currentView != null) {
+            var cache = DMAPP.app.viewCache;
+            var viewKey = DMAPP.app.currentView.key;
+            cache.removeView(viewKey);
+        }
+        DMAPP.app.currentViewModel = null;
     }
 
     function exitApp() {
@@ -66,15 +73,9 @@ $(function () {
     DMAPP.app.on("viewShown", function (e) {
         DMAPP.app.currentView = e.viewInfo;
     });
-    DMAPP.app.on("navigatingBack", function (e) {
-        if (DMAPP.app.currentView != null)
-        {
-            var cache = DMAPP.app.viewCache;
-            var viewKey = DMAPP.app.currentView;
-            cache.removeView(viewKey);
-        }
-        DMAPP.app.currentViewModel = null;
-    });
+    //DMAPP.app.on("navigatingBack", function (e) {
+       
+    //});
 
     DMAPP.app.router.register(":view/:id", { view: appStartView, id: undefined });
     DMAPP.app.on("navigatingBack", onNavigatingBack);

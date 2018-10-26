@@ -201,12 +201,16 @@
 };
 
 function OpenWorkShop(CODE_LINE, DESC_LINE, TYPE) {
-    if (TYPE == "01" || TYPE == "03") {
+    if (TYPE == "01") {
         var view = "DeviceTable?CODE_LINE=" + CODE_LINE + "&DESC_LINE=" + DESC_LINE;
         DMAPP.app.navigate(view);
     }
     else if (TYPE == "02") {
         var view = "EQCMenu";
+        DMAPP.app.navigate(view);
+    }
+    else if (TYPE == "03") {
+        var view = "TRFEdit";
         DMAPP.app.navigate(view);
     }
 }

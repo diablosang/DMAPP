@@ -1,11 +1,12 @@
-﻿DMAPP.EQCEdit = function (params) {
+﻿DMAPP.TRFEdit = function (params) {
     "use strict";
+
 
     var viewModel = {
         title: ko.observable(""),
         indicatorVisible: ko.observable(false),
         tileBarOption: {
-            items: [{ name: 'A31', text: '提交' }],
+            items: [{ name: 'BTNSUBMIT', text: '提交' }],
             direction: 'vertical',
             height: "100%",
             baseItemHeight: 192,
@@ -48,10 +49,10 @@
                     }
                 }
                 catch (e) {
-                    
+
                 }
 
-                viewModel.keepCache= true
+                viewModel.keepCache = true
                 return;
             }
 
@@ -72,51 +73,24 @@
             colCount: 3,
             items: [
                 {
-                    label: { text: SysMsg.jyjg },
-                    editorType: "dxLookup",
-                    editorOptions: {
-                        readOnly: true,
-                        displayExpr: "DES",
-                        valueExpr: "IDLINE",
-                        dataSource: (function () {
-                            if (DeviceLang() == "CHS") {
-                                return [
-                                    { IDLINE: 'OK', DES: '合格' },
-                                    { IDLINE: 'CG', DES: '改制' },
-                                    { IDLINE: 'RT', DES: '返工' },
-                                    { IDLINE: 'SC', DES: '报废' }
-                                ];
-                            } else {
-                                return [
-                                    { IDLINE: 'OK', DES: 'OK' },
-                                    { IDLINE: 'CG', DES: 'Change' },
-                                    { IDLINE: 'RT', DES: 'Return' },
-                                    { IDLINE: 'SC', DES: 'Scrap' }
-                                ];
-                            }
-                        })(),
-                    },
-                    dataField: "TYPE",
+                    label: { text: SysMsg.codeloc },
+                    dataField: "CODE_LOC",
+                    //editorOptions: {
+                    //    onFocusIn: function (e) {
+                    //        OpenDataWindow(this, "CODE_LOC", "BMAINBLOCK");
+                    //    }
+                    //},
                     colSpan: 3
                 },
                 {
-                    label: { text: SysMsg.woid},
+                    label: { text: SysMsg.woid },
                     dataField: "ID_WO",
                     colSpan: 3
                 },
                 {
-                    label: { text: SysMsg.gzwlh },
-                    dataField: "CODE_RITEM",
-                    colSpan: 3
-                },
-                {
-                    label: { text: SysMsg.codeop },
-                    dataField: "CODE_OP",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "CODE_OP", "BMAINBLOCK");
-                        }
-                    },
+                    label: { text: SysMsg.qty },
+                    dataField: "QTY_STK",
+                    editorType: "dxNumberBox",
                     colSpan: 3
                 },
                 {
@@ -151,18 +125,16 @@
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/NewDocSimple"
         var postData = {
             userName: u,
-            func: "MFG_T_EQC",
-            group: "GDRAFT",
-            initdata:{
-                TYPE:params.TYPE
-            }
+            func: "MFG_T_TRF",
+            group: "GADMIN",
+            initdata: {}
         }
 
         $.ajax({
             type: 'POST',
             data: postData,
             url: url,
-            async:false,
+            async: false,
             cache: false,
             success: function (data, textStatus) {
                 viewModel.winbox = data;
@@ -208,8 +180,11 @@
         var result = ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", par);
         if (result == true) {
             DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+            var form = $("#formMain").dxForm("instance");
+            var formData = form.option("formData");
+            var loc = formData.CODE_LOC;
             GetWinbox(viewModel, params);
-            
+            form.updateData("CODE_LOC", loc);
         }
     }
 

@@ -55,7 +55,14 @@ var chsMsg = {
     hg: "合格",
     bhg: "不合格",
     yj: "意见",
-    cslx:"参数类型"
+    cslx: "参数类型",
+    woid: "工单号",
+    gzwlh: "改制物料号",
+    codeop: "工序",
+    jyjg: "检验结果",
+    remark: "备注",
+    codeloc: "库位",
+    qty:"数量"
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -102,7 +109,14 @@ var engMsg = {
     hg: "Pass",
     bhg: "Failed",
     yj: "Comment",
-    cslx: "Type"
+    cslx: "Type",
+    woid: "Work Order",
+    gzwlh: "New Item Code",
+    codeop: "OP",
+    jyjg: "Type",
+    remark: "Remark",
+    codeloc: "Location",
+    qty:"Qty."
 }
 
 

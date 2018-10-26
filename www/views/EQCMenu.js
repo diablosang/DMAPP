@@ -3,12 +3,23 @@
 
     var viewModel = {
         tileBarOption: {
-            items: [
-                { name: 'OK', text: '合格' },
-                { name: 'CG', text: '改制' },
-                { name: 'RT', text: '返工' },
-                { name: 'SC', text: '报废' }
-            ],
+            items: (function () {
+                if (DeviceLang() == "CHS") {
+                    return [
+                        { name: 'OK', text: '合格' },
+                        { name: 'CG', text: '改制' },
+                        { name: 'RT', text: '返工' },
+                        { name: 'SC', text: '报废' }
+                    ];
+                } else {
+                    return [
+                        { name: 'OK', text: 'OK' },
+                        { name: 'CG', text: 'Change' },
+                        { name: 'RT', text: 'Return' },
+                        { name: 'SC', text: 'Scrap' }
+                    ];
+                }
+            })(),
             direction: 'vertical',
             height: "100%",
             baseItemHeight: 192,
