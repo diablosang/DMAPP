@@ -1,7 +1,7 @@
 <div data-options="dxView : { name: 'Login', title: '' } ">
   <div id="divContent" data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background" style="background-repeat:no-repeat;background-position:center">
     <div class="indicator" data-bind="dxLoadIndicator: { visible: indicatorVisible }"></div>
-    <div style="background-color:white;height:55px;line-height:35px">
+    <!--<div style="background-color:white;height:55px;line-height:35px">
       <div id="lblUser" class="Login_Header">用户名:</div>
       <div class="Login_Header" style="width:150px;" id="txtUser" data-bind="dxTextBox: {
                  maxLength: 24,
@@ -17,46 +17,10 @@
       <div id="btnLogin" class="Login_Header" style="width:125px"  data-bind="dxButton: { text: '登录',onClick:onLoginClick}"></div>
       <div id="btnSetting" class="Login_HeaderR"  data-bind="dxButton: { text: '设置',onClick:onSettingClick}"></div>
       <div id="appver" class="Login_HeaderR" >1.5.1</div>
-      <!--<table>
-        <tr>
-          <td align="center" width="100px">
-            <div id="lblUser">用户名:</div>
-          </td>
-          <td width="150px" align="left">
-            <div style="width:150px" id="txtUser" data-bind="dxTextBox: {
-                 maxLength: 24,
-                 placeholder: '请输入用户名',
-                 value:username
-               }"></div>
-          </td>
-          <td align="center" width="100px">
-            <div id="lblPwd">密码:</div>
-          </td>
-          <td width="160px" align="left">
-            <div style="width:150px" id="txtPwd" data-bind="dxTextBox: {
-                   mode: 'password',
-                   placeholder: '请输入密码',
-                   value:password
-                }"></div>
-          </td>
-          <td width="100px" align="center">
-            <div id="btnLogin"  data-bind="dxButton: { text: '登录',onClick:onLoginClick}"></div>
-          </td>
-          <td width="100%">
-            &nbsp;
-          </td>
-          <td align="center" width="100px">
-            <div id="appver">1.5.0</div>
-          </td>
-          <td width="100px" align="center">
-            <div id="btnSetting"  data-bind="dxButton: { text: '设置',onClick:onSettingClick}"></div>
-          </td>          
-        </tr>
-      </table>-->
-    </div>
+    </div>-->
 
     <!--<img id="logoImg" style="margin-top:20px;" src="" onerror="javascript:this.src='images/logo.png'"  width="100%" />-->
-    <!--<div class="Logindiv">
+    <div class="Logindiv">
             <div style="margin-top:20px;" class="dx-fieldset">
                 <div class="dx-field">
                     <div class="dx-field-label"></div>
@@ -79,12 +43,12 @@
                     <tr>
                         <td width="100%" align="center">
                             <div>
-                                <div id="appver">1.5.0</div>
+                                <div id="appver">1.5.2</div>
                             </div>
                         </td>
                     </tr>
                 </table>
             </div>
-        </div>-->
+        </div>
   </div>
 </div>

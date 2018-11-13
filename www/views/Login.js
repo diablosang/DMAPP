@@ -1,7 +1,7 @@
 ﻿DMAPP.Login = function (params) {
 
     var viewModel = {
-        hideLayout: true,
+        //hideLayout: true,
         title: ko.observable(""),
         chn: ko.observable(""),
         deviceid: ko.observable(""),
