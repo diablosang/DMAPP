@@ -72,12 +72,25 @@ $(function () {
     DMAPP.app.currentView = null;
     DMAPP.app.on("viewShown", function (e) {
         DMAPP.app.currentView = e.viewInfo;
+        var viewModel = e.viewInfo.model;
+        if (viewModel.hideLayout == true) {
+            $("#layout_header").hide();
+            $("#layout_footer").hide();
+            $("#layout_viewfooter").hide();
+            $("#layout-content").css("top", "0");
+        }
+        else {
+            $("#layout_header").show();
+            $("#layout_footer").show();
+            $("#layout_viewfooter").show();
+            $("#layout-content").css("top", "56px");
+        }
     });
     //DMAPP.app.on("navigatingBack", function (e) {
        
     //});
 
-    DMAPP.app.router.register(":view/:id", { view: appStartView, id: undefined });
+    DMAPP.app.router.register(":view/:id", { view: "Login", id: undefined });
     DMAPP.app.on("navigatingBack", onNavigatingBack);
     DMAPP.app.navigate();
 

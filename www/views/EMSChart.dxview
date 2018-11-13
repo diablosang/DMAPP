@@ -1,4 +1,5 @@
 <div data-options="dxView : { name: 'EMSChart', title: '曲线图' } " >
+  <div data-bind="dxCommand: { icon: 'home', id: 'cmdHome', onExecute: cmdHomeExecute, title: '' }"></div>
     <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
         <div>
             <table>

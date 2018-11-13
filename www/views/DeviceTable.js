@@ -20,7 +20,7 @@
             var u = sessionStorage.getItem("username");
             var postData = {
                 userName: u,
-                sql: "select * from V_EMS_T_EQP where CODE_LINE='" + CODE_LINE + "' and isnull(POS_X,0)>0 order by POS_X,POS_Y"
+                sql: "select S.COLOR,V.* from V_EMS_T_EQP V left outer join EMS_B_EQS S on V.STATUS_OP=S.STATUS_OP where CODE_LINE='" + CODE_LINE + "' and isnull(POS_X,0)>0 order by POS_X,POS_Y"
             };
 
             var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetData";
@@ -66,22 +66,27 @@
                         td.attr('align', 'center');
                         td.attr('valign', 'middle');
                         td.attr('onclick', "DeivceClick('" + d.CODE_EQP + "');");
-                        if (d.STATUS_OP == "0" || d.STATUS_OP==null)
-                        {
-                            td.css("background-color", "rgb(51, 232, 37)");
+                        var color = "#F5F5F5";
+                        if (d.COLOR != null && d.COLOR != "") {
+                            color = "#" + d.COLOR;
                         }
-                        else if (d.STATUS_OP == "1") {
-                            td.css("background-color", "yellow");
-                        }
-                        else if (d.STATUS_OP == "2") {
-                            td.css("background-color", "rgb(238, 121, 89)");
-                        }
-                        else if (d.STATUS_OP == "3") {
-                            td.css("background-color", "rgb(238, 121, 89)");
-                        }
-                        else {
-                            td.css("background-color", "rgb(245, 245, 245)");
-                        }
+                        td.css("background-color", color);
+                        //if (d.STATUS_OP == "0" || d.STATUS_OP==null)
+                        //{
+                        //    td.css("background-color", "rgb(51, 232, 37)");
+                        //}
+                        //else if (d.STATUS_OP == "1") {
+                        //    td.css("background-color", "yellow");
+                        //}
+                        //else if (d.STATUS_OP == "2") {
+                        //    td.css("background-color", "rgb(238, 121, 89)");
+                        //}
+                        //else if (d.STATUS_OP == "3") {
+                        //    td.css("background-color", "rgb(238, 121, 89)");
+                        //}
+                        //else {
+                        //    td.css("background-color", "rgb(245, 245, 245)");
+                        //}
 
                         td.css('border-radius', '7px');
                         td.css('box-shadow', '3px 3px 3px #888888');
@@ -90,6 +95,33 @@
                         $('<div>').html(d.DESC_DISP1).css("font-size", "small").appendTo(td);
                         $('<div>').html(d.DESC_DISP2).appendTo(td);
                     }      
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    viewModel.indicatorVisible(false);
+                    ServerError(xmlHttpRequest.responseText);
+                }
+            });
+
+            postData = {
+                userName: u,
+                sql: "select S.COLOR,L.DES1,L.DES2 from EMS_B_EQS S inner join SYS_LISTDETAIL L on L.IDNUM='ST_EMS_B_EQPOP'  and L.IDLINE=S.STATUS_OP "
+            };
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: postData,
+                cache: false,
+                success: function (data, textStatus) {
+                    var table = $("#tbLegend");
+                    table.empty();
+                    $('<tr>').attr('id', 'trLegend').appendTo(table);
+                    var tr = $("#trLegend");                   
+                    for (var i = 0; i < data.length; i++) {
+                        var desc = DeviceLang() == "CHS" ? data[i].DES1 : data[i].DES2;
+                        var color = "#" + data[i].COLOR;
+                        var html = "<td align='center' style='width:100px;background-color:" + color + "'>" + desc + "</td>";
+                        $(html).appendTo(tr);
+                    }
                 },
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
                     viewModel.indicatorVisible(false);

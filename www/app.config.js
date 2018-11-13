@@ -1,25 +1,43 @@
-﻿// NOTE object below must be a valid JSON
+// NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
 
 window.DMAPP = $.extend(true, window.DMAPP, {
-  "config": {
-    "layoutSet": "simple",
-    "navigation": [
-      {
-        "title": "车间",
-        "onExecute": "#" + appStartView,
-        "icon": "menu"
-      },
-      {
-        "title": "测试",
-        "onExecute": "#EMSChart2?CODE_EQP=G-03",
-        "icon": "preferences"
-      },
-      {
-        "title": "设置",
-        "onExecute": "#Config",
-        "icon": "preferences"
-      }
-    ]
-  }
+    "config": {
+        //"layoutSet": "navbar",
+        "layoutSet": "simple",
+        "navigation": [
+          {
+              "title": "车间",
+              "onExecute": "#" + appStartView,
+              "icon": "menu"
+          },
+          {
+              "title": "测试",
+              "onExecute": "#EMSChart2?CODE_EQP=G-03",
+              "icon": "preferences"
+          },
+          {
+              "title": "设置",
+              "onExecute": "#Config",
+              "icon": "preferences"
+          }
+        ],
+        "commandMapping": {
+            "generic-header-toolbar": {
+                defaults: {
+                    'showIcon': true,
+                    'location': 'before'
+                },
+                commands: [
+                    {
+                        id: 'cmdHome',
+                        title: "",
+                        icon: "home"
+                    }
+                ]
+            }
+        }
+            
+        
+    }
 });

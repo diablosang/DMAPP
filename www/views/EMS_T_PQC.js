@@ -30,6 +30,9 @@
             else if (params.DEVPARAM == "54") {
                 par = SysMsg.fljyjl;
             }
+            else if (params.DEVPARAM == "55") {
+                par = SysMsg.nddj;
+            }
 
             var tile = params.CODE_EQP + par;
             viewModel.title(tile);
@@ -86,7 +89,8 @@
                             { IDLINE: "51", DES1: SysMsg.cpjy },
                             { IDLINE: "52", DES1: SysMsg.cpjyjl},
                             { IDLINE: "53", DES1: SysMsg.fljy},
-                            { IDLINE: "54", DES1: SysMsg.fljyjl}
+                            { IDLINE: "54", DES1: SysMsg.fljyjl },
+                            { IDLINE: "55", DES1: SysMsg.nddj }
                         ]
                     }
                 }
@@ -154,7 +158,7 @@
                 var form = $("#formMain").dxForm("instance");
                 var items = form.option("items");
 
-                if (params.DEVPARAM == "51" || params.DEVPARAM == "51") {
+                if (params.DEVPARAM == "51" || params.DEVPARAM == "53") {
                     var item1 = {
                         label: { text: SysMsg.cc },
                         dataField: "SIZE",
@@ -169,6 +173,31 @@
                     items.push(item1);
                     items.push(item2);
                 }
+                else if (params.DEVPARAM == "55") {
+                    var item1 = {
+                        label: { text: SysMsg.scz },
+                        dataEditor:"dxNumber",
+                        dataField: "SIZE",
+                        colSpan: 1
+                    }
+
+                    var item2 = {
+                        label: { text: SysMsg.min },
+                        dataEditor: "dxNumber",
+                        dataField: "MIN",
+                        colSpan: 1
+                    }
+
+                    var item3= {
+                        label: { text: SysMsg.max },
+                        dataEditor: "dxNumber",
+                        dataField: "MAX",
+                        colSpan: 1
+                    }
+                    items.push(item1);
+                    items.push(item2);
+                    items.push(item3);
+                }
                 else {
                     var item1 = {
                         label: { text: SysMsg.jl },
@@ -179,7 +208,7 @@
                             valueExpr: "IDLINE",
                             dataSource: [
                                 { IDLINE: "合格", DES1: SysMsg.hg },
-                                { IDLINE: "不合格", DES1:SysMsg.bhg },
+                                { IDLINE: "不合格", DES1: SysMsg.bhg },
                             ]
                         },
                         colSpan: 1

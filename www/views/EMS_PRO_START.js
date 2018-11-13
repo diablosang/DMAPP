@@ -52,7 +52,14 @@
                     label: { text: "加工工序" },
                     dataField: "CODE_OP",
                     editorOptions: {
-                        readOnly:true,
+                        readOnly: (function () {
+                            if (params.DEVPARAM.indexOf("IR")>=0) {
+                                return false;
+                            }
+                            else {
+                                return true;
+                            }
+                        })(),
                         //onFocusIn: function (e) {
                         //    OpenDataWindow(this, "CODE_OP", "BMAINBLOCK");
                         //}

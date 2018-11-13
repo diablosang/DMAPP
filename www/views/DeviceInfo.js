@@ -337,6 +337,8 @@
             case "REP_RESULT": REP_RESULT(); break;
             case "PRO_MAT1": PRO_MAT1(); break;
             case "PRO_MAT2": PRO_MAT2(); break;
+            case "REP_RPSP": REP_RPSP(); break;
+            case "REP_RPMD": REP_RPMD(); break;
         }
     }
 
@@ -414,16 +416,23 @@
         var closeDialog = DevExpress.ui.dialog.custom({
             title: SysMsg.info,
             message: SysMsg.confirmREPResult,
-            buttons: [{ text: SysMsg.repFin, value: true, onClick: function () { return true; } }, { text: SysMsg.repReturn, value: false, onClick: function () { return false; } }]
+            buttons: [
+                { text: SysMsg.repFin, value: 1, onClick: function () { return 1; } },
+                { text: SysMsg.repReturn, value: 2, onClick: function () { return 2; } },
+                { text: SysMsg.cancel, value: 0, onClick: function () { return 0; } }
+            ]
         });
 
         closeDialog.show().done(function (dialogResult) {
             var m;
-            if (dialogResult == true) {
+            if (dialogResult == 1) {
                 m = "Finish";
             }
-            else {
+            else if (dialogResult == 2) {
                 m = "Return";
+            }
+            else {
+                return;
             }
 
             var u = sessionStorage.getItem("username");
@@ -518,6 +527,78 @@
                     }
                 });
             }
+        });
+    }
+
+    function REP_RPSP() {
+        var closeDialog = DevExpress.ui.dialog.custom({
+            title: SysMsg.info,
+            message: SysMsg.confirmREP,
+            buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
+        });
+
+        closeDialog.show().done(function (dialogResult) {
+            if (dialogResult == true) {
+                var u = sessionStorage.getItem("username");
+                var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+                var postData = {
+                    userName: u,
+                    methodName: "EMS.EMS_REP.StartRPSP",
+                    param: params.CODE_EQP
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: postData,
+                    url: url,
+                    async: false,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        viewModel.indicatorVisible(false);
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                });
+            }
+        });
+    }
+
+    function REP_RPMD() {
+        var closeDialog = DevExpress.ui.dialog.custom({
+            title: SysMsg.info,
+            message: SysMsg.confirmREPResult,
+            buttons: [{ text: SysMsg.repFin, value: true, onClick: function () { return true; } }, { text: SysMsg.cancel, value: false, onClick: function () { return false; } }]
+        });
+
+        closeDialog.show().done(function (dialogResult) {
+            if (dialogResult == false) {
+                return;
+            }
+
+            var u = sessionStorage.getItem("username");
+            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+            var postData = {
+                userName: u,
+                methodName: "EMS.EMS_REP.FinishRPSP",
+                param: params.CODE_EQP
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: postData,
+                url: url,
+                async: false,
+                cache: false,
+                success: function (data, textStatus) {
+                    DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    viewModel.indicatorVisible(false);
+                    ServerError(xmlHttpRequest.responseText);
+                }
+            });
         });
     }
 

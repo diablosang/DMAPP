@@ -1,5 +1,5 @@
-<div data-options="dxView : { name: 'EMSChart2', title: 'EMSChart2' } ">
-  <div data-bind="dxCommand: { icon: 'home', id: 'cmdHome', onExecute: cmdHomeExecute, title: '' }"></div>
+<div data-options="dxView : { name: 'EMSChart3', title: 'EMSChart3' } " >
+    <div data-bind="dxCommand: { icon: 'home', id: 'cmdHome', onExecute: cmdHomeExecute, title: '' }"></div>
     <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
         <div>
             <table>
@@ -23,8 +23,9 @@
                     <td><div data-bind="dxButton: { text: SysMsg.load,onClick: buttonLoadClick }"></div></td>
                     <td><!--<div data-bind="dxButton: { text: '自动刷新',onClick: buttonAutoClick }"></div>--></td>
                     <td width="20px">&nbsp;</td>
-                    <td><div id="ckSIZE" data-bind="dxCheckBox: { value: true,text: SysMsg.cc,onValueChanged: checkChanged}"></div></td>
-                    <td><div id="ckSXL" data-bind="dxCheckBox: { value: true,text: SysMsg.sxl,onValueChanged: checkChanged}"></div></td>
+                    <td><div id="ckSIZE" data-bind="dxCheckBox: { value: true,text: SysMsg.scz,onValueChanged: checkChanged}"></div></td>
+                    <td><div id="ckMIN" data-bind="dxCheckBox: { value: true,text: SysMsg.min,onValueChanged: checkChanged}"></div></td>
+                    <td><div id="ckMAX" data-bind="dxCheckBox: { value: true,text: SysMsg.max,onValueChanged: checkChanged}"></div></td>
                 </tr>
             </table>
         </div>

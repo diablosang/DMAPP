@@ -105,16 +105,26 @@
                     colSpan: 3
                 },
                 {
-                    label: { text: SysMsg.gzwlh },
-                    dataField: "CODE_RITEM",
-                    colSpan: 3
-                },
-                {
                     label: { text: SysMsg.codeop },
                     dataField: "CODE_OP",
                     editorOptions: {
                         onFocusIn: function (e) {
                             OpenDataWindow(this, "CODE_OP", "BMAINBLOCK");
+                        }
+                    },
+                    colSpan: 3
+                },
+                {
+                    label: { text: SysMsg.gzwlh },
+                    dataField: "CODE_RITEM",
+                    colSpan: 3
+                },
+                {
+                    label: { text: SysMsg.coderop },
+                    dataField: "CODE_ROP",
+                    editorOptions: {
+                        onFocusIn: function (e) {
+                            OpenDataWindow(this, "CODE_ROP", "BMAINBLOCK");
                         }
                     },
                     colSpan: 3
@@ -137,9 +147,12 @@
         var form = $("#formMain").dxForm("instance");
         if (params.TYPE == "CG") {
             form.itemOption("CODE_RITEM", "visible", true);
+            form.itemOption("CODE_ROP", "visible", true);
+            form.itemOption("CODE_OP", "editorOptions", {readOnly:true});
         }
         else {
             form.itemOption("CODE_RITEM", "visible", false);
+            form.itemOption("CODE_ROP", "visible", false);
         }
         GetWinbox(viewModel, params);
     }

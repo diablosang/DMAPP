@@ -522,3 +522,9 @@ function KeepAlive() {
         }
     });
 }
+
+function  cmdHomeExecute(){
+    var view = appStartView;
+    var option = { root: true };
+    DMAPP.app.navigate(view, option);
+}

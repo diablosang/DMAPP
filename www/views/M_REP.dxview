@@ -1,4 +1,5 @@
 <div data-options="dxView : { name: 'M_REP', title: 'M_REP' } " >
+  <div data-bind="dxCommand: { icon: 'home', id: 'cmdHome', onExecute: cmdHomeExecute, title: '' }"></div>
     <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
         <div class="indicator" data-bind="dxLoadIndicator: { visible: indicatorVisible }"></div>
         <div id="divP" style="float:left;width:413px;height:100%;background-color:#acd8fb;">

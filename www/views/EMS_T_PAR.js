@@ -56,36 +56,50 @@
         },
         formOption: {
             items: [
+                //{
+                //    id: "TYPE_OP",
+                //    label: { text: "参数类型" },
+                //    dataField: "TYPE_OP",
+                //    editorType: "dxLookup",
+                //    editorOptions: {
+                //        readOnly: true,
+                //        displayExpr: "DES1",
+                //        valueExpr: "IDLINE",
+                //        dataSource: (function () {
+                //            if (DeviceLang() == "CHS") {
+                //                return [
+                //                    { IDLINE: "31", DES1: "压力" },
+                //                    { IDLINE: "32", DES1: "主轴转速" },
+                //                    { IDLINE: "33", DES1: "料盘转速" }
+                //                ];
+                //            } else {
+                //                return [
+                //                    { IDLINE: "31", DES1: "Pressure" },
+                //                    { IDLINE: "32", DES1: "RPM Spindle" },
+                //                    { IDLINE: "33", DES1: "RPM Turntable" }
+                //                ];
+                //            }
+                //        })()
+                //    }
+                //},
                 {
-                    id: "TYPE_OP",
-                    label: { text: "参数类型" },
-                    dataField: "TYPE_OP",
-                    editorType: "dxLookup",
-                    editorOptions: {
-                        readOnly: true,
-                        displayExpr: "DES1",
-                        valueExpr: "IDLINE",
-                        dataSource: (function () {
-                            if (DeviceLang() == "CHS") {
-                                return [
-                                    { IDLINE: "31", DES1: "压力" },
-                                    { IDLINE: "32", DES1: "主轴转速" },
-                                    { IDLINE: "33", DES1: "料盘转速" }
-                                ];
-                            } else {
-                                return [
-                                    { IDLINE: "31", DES1: "Pressure" },
-                                    { IDLINE: "32", DES1: "RPM Spindle" },
-                                    { IDLINE: "33", DES1: "RPM Turntable" }
-                                ];
-                            }
-                        })()
-                    }
+                    id: "VAL_31",
+                    label: { text: "压力" },
+                    dataField: "VAL_31",
+                    editorType: "dxNumberBox",
+                    colSpan: 1
                 },
                 {
-                    id: "VAL_PAR",
-                    label: { text: "参数值" },
-                    dataField: "VAL_PAR",
+                    id: "VAL_32",
+                    label: { text: "主轴转速" },
+                    dataField: "VAL_32",
+                    editorType: "dxNumberBox",
+                    colSpan: 1
+                },
+                {
+                    id: "VAL_33",
+                    label: { text: "料盘转速" },
+                    dataField: "VAL_33",
                     editorType: "dxNumberBox",
                     colSpan: 1
                 },
@@ -130,7 +144,8 @@
                 par = "料盘转速";
             }
 
-            var tile = params.CODE_EQP + "设置参数-" + par;
+            //var tile = params.CODE_EQP + "设置参数-" + par;
+            var tile = params.CODE_EQP + "设置参数";
             viewModel.title(tile);
         }
         else {
@@ -144,11 +159,12 @@
                 par = "RPM Turntable";
             }
 
-            var tile = params.CODE_EQP + "Machine Data - " + par;
+            //var tile = params.CODE_EQP + "Machine Data - " + par;
+            var tile = params.CODE_EQP + "Machine Data";
             viewModel.title(tile);
 
-            form.itemOption("TYPE_OP", "label", { text: "Type" });
-            form.itemOption("VAL_PAR", "label", { text: "Value" });
+            //form.itemOption("TYPE_OP", "label", { text: "Type" });
+            //form.itemOption("VAL_PAR", "label", { text: "Value" });
         }
     }
 
@@ -164,8 +180,8 @@
                 group: "GDRAFT",
                 initdata: {
                     CODE_EQP: params.CODE_EQP,
-                    CODE_OP: params.CODE_OP,
-                    TYPE_OP: params.DEVPARAM
+                    CODE_OP: params.CODE_OP
+                    //TYPE_OP: params.DEVPARAM
                 }
             }
         }

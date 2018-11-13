@@ -59,10 +59,16 @@ var chsMsg = {
     woid: "工单号",
     gzwlh: "改制物料号",
     codeop: "工序",
+    coderop: "改制工序",
     jyjg: "检验结果",
     remark: "备注",
     codeloc: "库位",
-    qty:"数量"
+    qty: "数量",
+    cancel: "取消",
+    nddj: "浓度点检",
+    scz: "实测值",
+    min: "下限值",
+    max:"上限值"
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -113,10 +119,16 @@ var engMsg = {
     woid: "Work Order",
     gzwlh: "New Item Code",
     codeop: "OP",
+    coderop: "ROP",
     jyjg: "Type",
     remark: "Remark",
     codeloc: "Location",
-    qty:"Qty."
+    qty: "Qty.",
+    cancel: "Cancel",
+    nddj: "Coolant Concentration",
+    scz: "Actual Value",
+    min: "Min Value",
+    max: "Max Value"
 }
 
 

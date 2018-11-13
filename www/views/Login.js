@@ -1,6 +1,7 @@
 ﻿DMAPP.Login = function (params) {
 
     var viewModel = {
+        hideLayout: true,
         title: ko.observable(""),
         chn: ko.observable(""),
         deviceid: ko.observable(""),
@@ -15,9 +16,10 @@
                 $("#WebApiServerURL")[0].value = url;
             }
 
-            var divContent = $("#divContent").css("background-image", "url('" + url + "/images/bg.jpg');");
-
-            $("#logoImg").attr("src",url+"/logo.png");
+            var img = "url('" + url + "/images/bg.jpg?v=1')";
+            var divContent = $("#divContent").css("background-image", img).css("background-size","100% 100%");
+            
+            //$("#logoImg").attr("src",url+"/logo.png");
 
             var u = localStorage.getItem("username");
             if(u != null)
