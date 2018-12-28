@@ -1,13 +1,35 @@
-﻿DMAPP.M_DOC = function (params) {
+﻿DMAPP.M_DOC2 = function (params) {
     "use strict";
 
     var viewModel = {
         title: ko.observable(""),
+        keepCache: false,
         indicatorVisible: ko.observable(false),
         command: ko.observable(""),
-        parentMenu: ko.observable("M_DOC"),
-        viewShown: function () {
-            this.title(params.CODE_EQP);
+        parentMenu: ko.observable("M_DOC2"),
+        viewShown: function (e) {
+            this.title(SysMsg.itemdoc);
+            this.viewKey = e.viewInfo.key;
+
+            if (viewModel.keepCache == true) {
+                viewModel.keepCache = false;
+                var viewAction = sessionStorage.getItem("viewAction");
+                if (viewAction != null) {
+                    sessionStorage.removeItem("viewAction");
+                    if (viewAction == "refreshRow") {
+                        RefreshData(this);
+                    }
+
+                    if (viewAction == "dataWindow") {
+                        var param = JSON.parse(sessionStorage.getItem("dwParam"));
+                        switch (param.blockID) {
+                            case "BMAINBLOCK": UpdateDataWindow(this); break;
+                        }
+                    }
+                }
+                return;
+            }
+
             try {
                 GetWinbox(this, params);
             }
@@ -15,15 +37,43 @@
                 DevExpress.ui.notify("该单据未包含明细信息", "error", 1000);
             }
         },
+        formOption: {
+            colCount: 2,
+            items: [
+                {
+                    label: { text: "物料编号" },
+                    dataField: "CODE_ITEM",
+                    editorOptions: {
+                        onFocusIn: function (e) {
+                            OpenDataWindow(this, "CODE_ITEM", "BMAINBLOCK");
+                        }
+                    },
+                    dataWindow: true,
+                    colSpan: 1
+                },
+                {
+                    label: { text: "工序" },
+                    dataField: "CODE_CMMT",
+                    colSpan: 1
+                }
+            ],
+            onFieldDataChanged: function (e) {
+                if (this.keepCache == true) {
+                    MainValueChanged(viewModel, e);
+                }
+            }
+        },
         gridDOCOption: {
             dateSerializationFormat: "yyyy-MM-dd",
             keyExpr: "ID_DOC",
             columnAutoWidth: true,
             columns: [
-                       { dataField: "ID_DOC", caption: "ID", allowEditing: false, allowSorting: false,width:"75px" },
-                       { dataField: "CODE_OP", caption: "工序", allowEditing: false, allowSorting: false, width: "75px" },
+                 { dataField: "CODE_ITEM", caption: "物料号", allowEditing: false, allowSorting: false, width: "150px" },
+                 { dataField: "CODE_CMMT", caption: "工序", allowEditing: false, allowSorting: false, width: "60px" },
+                       { dataField: "ID_DOC", caption: "ID", allowEditing: false, allowSorting: false, width: "75px" },
+                       { dataField: "DESC_CMMT", caption: "信息内容", allowEditing: false, allowSorting: false, width: "150px" },
                        {
-                           dataField: "TYPE", caption: "类型", allowEditing: false, allowSorting: false,width:"75px",
+                           dataField: "TYPE", caption: "类型", allowEditing: false, allowSorting: false, width: "75px",
                            lookup: {
                                dataSource: [
                                    { IDLINE: "01", DES: "手册类" },
@@ -45,20 +95,38 @@
             onRowClick: function (e) {
                 OpenFile(e.data.ID_DOC);
             }
-        }
+        },
+        toolBarOption: {
+            items: [
+               { location: 'before', widget: 'button', name: 'find', options: { icon: 'find', text: '查找' } },
+            ],
+            onItemClick: function (e) {
+                BindData(this);
+            }
+        },
     };
 
     function GetWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetListWinbox?UserName=" + u + "&FUNCID=V_EMS_B_DOC@GADMIN";
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/NewDocSimple"
+        //var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetListWinbox?UserName=" + u + "&FUNCID=EMS_B_EQPOI@GREPORT";
+        var postData = {
+            userName: u,
+            func: "BD_B_ITEMOI",
+            group: "GADMIN"
+        }
 
         $.ajax({
-            type: 'GET',
+            type: 'POST',
+            data: postData,
             url: url,
             cache: false,
             success: function (data, textStatus) {
-                BindData(viewModel);
+                var form = $("#formMain").dxForm("instance");
+                form.option("formData", data[0].data[0]);
+                form.repaint();
+                viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);
@@ -71,7 +139,15 @@
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetListData2";
-        var filterString = "CODE_EQP='" + params.CODE_EQP+"'";
+        var form = $("#formMain").dxForm("instance");
+        var formData = form.option("formData");
+
+        var filterString = "CODE_ITEM='" + formData.CODE_ITEM + "'";
+        if (formData.CODE_CMMT != null && formData.CODE_CMMT != "") {
+            filterString = filterString + " and CODE_CMMT='" + formData.CODE_CMMT + "'";
+        }
+
+
         var postData = {
             user: u,
             page: 0,
@@ -96,6 +172,8 @@
                 });
 
                 grid.repaint();
+
+                GetWinbox(viewModel, params);
                 viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {

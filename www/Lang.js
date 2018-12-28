@@ -68,7 +68,10 @@ var chsMsg = {
     nddj: "浓度点检",
     scz: "实测值",
     min: "下限值",
-    max:"上限值"
+    max: "上限值",
+    fuzzysearch: "模糊查找",
+    itemdoc: "零件文档",
+    selectFields:"选择字段"
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -128,7 +131,10 @@ var engMsg = {
     nddj: "Coolant Concentration",
     scz: "Actual Value",
     min: "Min Value",
-    max: "Max Value"
+    max: "Max Value",
+    fuzzysearch: "Fuzzy Search",
+    itemdoc: "Item Documents",
+    selectFields:"Select Fields"
 }
 
 

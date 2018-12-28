@@ -90,7 +90,7 @@ $(function () {
        
     //});
 
-    DMAPP.app.router.register(":view/:id", { view: "Login", id: undefined });
+    DMAPP.app.router.register(":view/:id", { view: "Login", id: appVer });
     DMAPP.app.on("navigatingBack", onNavigatingBack);
     DMAPP.app.navigate();
 

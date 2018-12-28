@@ -1,5 +1,8 @@
 // NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
+var keepPopUserInfo = true;
+var appVer = "1.9.2";
+var dbProfile = "IRCZ";
 
 window.DMAPP = $.extend(true, window.DMAPP, {
     "config": {
@@ -33,6 +36,10 @@ window.DMAPP = $.extend(true, window.DMAPP, {
                         id: 'cmdHome',
                         title: "",
                         icon: "home"
+                    },
+                    {
+                        id: 'cmdFieldSelect',
+                        title: "选择字段"
                     }
                 ]
             }

@@ -18,7 +18,13 @@
                     "</div><div class=\"BKImage\" style=\"background-image: url('" + url + "/images/JGBR/" + itemData.text + ".jpg')\"></div>");
             },
             onItemClick: function (e) {
-                BarItemClick(e);
+                if (e.itemData.name == "BTNFIN" || e.itemData.name == "BTNDSUP") {
+                    viewModel.popArgu(e);
+                    viewModel.popUserVisible(true);                   
+                }
+                else {
+                    BarItemClick(e);
+                }
             }
         },
         detailBarOption: {
@@ -60,6 +66,62 @@
         },
         winbox: {},
         keepCache: false,
+        popUserVisible: ko.observable(false),
+        popArgu: ko.observable({}),
+        onPopCancelClick: function (e) {
+            this.popUserVisible(false);
+        },
+        onPopOKClick: function (e) {
+            var u = sessionStorage.getItem("username");
+            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+            var argu = this.popArgu();
+            var popUser = $("#txtPopUser").dxTextBox("instance").option("value");
+            var popPwd = $("#txtPopPwd").dxTextBox("instance").option("value");
+            var popParam = popUser + ";" + popPwd + ";" + argu.itemData.name;
+            var postData = {
+                userName: u,
+                methodName: "EMS.EMS.CheckValid",
+                param: popParam
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: postData,
+                url: url,
+                async: false,
+                cache: false,
+                success: function (data, textStatus) {
+                    viewModel.popUserVisible(false);
+                    BarItemClick(argu);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    viewModel.indicatorVisible(false);
+                    if (xmlHttpRequest.responseText == "NO SESSION") {
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                    else {
+                        DevExpress.ui.notify("无法读取数据", "error", 1000);
+                    }
+                }
+            });
+        },
+        popUserShown: function (e) {
+            var popUser = $("#txtPopUser").dxTextBox("instance");
+            var popPwd = $("#txtPopPwd").dxTextBox("instance");
+            if (keepPopUserInfo == false) {
+                
+                popUser.option("value", "");
+                popPwd.option("value", "");
+            }
+            else {
+                var u = sessionStorage.getItem("username");
+                if (u.toUpperCase() == "ADMIN") {
+                    var p = localStorage.getItem("password");
+                    popUser.option("value", u);
+                    popPwd.option("value", p);
+                }
+            }
+        },
         viewShown: function (e) {
             this.viewKey = e.viewInfo.key;
             viewModel.title(params.ID_EMP);
@@ -163,9 +225,9 @@
                { dataField: "MODEL_ITEM", caption: "型号", allowEditing: false, allowSorting: false, width: 100 },
                { dataField: "QTY_REQ", caption: "需求数量", allowEditing: true, allowSorting: false, width: 100 },
                { dataField: "QTY_ISS", caption: "实发数量", allowEditing: false, allowSorting: false, width: 100 },              
-               { dataField: "QTY_SP", caption: "自备数量", allowEditing: false, allowSorting: false, width: 100 },
+               //{ dataField: "QTY_SP", caption: "自备数量", allowEditing: false, allowSorting: false, width: 100 },
                { dataField: "CODE_LOC", caption: "货架", allowEditing: true, allowSorting: false, width: 100 },
-               { dataField: "F_WH", caption: "仓库申领", allowEditing: true, allowSorting: false, width: 100, dataType: "boolean" }
+               //{ dataField: "F_WH", caption: "仓库申领", allowEditing: true, allowSorting: false, width: 100, dataType: "boolean" }
                //{ dataField: "REMARK", caption: "备注", allowEditing: true, allowSorting: false, width: 100 },
             ],
             editing: {
@@ -208,7 +270,8 @@
             columnAutoWidth: true,
             columns: [
                 { dataField: "LINE_ROEP", caption: "行号", allowEditing: false, allowSorting: false, width: 50 },
-                { dataField: "DRL_ROEP", caption: "辅修人", allowEditing: true, allowSorting: false, width: 100, dataWindow: true }
+                //{ dataField: "DRL_ROEP", caption: "辅修人", allowEditing: true, allowSorting: false, width: 100, dataWindow: true },
+                { dataField: "DRL_NAME", caption: "辅修人", allowEditing: true, allowSorting: false, width: 100, dataWindow: true }
             ],
             editing: {
                 allowUpdating: true,
@@ -251,61 +314,67 @@
         var formItems;
         var toolItems;
 
+
         if (params.DEVPARAM == "START") {
+            var optionFP = {
+                displayExpr: "DES1",
+                valueExpr: "IDLINE",
+                dataSource: [
+                    { IDLINE: "01", DES1: "尺寸超差" },
+                    { IDLINE: "02", DES1: "光洁度超差" },
+                    { IDLINE: "03", DES1: "操作面板异常" },
+                    { IDLINE: "04", DES1: "主轴异常" },
+                    { IDLINE: "05", DES1: "驱动轴X异常" },
+                    { IDLINE: "06", DES1: "驱动轴Y异常" },
+                    { IDLINE: "07", DES1: "驱动轴Z异常" },
+                    { IDLINE: "08", DES1: "刀仓、换刀臂异常" },
+                    { IDLINE: "09", DES1: "交换台异常" },
+                    { IDLINE: "10", DES1: "电控系统异常" },
+                    { IDLINE: "11", DES1: "分度台异常" },
+                    { IDLINE: "12", DES1: "液压站异常" },
+                    { IDLINE: "13", DES1: "集中润滑系统异常" },
+                    { IDLINE: "14", DES1: "主轴油冷却系统异常" },
+                    { IDLINE: "15", DES1: "排屑机异常" },
+                    { IDLINE: "16", DES1: "切削液系统异常" },
+                    { IDLINE: "17", DES1: "漏油" },
+                    { IDLINE: "18", DES1: "漏液" }
+                ]
+            };
+
             formItems = [
                 {
                     label: { text: "故障现象1" },
-                    dataField: "DESC_FP",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {
                     label: { text: "故障现象2" },
-                    dataField: "DESC_FP2",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP2", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP2",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {
                     label: { text: "故障现象3" },
-                    dataField: "DESC_FP3",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP3", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP3",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {
                     label: { text: "故障现象4" },
-                    dataField: "DESC_FP4",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP4", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP4",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {
                     label: { text: "故障现象5" },
-                    dataField: "DESC_FP5",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP5", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP5",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {
@@ -453,21 +522,32 @@
                 },
                 {
                     label: { text: "维修动作" },
-                    dataField: "DESC_MA",
+                    dataField: "CODE_MA",
+                    editorType: "dxLookup",
                     editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_MA", "BMAINBLOCK");
-                        }
+                        displayExpr: "DES1",
+                        valueExpr: "IDLINE",
+                        dataSource: [
+                            { IDLINE: "01", DES1: "维修" },
+                            { IDLINE: "02", DES1: "更换"},
+                            { IDLINE: "03", DES1: "调整" }
+                        ]
                     },
                     colSpan: 1
                 },
                 {
                     label: { text: "维修结论" },
-                    dataField: "DESC_MC",
+                    dataField: "CODE_MC",
+                    editorType: "dxLookup",
                     editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_MC", "BMAINBLOCK");
-                        }
+                        displayExpr: "DES1",
+                        valueExpr: "IDLINE",
+                        dataSource: [
+                            { IDLINE: "01", DES1: "修复、恢复生产" },
+                            { IDLINE: "02", DES1: "修复、待调机" },
+                            { IDLINE: "03", DES1: "未修复、等待备件" },
+                            { IDLINE: "04", DES1: "未修复、原因不明" }
+                        ]
                     },
                     colSpan: 2
                 },
@@ -604,7 +684,34 @@
 
             ValidChange();
             setTimeout(function () {
-                ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+                if (e.itemData.name == "BTNFIN") {
+                    var form = $("#formMain").dxForm("instance");
+                    var formData = form.option("formData");
+                    if (formData.CODE_MA == null || formData.CODE_MC == null || formData.CODE_MA == "" || formData.CODE_MC == "") {
+                        DevExpress.ui.notify("必须填写维修动作和维修结论", "error", 2000);
+                        return;
+                    }
+
+                    ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+                    //var closeDialog = DevExpress.ui.dialog.custom({
+                    //    title: SysMsg.info,
+                    //    message: "您是否确认维修完成？",
+                    //    buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
+                    //});
+
+                    //closeDialog.show().done(function (dialogResult) {
+                    //    if (dialogResult == true) {
+                    //        ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+                    //    }
+                    //    else {
+                    //        return;
+                    //    }
+                    //});
+                }
+                else {
+                    ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+                }
+                
             }, 200);
             
         }

@@ -9,7 +9,7 @@
         <div style="overflow:hidden;">
             <div id="gridEMP" data-bind="dxDataGrid: gridEMPOption"></div>
         </div>
-        <div id="popUser" data-bind="dxPopup: { title: '身份验证', showTitle: true, visible:popUserVisible,height:250}">
+        <div id="popUser" data-bind="dxPopup: { title: '身份验证', showTitle: true, visible:popUserVisible,height:250,onShown:popUserShown}">
             <div>
                 <table width="100%">
                     <tr>

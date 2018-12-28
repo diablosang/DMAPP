@@ -20,21 +20,22 @@
             var divContent = $("#divContent").css("background-image", img).css("background-size","100% 100%");
             
             //$("#logoImg").attr("src",url+"/logo.png");
-
-            var u = localStorage.getItem("username");
-            if(u != null)
-            {
-                var p = localStorage.getItem("password");
-                this.username(u);
-                this.password(p);
+            if (keepPopUserInfo == true) {
+                var u = localStorage.getItem("username");
+                if (u != null) {
+                    var p = localStorage.getItem("password");
+                    this.username(u);
+                    this.password(p);
+                }
             }
 
             if (viewModel.versionChecked() == false) {
                 try {
-                    cordova.getAppVersion.getVersionNumber().then(function (version) {
-                        $("#appver").text("Version: "+version);
-                        CheckUpdate();
-                    });
+                    $("#appver").text(appVer);
+                    //cordova.getAppVersion.getVersionNumber().then(function (version) {
+                    //    $("#appver").text("Version: "+appVer);
+                    //    CheckUpdate();
+                    //});
                 }
                 catch (e) { }
                 

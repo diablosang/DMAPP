@@ -64,16 +64,22 @@
         try {
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
+            //var custsql = "select * from V_MFG_B_LINE where isnull(POS_X,0)>0 order by POS_X,POS_Y";
+            //if (dbProfile == "IRCZ") {
+            //    custsql = "select * from V_MFG_B_LINE where isnull(POS_X,0)>0 and (CODE_WS IN (SELECT CODE_WS FROM MFG_B_WSUSR WHERE USERID = '" + u + "') or TYPE<>'01') order by POS_X,POS_Y";
+            //}
+
+            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
             var postData = {
                 userName: u,
-                sql: "select * from V_MFG_B_LINE where isnull(POS_X,0)>0 order by POS_X,POS_Y"
-            };
+                methodName: "EMS.Common.GetWorkShop",
+                param: ""
+            }
 
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetData";
             $.ajax({
                 type: 'POST',
-                url: url,
                 data: postData,
+                url: url,
                 cache: false,
                 success: function (data, textStatus) {
                     var r = 0;
@@ -109,7 +115,7 @@
                         td.attr('CODE_EQP', d.CODE_EQP);
                         td.attr('align', 'center');
                         td.attr('valign', 'middle');
-                        td.attr('onclick', "OpenWorkShop('" + d.CODE_LINE + "','"+d.DESC_LINE+"','"+d.TYPE+"');");
+                        td.attr('onclick', "OpenWorkShop('" + d.CODE_LINE + "','" + d.DESC_LINE + "','" + d.TYPE + "');");
                         if (d.TYPE == "01" || d.TYPE == null) {
                             td.css("background-color", "rgb(51, 232, 37)");
                         }
@@ -138,6 +144,26 @@
                     ServerError(xmlHttpRequest.responseText);
                 }
             });
+
+
+            //var postData = {
+            //    userName: u,
+            //    sql: custsql
+            //};
+
+            //var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetData";
+            //$.ajax({
+            //    type: 'POST',
+            //    url: url,
+            //    data: postData,
+            //    cache: false,
+            //    success: function (data, textStatus) {
+
+            //    },
+            //    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    
+            //    }
+            //});
         }
         catch (e) {
             DevExpress.ui.notify(e.message, "error", 1000);
@@ -211,6 +237,10 @@ function OpenWorkShop(CODE_LINE, DESC_LINE, TYPE) {
     }
     else if (TYPE == "03") {
         var view = "TRFEdit";
+        DMAPP.app.navigate(view);
+    }
+    else if(TYPE=="04" ){
+        var view = "M_DOC2";
         DMAPP.app.navigate(view);
     }
 }

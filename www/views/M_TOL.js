@@ -67,7 +67,7 @@
             },
             onItemClick: function (e) {
                 viewModel.popArgu(e);
-                this.popUserVisible(true);
+                viewModel.popUserVisible(true);
                 //if (e.itemData.DEVOBJ == "EMS_T_TOAP") {
                 //    switch (e.itemData.DEVPARAM) {
                 //        case "NEW": NEW(); break;
@@ -119,6 +119,23 @@
                     }
                 }
             });
+        },
+        popUserShown: function (e) {
+            var popUser = $("#txtPopUser").dxTextBox("instance");
+            var popPwd = $("#txtPopPwd").dxTextBox("instance");
+            if (keepPopUserInfo == false) {
+                
+                popUser.option("value", "");
+                popPwd.option("value", "");
+            }
+            else {
+                var u = sessionStorage.getItem("username");
+                if (u.toUpperCase() == "ADMIN") {
+                    var p = localStorage.getItem("password");
+                    popUser.option("value", u);
+                    popPwd.option("value", p);
+                }
+            }
         }
     };
 

@@ -4,7 +4,7 @@
         searchInited: false,
         winbox:{},
         viewShown: function () {
-            BindData();
+            BindData("");
         },
         viewHidden: function (e) {
             var cache = DMAPP.app.viewCache;
@@ -13,7 +13,21 @@
         },
         toolBarOption:{
             items: [
-               { location: 'before', widget: 'button', name: 'find', options: { icon: 'find', text: '' } }
+               { location: 'before', widget: 'button', name: 'find', options: { icon: 'find', text: '精确查找' } },
+               {
+                   widget: 'dxTextBox',
+                   options: {
+                       search: 'search',
+                       placeholder: SysMsg.fuzzysearch,
+                       width: "300px",
+                       onValueChanged: function (e) {
+                           BindData("@FUZZY."+e.value);
+                       },
+
+                   },
+                   
+                   location: 'before'
+               }
             ],
             onItemClick: function (e) {
                 switch (e.itemData.name){

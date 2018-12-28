@@ -72,7 +72,7 @@
             },
             onItemClick: function (e) {
                 viewModel.popArgu(e);
-                this.popUserVisible(true);
+                viewModel.popUserVisible(true);
                 //if (e.itemData.DEVOBJ == "EMS_T_EMP") {
                 //    switch (e.itemData.DEVPARAM) {
                 //        case "PM": PM(); break;
@@ -106,8 +106,8 @@
                 cache: false,
                 success: function (data, textStatus) {
                     viewModel.popUserVisible(false);
-                    if (e.itemData.DEVOBJ == "EMS_T_EMP") {
-                        switch (e.itemData.DEVPARAM) {
+                    if (argu.itemData.DEVOBJ == "EMS_T_EMP") {
+                        switch (argu.itemData.DEVPARAM) {
                             case "PM": PM(); break;
                             case "CONF": CONF(); break;
                             case "ECOF": ECOF(); break;
@@ -124,6 +124,22 @@
                     }
                 }
             });
+        },
+        popUserShown: function (e) {
+            var popUser = $("#txtPopUser").dxTextBox("instance");
+            var popPwd = $("#txtPopPwd").dxTextBox("instance");
+            if (keepPopUserInfo == false) {
+                popUser.option("value", "");
+                popPwd.option("value", "");
+            }
+            else {
+                var u = sessionStorage.getItem("username");
+                if (u.toUpperCase() == "ADMIN") {
+                    var p = localStorage.getItem("password");
+                    popUser.option("value", u);
+                    popPwd.option("value", p);
+                }
+            }
         }
     };
 

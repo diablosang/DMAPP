@@ -76,8 +76,21 @@
                     "</div><div class=\"BKImage\" style=\"background-image: url('" + url + "/images/JGBR/" + itemData.CODE_MENU + ".jpg')\"></div>");
             },
             onItemClick: function (e) {
-                viewModel.popArgu(e);
-                this.popUserVisible(true);
+                if (e.itemData.DEVPARAM == "REPAIR") {
+                    var grid = $("#gridREP").dxDataGrid("instance");
+                    var data = grid.option("dataSource");
+                    if (data[0].MR_ROE == null || data[0].MR_ROE == "") {
+                        viewModel.popArgu(e);
+                        viewModel.popUserVisible(true);
+                    }
+                    else {
+                        REPAIR();
+                    }
+                }
+                else {
+                    viewModel.popArgu(e);
+                    viewModel.popUserVisible(true);
+                }
             }
         },
         onPopCancelClick: function (e) {
@@ -123,6 +136,23 @@
                     }
                 }
             });
+        },
+        popUserShown: function (e) {
+            var popUser = $("#txtPopUser").dxTextBox("instance");
+            var popPwd = $("#txtPopPwd").dxTextBox("instance");
+            if (keepPopUserInfo == false) {
+                
+                popUser.option("value", "");
+                popPwd.option("value", "");
+            }
+            else {
+                var u = sessionStorage.getItem("username");
+                if (u.toUpperCase() == "ADMIN") {
+                    var p = localStorage.getItem("password");
+                    popUser.option("value", u);
+                    popPwd.option("value", p);
+                }
+            }
         }
     };
 
