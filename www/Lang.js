@@ -71,7 +71,11 @@ var chsMsg = {
     max: "上限值",
     fuzzysearch: "模糊查找",
     itemdoc: "零件文档",
-    selectFields:"选择字段"
+    selectFields: "选择字段",
+    ws_1: "质检",
+    ws_2: "转移",
+    ws_3: "文档",
+    ws_4: "报表"
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -134,7 +138,11 @@ var engMsg = {
     max: "Max Value",
     fuzzysearch: "Fuzzy Search",
     itemdoc: "Item Documents",
-    selectFields:"Select Fields"
+    selectFields: "Select Fields",
+    ws_1: "QC",
+    ws_2: "Transfer",
+    ws_3: "Documents",
+    ws_4: "Report"
 }
 
 

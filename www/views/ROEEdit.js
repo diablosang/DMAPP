@@ -175,10 +175,13 @@
             columnAutoWidth: true,
             columns: [
                 { dataField: "LINE_FLOC", caption: "行号", allowEditing: false, allowSorting: false, width: 50 },
-                { dataField: "DESC_FLOCP1", caption: "故障部位1", allowEditing: true, allowSorting: false, width: 200, dataWindow: true },
-                { dataField: "DESC_FLOCP2", caption: "故障部位2", allowEditing: true, allowSorting: false, width: 200, dataWindow: true },
-                { dataField: "DESC_FLOC", caption: "故障部位3", allowEditing: true, allowSorting: false, width: 200, dataWindow: true },
-                { dataField: "AN_ROE", caption: "报警号", allowEditing: true, allowSorting: false, width: 100 },
+                { dataField: "DESC_FLOCP1", caption: "故障部位1", allowEditing: true, allowSorting: false, width: 110, dataWindow: true },
+                { dataField: "DESC_FLOCP2", caption: "故障部位2", allowEditing: true, allowSorting: false, width: 110, dataWindow: true },
+                { dataField: "DESC_FLOC", caption: "故障部位3", allowEditing: true, allowSorting: false, width: 110, dataWindow: true },
+                { dataField: "AN_ROE", caption: "报警号1", allowEditing: true, allowSorting: false, width: 100 },
+                { dataField: "AN_ROE2", caption: "报警号2", allowEditing: true, allowSorting: false, width: 100 },
+                { dataField: "AN_ROE3", caption: "报警号3", allowEditing: true, allowSorting: false, width: 100 },
+                { dataField: "SERVO", caption: "伺服代码", allowEditing: true, allowSorting: false, width: 100 },
             ],
             editing: {
                 allowUpdating: true,
@@ -313,33 +316,33 @@
     function InitView(viewModel, params) {
         var formItems;
         var toolItems;
-
+        var optionFP = {
+            displayExpr: "DES1",
+            valueExpr: "IDLINE",
+            dataSource: [
+                { IDLINE: "01", DES1: "尺寸超差" },
+                { IDLINE: "02", DES1: "光洁度超差" },
+                { IDLINE: "03", DES1: "操作面板异常" },
+                { IDLINE: "04", DES1: "主轴异常" },
+                { IDLINE: "05", DES1: "驱动轴X异常" },
+                { IDLINE: "06", DES1: "驱动轴Y异常" },
+                { IDLINE: "07", DES1: "驱动轴Z异常" },
+                { IDLINE: "08", DES1: "刀仓、换刀臂异常" },
+                { IDLINE: "09", DES1: "交换台异常" },
+                { IDLINE: "10", DES1: "电控系统异常" },
+                { IDLINE: "11", DES1: "分度台异常" },
+                { IDLINE: "12", DES1: "液压站异常" },
+                { IDLINE: "13", DES1: "集中润滑系统异常" },
+                { IDLINE: "14", DES1: "主轴油冷却系统异常" },
+                { IDLINE: "15", DES1: "排屑机异常" },
+                { IDLINE: "16", DES1: "切削液系统异常" },
+                { IDLINE: "17", DES1: "漏油" },
+                { IDLINE: "18", DES1: "漏液" }
+            ]
+        };
 
         if (params.DEVPARAM == "START") {
-            var optionFP = {
-                displayExpr: "DES1",
-                valueExpr: "IDLINE",
-                dataSource: [
-                    { IDLINE: "01", DES1: "尺寸超差" },
-                    { IDLINE: "02", DES1: "光洁度超差" },
-                    { IDLINE: "03", DES1: "操作面板异常" },
-                    { IDLINE: "04", DES1: "主轴异常" },
-                    { IDLINE: "05", DES1: "驱动轴X异常" },
-                    { IDLINE: "06", DES1: "驱动轴Y异常" },
-                    { IDLINE: "07", DES1: "驱动轴Z异常" },
-                    { IDLINE: "08", DES1: "刀仓、换刀臂异常" },
-                    { IDLINE: "09", DES1: "交换台异常" },
-                    { IDLINE: "10", DES1: "电控系统异常" },
-                    { IDLINE: "11", DES1: "分度台异常" },
-                    { IDLINE: "12", DES1: "液压站异常" },
-                    { IDLINE: "13", DES1: "集中润滑系统异常" },
-                    { IDLINE: "14", DES1: "主轴油冷却系统异常" },
-                    { IDLINE: "15", DES1: "排屑机异常" },
-                    { IDLINE: "16", DES1: "切削液系统异常" },
-                    { IDLINE: "17", DES1: "漏油" },
-                    { IDLINE: "18", DES1: "漏液" }
-                ]
-            };
+            
 
             formItems = [
                 {
@@ -418,57 +421,37 @@
                 },
                 {
                     label: { text: "故障现象1" },
-                    dataField: "DESC_FP",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {
                     label: { text: "故障现象2" },
-                    dataField: "DESC_FP2",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP2", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP2",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {
                     label: { text: "故障现象3" },
-                    dataField: "DESC_FP3",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP3", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP3",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {
                     label: { text: "故障现象4" },
-                    dataField: "DESC_FP4",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP4", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP4",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {
                     label: { text: "故障现象5" },
-                    dataField: "DESC_FP5",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "DESC_FP5", "BMAINBLOCK");
-                        }
-                    },
-                    dataWindow: true,
+                    dataField: "CODE_FP5",
+                    editorType: "dxLookup",
+                    editorOptions: optionFP,
                     colSpan: 3
                 },
                 {

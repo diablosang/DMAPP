@@ -57,6 +57,14 @@
         },
         buttonGoClick: function (e) {
             OpenDevice(viewModel);
+        },
+        buttonFuncClick: function (e) {
+            var view = e.component.option("view");
+            if (view != "")
+            {
+                DMAPP.app.navigate(view);
+            }
+            
         }
     };
 
@@ -64,11 +72,6 @@
         try {
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
-            //var custsql = "select * from V_MFG_B_LINE where isnull(POS_X,0)>0 order by POS_X,POS_Y";
-            //if (dbProfile == "IRCZ") {
-            //    custsql = "select * from V_MFG_B_LINE where isnull(POS_X,0)>0 and (CODE_WS IN (SELECT CODE_WS FROM MFG_B_WSUSR WHERE USERID = '" + u + "') or TYPE<>'01') order by POS_X,POS_Y";
-            //}
-
             var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
             var postData = {
                 userName: u,
@@ -144,26 +147,6 @@
                     ServerError(xmlHttpRequest.responseText);
                 }
             });
-
-
-            //var postData = {
-            //    userName: u,
-            //    sql: custsql
-            //};
-
-            //var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetData";
-            //$.ajax({
-            //    type: 'POST',
-            //    url: url,
-            //    data: postData,
-            //    cache: false,
-            //    success: function (data, textStatus) {
-
-            //    },
-            //    error: function (xmlHttpRequest, textStatus, errorThrown) {
-                    
-            //    }
-            //});
         }
         catch (e) {
             DevExpress.ui.notify(e.message, "error", 1000);

@@ -1,31 +1,46 @@
-<div data-options="dxView : { name: 'WorkShop2', title: '车间' } " >
+<div data-options="dxView : { name: 'WorkShop2', title: '车间' } ">
     <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
-      <div style="height:20px;margin-top:10px">
-        <table style="font-size:larger;font-weight:bold;">
-          <tr>
-            <td id="td1" width="75px" align="center">图示:</td>
-            <td id="td2" width="100px" align="center" style="background-color:rgb(51, 232, 37)">设备</td>
-            <td id="td3" width="100px" align="center" style="background-color:yellow">质检</td>
-            <td id="td4" width="100px" align="center" style="background-color:rgb(238, 121, 89)">转移</td>
-            <td id="td5" width="100px" align="center" style="background-color:red">其它</td>
-            <td width="10px"></td>
-            <td>
-              <div id="txtCODE_EQP" data-bind="dxTextBox: {placeholder:SysMsg.inputEQP}"></div>
-            </td>
-            <td width="100px">
-              <div data-bind="dxButton: { text: 'GO',onClick:buttonGoClick }"></div>
-            </td>
-            <td width="100px" align="center">
-              <div id="btnLogoff" class="Login_Btn" data-bind="dxButton: { text: SysMsg.logoff, onClick:onLogoffClick}"></div>
-            </td>
-          </tr>
-        </table>
-      </div>
+        <div style="height:20px;margin-top:10px">
+            <table style="font-size:larger;font-weight:bold;">
+                <tr>
+                    <td width="10px">
+                        &nbsp;
+                    </td>
+                    <td width="75px">
+                        <div data-bind="dxButton: { text: SysMsg.ws_1,view:'EQCMenu',onClick:buttonFuncClick }"></div>
+                    </td>
+                    <td width="75px">
+                        <div data-bind="dxButton: { text: SysMsg.ws_2,view:'TRFEdit',onClick:buttonFuncClick }"></div>
+                    </td>
+                    <td width="75px">
+                        <div data-bind="dxButton: { text: SysMsg.ws_3,view:'M_DOC2',onClick:buttonFuncClick }"></div>
+                    </td>
+                    <td width="75px">
+                        <div data-bind="dxButton: { text:SysMsg.ws_4,view:'',onClick:buttonFuncClick }"></div>
+                    </td>
+                    <!--<td id="td1" width="75px" align="center">图示:</td>
+                    <td id="td2" width="100px" align="center" style="background-color:rgb(51, 232, 37)">设备</td>
+                    <td id="td3" width="100px" align="center" style="background-color:yellow">质检</td>
+                    <td id="td4" width="100px" align="center" style="background-color:rgb(238, 121, 89)">转移</td>
+                    <td id="td5" width="100px" align="center" style="background-color:red">其它</td>-->
+                    <td width="10px"></td>
+                    <td>
+                        <div id="txtCODE_EQP" data-bind="dxTextBox: {placeholder:SysMsg.inputEQP}"></div>
+                    </td>
+                    <td width="100px">
+                        <div data-bind="dxButton: { text: 'GO',onClick:buttonGoClick }"></div>
+                    </td>
+                    <td width="100px" align="center">
+                        <div id="btnLogoff" class="Login_Btn" data-bind="dxButton: { text: SysMsg.logoff, onClick:onLogoffClick}"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <div data-bind="dxScrollView: {useNative:false,showScrollbar:'never' }" class="ItemList-ScrollView2">
             <table id="tbWorkShop" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>
         </div>
-      <!--<div style="position:absolute;top:50px;bottom:0;overflow-y:auto;height:auto;width:100%">
-        <table id="tbWorkShop" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>
-      </div>-->
+        <!--<div style="position:absolute;top:50px;bottom:0;overflow-y:auto;height:auto;width:100%">
+          <table id="tbWorkShop" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>
+        </div>-->
     </div>
 </div>
