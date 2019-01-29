@@ -75,7 +75,8 @@ var chsMsg = {
     ws_1: "质检",
     ws_2: "转移",
     ws_3: "文档",
-    ws_4: "报表"
+    ws_4: "报表",
+    codert:"改制工艺"
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -142,7 +143,8 @@ var engMsg = {
     ws_1: "QC",
     ws_2: "Transfer",
     ws_3: "Documents",
-    ws_4: "Report"
+    ws_4: "Report",
+    codert: "New Routing"
 }
 
 

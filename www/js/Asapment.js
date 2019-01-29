@@ -244,19 +244,26 @@ function GridRowDelete(viewModel, gridName, e) {
         rowIndex: rowIndex
     }
 
+    var result;
+
     $.ajax({
         type: 'POST',
         url: url,
+        async: false,
         data: postData,
         cache: false,
         success: function (data, textStatus) {
             loadIndicator.option("visible", false);
+            result= true;
         },
         error: function (xmlHttpRequest, textStatus, errorThrown) {
             loadIndicator.option("visible", false);
             ServerError(xmlHttpRequest.responseText);
+            result= false;
         }
     });
+
+    return result;
 }
 
 

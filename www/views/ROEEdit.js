@@ -264,7 +264,9 @@
                 GridRowInsert(this, "gridITEM", e)
             },
             onRowRemoving: function (e) {
-                GridRowDelete(this, "gridITEM", e)
+                if (GridRowDelete(this, "gridITEM", e) == false) {
+                    e.cancel = true;
+                }
             }
         },
         gridROEPOption: {

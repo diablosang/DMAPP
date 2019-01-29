@@ -117,7 +117,13 @@
                 {
                     label: { text: SysMsg.gzwlh },
                     dataField: "CODE_RITEM",
-                    colSpan: 3
+                    colSpan: 3,
+                    dataWindow:true,
+                    editorOptions: {
+                        onFocusIn: function (e) {
+                            OpenDataWindow(this, "CODE_RITEM", "BMAINBLOCK");
+                        }
+                    }
                 },
                 {
                     label: { text: SysMsg.coderop },
@@ -125,6 +131,16 @@
                     editorOptions: {
                         onFocusIn: function (e) {
                             OpenDataWindow(this, "CODE_ROP", "BMAINBLOCK");
+                        }
+                    },
+                    colSpan: 3
+                },
+                {
+                    label: { text: SysMsg.codert },
+                    dataField: "CODE_RT",
+                    editorOptions: {
+                        onFocusIn: function (e) {
+                            OpenDataWindow(this, "CODE_RT", "BMAINBLOCK");
                         }
                     },
                     colSpan: 3
@@ -148,11 +164,13 @@
         if (params.TYPE == "CG") {
             form.itemOption("CODE_RITEM", "visible", true);
             form.itemOption("CODE_ROP", "visible", true);
+            form.itemOption("CODE_RT", "visible", true);
             form.itemOption("CODE_OP", "editorOptions", {readOnly:true});
         }
         else {
             form.itemOption("CODE_RITEM", "visible", false);
             form.itemOption("CODE_ROP", "visible", false);
+            form.itemOption("CODE_RT", "visible", false);
         }
         GetWinbox(viewModel, params);
     }
