@@ -30,12 +30,7 @@
             ]
         },
         viewShown: function (e) {
-            if (DeviceLang() == "CHS") {
-                this.title("设备报修 " + params.CODE_EQP);
-            }
-            else {
-                this.title("Repair Application " + params.CODE_EQP);
-            }
+            this.title(params.CODE_EQP);
         }
     };
 
@@ -47,9 +42,11 @@
         var formData = formMain.option("formData");
         var remark = formData.REMARK.replace(";","@SE@");
 
+        var method = params.DEVPARAM;
+
         var postData = {
             userName: u,
-            methodName: "EMS.EMS_REP.Start",
+            methodName: "EMS.EMS_REP." + method,
             param: params.CODE_EQP + ";" + remark
         }
 

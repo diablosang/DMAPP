@@ -7,7 +7,7 @@
         indicatorVisible: ko.observable(false),
         toolBarOption: {
             items: [
-                 { location: 'before', widget: 'button', name: 'A31', options: { text: '提交' } },
+                { location: 'before', widget: 'button', name: 'A31', options: { text: '提交' } },
             ],
             onItemClick: function (e) {
                 BarItemClick(e);
@@ -16,39 +16,11 @@
         winbox: {},
         keepCache: false,
         viewShown: function (e) {
-            var tile = params.CODE_EQP + "辅料" + (params.DEVPARAM == "1" ? "添加" : "更换");
+            var tile = params.CODE_EQP + "辅料" + (params.DEVPARAM == "PRO_MAT1" ? "添加" : "更换");
             viewModel.title(tile);
 
-
-            this.viewKey = e.viewInfo.key;
-            if (viewModel.keepCache == true) {
-                viewModel.keepCache = false;
-                var viewAction = sessionStorage.getItem("viewAction");
-                if (viewAction != null) {
-                    sessionStorage.removeItem("viewAction");
-                    if (viewAction == "refreshRow") {
-                        RefreshData(this);
-                    }
-
-                    if (viewAction == "dataWindow") {
-                        var param = JSON.parse(sessionStorage.getItem("dwParam"));
-                        if (param.blockID == "BMAINBLOCK") {
-                            UpdateDataWindow(this);
-                        }
-                        else {
-                            UpdateGridDataWindow(this, "gridDetail");
-                        }
-                    }
-                }
-                return;
-            }
-
-            try {
-                GetWinbox(this, params);
-            }
-            catch (e) {
-                DevExpress.ui.notify("该单据未包含明细信息", "error", 1000);
-            }
+            var form = $("#formMain").dxForm("instance");
+            form.option("formData", { REMARK: "", OTHER: ""});
         },
         viewHidden: function (e) {
             if (viewModel.keepCache == false) {
@@ -57,44 +29,21 @@
             }
         },
         formOption: {
+            formData: {
+                REMARK: "",OTHER:""
+            },
             items: [
                 {
-                    label: { text: "类别" },
-                    dataField:"TYPE_MAT",
-                    editorType: "dxLookup",
-                    editorOptions: {
-                        readOnly: true,
-                        displayExpr: "DES1",
-                        valueExpr: "IDLINE",
-                        dataSource: [
-                            { IDLINE: "1", DES1: "添加" },
-                            { IDLINE: "2", DES1: "更换" }
-                        ]
-                    }
-                },
-                {
-                    label: { text: "序列号" },
-                    dataField: "CODE_SEQ",
-                    editorOptions: {
-                        onFocusIn: function (e) {
-                            OpenDataWindow(this, "CODE_SEQ", "BMAINBLOCK");
-                        }
-                    },                    
-                    dataWindow: true,
+                    label: { text: SysMsg.remark },
+                    dataField: "REMARK",
                     colSpan: 1
                 },
                 {
-                    label: { text: "数量" },
-                    dataField: "QTY",
-                    editorType:"dxNumberBox",
+                    label: { text: SysMsg.other },
+                    dataField: "OTHER",
                     colSpan: 1
-                },
-            ],
-            onFieldDataChanged: function (e) {
-                if (this.keepCache == true) {
-                    MainValueChanged(viewModel, e);
                 }
-            }
+            ]
         },
         tileBarOption: {
             items: [
@@ -128,7 +77,7 @@
                 group: "GDRAFT",
                 initdata: {
                     CODE_EQP: params.CODE_EQP,
-                    CODE_OP:params.CODE_OP,
+                    CODE_OP: params.CODE_OP,
                     TYPE_MAT: params.DEVPARAM
                 }
             }
@@ -166,22 +115,69 @@
     }
 
     function BarItemClick(e) {
-        if (e.itemData.needComment == "1") {
-            this.commentVisible(true);
-            this.comment(e.itemData.options.text);
-            this.commentButton(e.itemData.name);
-        }
-        else {
-            if (e.itemData.EXTPROP != null) {
-                if (e.itemData.EXTPROP.RUNAT == "DEVICE") {
-                    ButtonClickDevice(e.itemData);
-                    return;
-                }
-            }
-
-            ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+        switch (params.DEVPARAM) {
+            case "PRO_MAT1": PRO_MAT1(); break;
+            case "PRO_MAT2": PRO_MAT2(); break;
         }
     }
+
+    function PRO_MAT1() {
+        var form = $("#formMain").dxForm("instance");
+        var fromData = form.option("formData");
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+        var postData = {
+            userName: u,
+            methodName: "EMS.EMS_PRO_MAT.Add",
+            param: params.CODE_EQP + ";" + params.CODE_OP + ";" + fromData.REMARK.replace(";", "@SE@") + ";" + fromData.OTHER.replace(";", "@SE@")
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+                (new DevExpress.framework.dxCommand({ onExecute: "#_back" })).execute();
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
+
+    function PRO_MAT2() {
+        var form = $("#formMain").dxForm("instance");
+        var fromData = form.option("formData");
+
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+        var postData = {
+            userName: u,
+            methodName: "EMS.EMS_PRO_MAT.Replace",
+            param: params.CODE_EQP + ";" + params.CODE_OP + ";" + fromData.REMARK.replace(";", "@SE@") + ";" + fromData.OTHER.replace(";", "@SE@")
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+                (new DevExpress.framework.dxCommand({ onExecute: "#_back" })).execute();
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
+
 
     return viewModel;
 };
