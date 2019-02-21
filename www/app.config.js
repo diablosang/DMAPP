@@ -1,7 +1,7 @@
 // NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
-var keepPopUserInfo = false;
-var appVer = "1.13.0";
+var keepPopUserInfo = true;
+var appVer = "1.14.1";
 var dbProfile = "IRCZ";
 
 window.DMAPP = $.extend(true, window.DMAPP, {

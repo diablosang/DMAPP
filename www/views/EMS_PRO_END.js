@@ -153,6 +153,7 @@
                     }
                 }
 
+                GetID_WO();
                 viewModel.keepCache = true;
                 viewModel.indicatorVisible(false);
             },
@@ -164,6 +165,35 @@
                 else {
                     DevExpress.ui.notify(SysMsg.nodata, "error", 1000);
                 }
+            }
+        });
+    }
+
+    function GetID_WO() {
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+        var postData = {
+            userName: u,
+            methodName: "EMS.EMS_PRO_END.GetID_WO",
+            param: params.CODE_EQP
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data.length > 0) {
+                    var form = $("#formMain").dxForm("instance");
+                    form.updateData("ID_WO", data[0].ID_WO);
+                    form.repaint();
+                }
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
             }
         });
     }

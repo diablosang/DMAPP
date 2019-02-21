@@ -16,7 +16,7 @@
                         <div data-bind="dxButton: { text: SysMsg.ws_3,view:'M_DOC2',onClick:buttonFuncClick }"></div>
                     </td>
                     <td width="75px">
-                        <div data-bind="dxButton: { text:SysMsg.ws_4,view:'',onClick:buttonFuncClick }"></div>
+                        <div data-bind="dxButton: { text:SysMsg.ws_4,view:'',onClick:buttonReportClick }"></div>
                     </td>
                     <!--<td id="td1" width="75px" align="center">图示:</td>
                     <td id="td2" width="100px" align="center" style="background-color:rgb(51, 232, 37)">设备</td>

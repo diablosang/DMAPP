@@ -64,7 +64,9 @@
             {
                 DMAPP.app.navigate(view);
             }
-            
+        },
+        buttonReportClick: function (e) {
+            DMAPP.app.navigate("DMREPORT");
         }
     };
 
