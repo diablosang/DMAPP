@@ -81,7 +81,8 @@ var chsMsg = {
     devicenote: "设备便签",
     comment: "内容",
     note_creusr: "发布人",
-    date:"日期"
+    date: "日期",
+    note_reqired:"必须填写内容"
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -154,7 +155,8 @@ var engMsg = {
     devicenote: "Device Note",
     comment: "comment",
     note_creusr: "Publisher",
-    date:"Date"
+    date: "Date",
+    note_reqired: "Comment Requied"
 }
 
 

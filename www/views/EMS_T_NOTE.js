@@ -65,7 +65,7 @@
                         valueExpr: "IDNUM"
                     }
                 },
-                { dataField: "CREDAT", caption: SysMsg.date, allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd" },
+                { dataField: "CREDAT", caption: SysMsg.date, allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd HH:mm:ss" },
                 { dataField: "COMMENT", caption: SysMsg.comment, allowEditing: false, allowSorting: false }
             ],
             selection: {
@@ -142,6 +142,13 @@
     }
 
     function BarItemClick(e) {
+        var form = $("#formMain").dxForm("instance");
+        var formData = form.option("formData");
+        if (formData.COMMENT == null || formData.COMMENT == "") {
+            ServerError(SysMsg.note_reqired);
+            return;
+        }
+
         ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
     }
 

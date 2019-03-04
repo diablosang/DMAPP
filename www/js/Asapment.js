@@ -9,13 +9,23 @@
     switch (field.CTRLTYPE) {
 
         case "2": {
-            if (field.DS_DATA.length > 0) {
+            if (field.DSTYPE == "5") {
                 col.lookup = {
-                    dataSource: field.DS_DATA,
+                    dataSource: asUserList,
                     displayExpr: "DES",
-                    valueExpr: "IDLINE",
+                    valueExpr: "IDNUM",
                 };
             }
+            else {
+                if (field.DS_DATA.length > 0) {
+                    col.lookup = {
+                        dataSource: field.DS_DATA,
+                        displayExpr: "DES",
+                        valueExpr: "IDLINE",
+                    };
+                }
+            }
+
             break;
         }
         case "3": {
@@ -24,6 +34,7 @@
         }
         case "4": {
             col.dataType = "date";
+            col.format = field.DSPFORMAT;
             break;
         }
         case "7": {
@@ -49,16 +60,26 @@ function createMainControl(id, $parent, field, option) {
             break;
         }
         case "2": {
-            if (field.DS_DATA.length > 0) {
-                option.dataSource = field.DS_DATA;
+            if (field.DSTYPE == "5") {
+                option.dataSource = asUserList;
                 option.displayExpr = "DES";
-                option.valueExpr = "IDLINE";
+                option.valueExpr = "IDNUM";
 
                 $('<div>').attr('id', feID).appendTo($parent).dxSelectBox(option);
             }
             else {
-                $('<div>').attr('id', feID).appendTo($parent).dxTextBox(option);
+                if (field.DS_DATA.length > 0) {
+                    option.dataSource = field.DS_DATA;
+                    option.displayExpr = "DES";
+                    option.valueExpr = "IDLINE";
+
+                    $('<div>').attr('id', feID).appendTo($parent).dxSelectBox(option);
+                }
+                else {
+                    $('<div>').attr('id', feID).appendTo($parent).dxTextBox(option);
+                }
             }
+            
             break;
         }
         case "3": {
