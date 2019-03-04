@@ -152,9 +152,9 @@
                         form.repaint();
                     }
                 }
-
-                GetID_WO();
+                
                 viewModel.keepCache = true;
+                GetID_WO();
                 viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -170,12 +170,15 @@
     }
 
     function GetID_WO() {
+        var form = $("#formMain").dxForm("instance");
+        form.updateData("ID_WO", "TEST");
+        return;
         var u = sessionStorage.getItem("username");
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
         var postData = {
             userName: u,
             methodName: "EMS.EMS_PRO_END.GetID_WO",
-            param: params.CODE_EQP
+            param: params.CODE_EQP + ";" + params.CODE_OP
         }
 
         $.ajax({

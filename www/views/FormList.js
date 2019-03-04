@@ -113,9 +113,14 @@
     return viewModel;
 
     function SearchData(viewModel) {
-        var where = "1=1";
-
         var block = viewModel.winbox.block[0];
+        var where = "";
+
+        if (block.PROC != "1") {
+            where = "1=1";
+        }
+        
+        
         for (var i = 0; i < block.field.length; i++) {
             var field = block.field[i];
             if (field.ALLOWSEARCH == "1") {
@@ -124,16 +129,28 @@
 
                 switch (field.CTRLTYPE) {
                     case "2": {
-                        if (field.DS_DATA.length > 0) {
+                        if (field.DSTYPE == "5") {
                             control = $(feID).dxSelectBox("instance");
                         }
                         else {
-                            control = $(feID).dxTextBox("instance");
+                            if (field.DS_DATA.length > 0) {
+                                control = $(feID).dxSelectBox("instance");
+                            }
+                            else {
+                                control = $(feID).dxTextBox("instance");
+                            }
                         }
+
 
                         var val = control.option().value;
                         if (val != null && val.toString() != "") {
-                            where = where + " and " + field.FIELDNAME + "='" + val + "'";
+                            if (block.PROC == "1") {
+                                where = where + "'" + val + "',";
+                            }
+                            else {
+                                where = where + " and " + field.FIELDNAME + "='" + val + "'";
+                            }
+                            
                         }
                         break;
                     }
@@ -142,7 +159,13 @@
                         var val = control.option().value;
                         if (val != null && val.toString() != "") {
                             val = (val == true ? "1" : "0");
-                            where = where + " and " + field.FIELDNAME + "=" + val;
+                            if (block.PROC == "1") {
+                                where = where + "'" + val + "',";
+                            }
+                            else {
+                                where = where + " and " + field.FIELDNAME + "=" + val;
+                            }
+                            
                         }
                         break;
                     }
@@ -153,10 +176,22 @@
                         var val2 = control2.option().text;
                         if (val1 != null && val1.toString() != "") {
                             if (val2 != null && val2.toString() != "") {
-                                where = where + " and (" + field.FIELDNAME + " between '" + val1 + "' and '" + val2 + "')";
+                                if (block.PROC == "1") {
+                                    where = where + "'" + val1 + "','"+val2+"',";
+                                }
+                                else {
+                                    where = where + " and (" + field.FIELDNAME + " between '" + val1 + "' and '" + val2 + "')";
+                                }
+                                
                             }
                             else {
-                                where = where + " and " + field.FIELDNAME + "='" + val1 + "'";
+                                if (block.PROC == "1") {
+                                    where = where + "'" + val + "',";
+                                }
+                                else {
+                                    where = where + " and " + field.FIELDNAME + "='" + val1 + "'";
+                                }
+                                
                             }
                         }
                         break;
@@ -165,7 +200,13 @@
                         control = $(feID).dxTextArea("instance");
                         var val = control.option().value;
                         if (val != null && val.toString() != "") {
-                            where = where + " and " + field.FIELDNAME + " like '%" + val + "%'";
+                            if (block.PROC == "1") {
+                                where = where + "'" + val + "',";
+                            }
+                            else {
+                                where = where + " and " + field.FIELDNAME + " like '%" + val + "%'";
+                            }
+                            
                         }
                         break;
                     }
@@ -173,7 +214,13 @@
                         control = $(feID).dxNumberBox("instance");
                         var val = control.option().value;
                         if (val != null && val.toString() != "") {
-                            where = where + " and " + field.FIELDNAME + "=" + val;
+                            if (block.PROC == "1") {
+                                where = where + "'" + val + "',";
+                            }
+                            else {
+                                where = where + " and " + field.FIELDNAME + "=" + val;
+                            }
+                            
                         }
                         break;
                     }
@@ -181,7 +228,13 @@
                         control = $(feID).dxTextBox("instance");
                         var val = control.option().value;
                         if (val != null && val.toString() != "") {
-                            where = where + " and " + field.FIELDNAME + "='" + val + "'";
+                            if (block.PROC == "1") {
+                                where = where + "'" + val + "',";
+                            }
+                            else {
+                                where = where + " and " + field.FIELDNAME + "='" + val + "'";
+                            }
+                            
                         }
                         break;
                     }
@@ -189,7 +242,12 @@
                         control = $(feID).dxTextBox("instance");
                         var val = control.option().value;
                         if (val != null && val.toString() != "") {
-                            where = where + " and " + field.FIELDNAME + " like '%" + val + "%'";
+                            if (block.PROC == "1") {
+                                where = where + "'" + val + "',";
+                            }
+                            else {
+                                where = where + " and " + field.FIELDNAME + " like '%" + val + "%'";
+                            }
                         }
                         break;
                     }

@@ -77,7 +77,11 @@ var chsMsg = {
     ws_3: "文档",
     ws_4: "报表",
     codert: "改制工艺",
-    other:"其他"
+    other: "其他",
+    devicenote: "设备便签",
+    comment: "内容",
+    note_creusr: "发布人",
+    date:"日期"
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -146,7 +150,11 @@ var engMsg = {
     ws_3: "Documents",
     ws_4: "Report",
     codert: "New Routing",
-    other: "Other"
+    other: "Other",
+    devicenote: "Device Note",
+    comment: "comment",
+    note_creusr: "Publisher",
+    date:"Date"
 }
 
 

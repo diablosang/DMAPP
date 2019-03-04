@@ -78,7 +78,7 @@
 
         var devicetype = DevExpress.devices.real().platform;
 
-        if (serverVer == "2") {
+        if (serverVer >= "2") {
             var postData = {
                 UserName: u,
                 Password: p,
@@ -106,8 +106,8 @@
                     var option = { root: true };
                     keepAlive = true;
                     KeepAlive();
+                    GetUserList(u);
                     DMAPP.app.navigate(view, option);
-
                 },
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
                     viewModel.indicatorVisible(false);
@@ -147,6 +147,23 @@
             });
         }
         
+    }
+
+    function GetUserList(u) {
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserList?UserName=" + u;
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            cache: false,
+            success: function (data, textStatus) {
+                asUserList = data;
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
     }
 
     function CheckServerVersion()
