@@ -7,6 +7,14 @@
     }
 }
 
+var DESField = function () {
+    if (DeviceLang() == "CHS") {
+        return "DES1";
+    }
+    else {
+        return "DES2";
+    }
+}
 
 var SysMsg = {}
 
@@ -82,7 +90,19 @@ var chsMsg = {
     comment: "内容",
     note_creusr: "发布人",
     date: "日期",
-    note_reqired:"必须填写内容"
+    note_reqired: "必须填写内容",
+    sid: "序号",
+    amd: "设备点检",
+    amd_dateplan: "计划点检日期",
+    amd_codeitem: "点检项",
+    amd_descitem: "点检项说明",
+    amd_type: "类别",
+    amd_config: "属性",
+    amd_method: "控制方法",
+    amd_methoddesc: "控制方法说明",
+    amd_f_image: "是否上传图片",
+    amd_value: "点检结果",
+    
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -156,7 +176,18 @@ var engMsg = {
     comment: "comment",
     note_creusr: "Publisher",
     date: "Date",
-    note_reqired: "Comment Requied"
+    note_reqired: "Comment Requied",
+    sid:"sid",
+    amd: "Equipment AM",
+    amd_dateplan: "Date Plan",
+    amd_codeitem: "Item Code",
+    amd_descitem: "Item Description",
+    amd_type: "Item Type",
+    amd_config: "Config",
+    amd_method: "Method",
+    amd_methoddesc:"Method Description",
+    amd_f_image: "Need Photo",
+    amd_value: "Value",
 }
 
 

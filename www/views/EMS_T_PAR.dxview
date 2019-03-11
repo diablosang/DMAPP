@@ -9,5 +9,6 @@
         <div style="overflow:hidden;">
             <div id="formMain" data-bind="dxForm:formOption" class="Margin5"></div>
         </div>
+      <div></div>
     </div>
 </div>

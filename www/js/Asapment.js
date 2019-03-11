@@ -190,7 +190,7 @@ function GridRowUpdated(viewModel,gridName,e) {
     var postData = {
         userName: u,
         blockID: option.block,
-        rowIndex: option.currentRow,
+        rowIndex: e.rowIndex,
         rowData: rowData
     }
 
@@ -555,4 +555,42 @@ function  cmdHomeExecute(){
     var view = appStartView;
     var option = { root: true };
     DMAPP.app.navigate(view, option);
+}
+
+function GetAsapmentListData(lists) {
+    var listarr = [];
+
+    for (var i = 0; i < lists.length;i++) {
+        if (asListData[lists[i]] == null) {
+            listarr.push(lists[i]);
+        }
+    }
+
+    if (listarr.length == 0) {
+        return;
+    }
+
+    var u = sessionStorage.getItem("username");
+    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetAsapmentListData";
+    var postData = {
+        userName: u,
+        list: listarr
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: postData,
+        async: false,
+        cache: false,
+        success: function (data, textStatus) {
+            for (var key in data) {
+                asListData[key] = data[key];
+            }
+        },
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            ServerError(xmlHttpRequest.responseText);
+        }
+    });
+
 }

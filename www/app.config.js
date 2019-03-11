@@ -1,10 +1,11 @@
 ﻿// NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
 var keepPopUserInfo = false;
-var appVer = "1.16.1";
+var appVer = "1.18.0";
 var dbProfile = "IRCZ";
 var asUserList = [];
-var nullDeviceType = "andriod";
+var nullDeviceType = "PC";
+var asListData = {};
 
 
 window.DMAPP = $.extend(true, window.DMAPP, {

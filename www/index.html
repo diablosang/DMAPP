@@ -34,7 +34,9 @@
     <!--<script type="text/javascript" src="js/dx.all.debug.js"></script>-->
 
     <link rel="stylesheet" type="text/css" href="index.css" />
-    <script type="text/javascript" src="app.config.js?ver=1.16.1"></script>
+    <script type="text/javascript" src="app.config.js?ver=1.18.0"></script>
+    <script src="js/Asapment.js?ver=1.18.0"></script>
+    <link href="css/Trusteem.css?ver=1.18.0" rel="stylesheet" />
     <script src="Lang.js"></script>
     <script type="text/javascript" src="index.js"></script>
 
@@ -49,8 +51,8 @@
     <script type="text/javascript" src="layouts/Simple/SimpleLayout.js"></script>
 
 
-    <link href="css/Trusteem.css" rel="stylesheet" />
-    <script src="js/Asapment.js"></script>
+
+
     <!-- Views -->
 
     <script type="text/javascript" src="views/WorkShop.js"></script>
@@ -72,69 +74,69 @@
     <script type="text/javascript">
         DevExpress.config({ forceIsoDateParsing: true });
 
-        //var onDeviceReady = function () {
-        //    initiateUI();
-        //};
-        //var getRegistrationID = function () {
-        //    window.plugins.jPushPlugin.getRegistrationID(onGetRegistrationID);
-        //};
-        //var onGetRegistrationID = function (data) {
-        //    try {
-        //        if (data.length == 0) {
-        //            var t1 = window.setTimeout(getRegistrationID, 1000);
-        //        }
-        //        var chn = data;
-        //        var sessionStorage = window.sessionStorage;
-        //        sessionStorage.removeItem("baiduchn");
-        //        sessionStorage.setItem("baiduchn", chn);
-        //    } catch (exception) {
-        //        DevExpress.ui.notify(exception, "error", 3000);
-        //    }
-        //};
+                //var onDeviceReady = function () {
+                //    initiateUI();
+                //};
+                //var getRegistrationID = function () {
+                //    window.plugins.jPushPlugin.getRegistrationID(onGetRegistrationID);
+                //};
+                //var onGetRegistrationID = function (data) {
+                //    try {
+                //        if (data.length == 0) {
+                //            var t1 = window.setTimeout(getRegistrationID, 1000);
+                //        }
+                //        var chn = data;
+                //        var sessionStorage = window.sessionStorage;
+                //        sessionStorage.removeItem("baiduchn");
+                //        sessionStorage.setItem("baiduchn", chn);
+                //    } catch (exception) {
+                //        DevExpress.ui.notify(exception, "error", 3000);
+                //    }
+                //};
 
-        //var onOpenNotification = function (event) {
+                //var onOpenNotification = function (event) {
 
-        //};
-        //var onReceiveNotification = function (event) {
-        //    var alertContent;
-        //    if (device.platform == "Android") {
-        //        alertContent = event.alert;
-        //    } else {
-        //        alertContent = event.aps.alert;
-        //        DevExpress.ui.notify(alertContent, "info", 3000);
-        //    }
-        //};
-        //var onReceiveMessage = function (event) {
-        //    var message;
-        //    if (device.platform == "Android") {
-        //        message = event.message;
-        //    } else {
-        //        message = event.content;
-        //    }
-        //    DevExpress.ui.notify(message, "info", 3000);
-        //};
-        //var initiateUI = function () {
-        //    try {
-        //        window.plugins.jPushPlugin.init();
-        //        window.setTimeout(getRegistrationID, 1000);
-        //        if (device.platform != "Android") {
-        //            window.plugins.jPushPlugin.setDebugModeFromIos();
-        //            window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
-        //        } else {
-        //            //window.plugins.jPushPlugin.setDebugMode(true);
-        //            //window.plugins.jPushPlugin.setStatisticsOpen(true);
-        //        }
+                //};
+                //var onReceiveNotification = function (event) {
+                //    var alertContent;
+                //    if (device.platform == "Android") {
+                //        alertContent = event.alert;
+                //    } else {
+                //        alertContent = event.aps.alert;
+                //        DevExpress.ui.notify(alertContent, "info", 3000);
+                //    }
+                //};
+                //var onReceiveMessage = function (event) {
+                //    var message;
+                //    if (device.platform == "Android") {
+                //        message = event.message;
+                //    } else {
+                //        message = event.content;
+                //    }
+                //    DevExpress.ui.notify(message, "info", 3000);
+                //};
+                //var initiateUI = function () {
+                //    try {
+                //        window.plugins.jPushPlugin.init();
+                //        window.setTimeout(getRegistrationID, 1000);
+                //        if (device.platform != "Android") {
+                //            window.plugins.jPushPlugin.setDebugModeFromIos();
+                //            window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+                //        } else {
+                //            //window.plugins.jPushPlugin.setDebugMode(true);
+                //            //window.plugins.jPushPlugin.setStatisticsOpen(true);
+                //        }
 
 
-        //    } catch (exception) {
-        //        DevExpress.ui.notify(exception, "error", 3000);
-        //    }
-        //};
+                //    } catch (exception) {
+                //        DevExpress.ui.notify(exception, "error", 3000);
+                //    }
+                //};
 
-        //document.addEventListener("deviceready", onDeviceReady, false);
-        //document.addEventListener("jpush.openNotification", onOpenNotification, false);
-        //document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
-        //document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+                //document.addEventListener("deviceready", onDeviceReady, false);
+                //document.addEventListener("jpush.openNotification", onOpenNotification, false);
+                //document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+                //document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
     </script>
 
     <script type="text/javascript" src="views/EMS_PRO_START.js"></script>
@@ -208,19 +210,26 @@
     <script type="text/javascript" src="views/EMSChart3.js"></script>
     <link rel="dx-template" type="text/html" href="views/EMSChart3.dxview" />
 
-		<script type="text/javascript" src="views/M_DOC2.js"></script>
-		<link rel="dx-template" type="text/html" href="views/M_DOC2.dxview"/>
+    <script type="text/javascript" src="views/M_DOC2.js"></script>
+    <link rel="dx-template" type="text/html" href="views/M_DOC2.dxview" />
 
-		<script type="text/javascript" src="views/DMREPORT.js"></script>
-		<link rel="dx-template" type="text/html" href="views/DMREPORT.dxview"/>
+    <script type="text/javascript" src="views/DMREPORT.js"></script>
+    <link rel="dx-template" type="text/html" href="views/DMREPORT.dxview" />
 
-		<script type="text/javascript" src="views/FormList.js"></script>
-		<link rel="dx-template" type="text/html" href="views/FormList.dxview"/>
+    <script type="text/javascript" src="views/FormList.js"></script>
+    <link rel="dx-template" type="text/html" href="views/FormList.dxview" />
 
-		<script type="text/javascript" src="views/EMS_T_NOTE.js"></script>
-		<link rel="dx-template" type="text/html" href="views/EMS_T_NOTE.dxview"/>
+    <script type="text/javascript" src="views/EMS_T_NOTE.js"></script>
+    <link rel="dx-template" type="text/html" href="views/EMS_T_NOTE.dxview" />
+
+		<script type="text/javascript" src="views/M_AMD.js"></script>
+		<link rel="dx-template" type="text/html" href="views/M_AMD.dxview"/>
+
+		<script type="text/javascript" src="views/EMS_T_AMD.js"></script>
+		<link rel="dx-template" type="text/html" href="views/EMS_T_AMD.dxview"/>
 </head>
 <body>
+    <input id="fileSelector" type="file" style="display:none" />
     <input hidden="hidden" value="http://www.ssi-technical.com:20020/AsapmentWebAPI" id="WebApiServerURL" />
 </body>
 </html>

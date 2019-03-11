@@ -207,6 +207,8 @@
                 }
             },
             onRowUpdated: function (e) {
+                var idx = e.component.getRowIndexByKey(e.key);
+                e.rowIndex = idx;
                 GridRowUpdated(this, "gridFLOC", e)
             },
             onRowInserted: function (e) {
@@ -258,6 +260,8 @@
 
             },
             onRowUpdated: function (e) {
+                var idx = e.component.getRowIndexByKey(e.key);
+                e.rowIndex = idx;
                 GridRowUpdated(this, "gridITEM", e)
             },
             onRowInserted: function (e) {
@@ -303,6 +307,8 @@
 
             },
             onRowUpdated: function (e) {
+                var idx = e.component.getRowIndexByKey(e.key);
+                e.rowIndex = idx;
                 GridRowUpdated(this, "gridROEP", e)
             },
             onRowInserted: function (e) {

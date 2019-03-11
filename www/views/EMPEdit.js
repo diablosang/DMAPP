@@ -37,12 +37,10 @@
 
                     if (viewAction == "dataWindow") {
                         var param = JSON.parse(sessionStorage.getItem("dwParam"));
-                        if (param.blockID == "BMAINBLOCK") {
-                            UpdateDataWindow(this);
-                        }
-                        else {
-                            
-                            UpdateGridDataWindow(this, "gridDetail");
+                        switch (param.blockID) {
+                            case "BMAINBLOCK": UpdateDataWindow(this); break;
+                            case "BEMPROJ": UpdateGridDataWindow(this, "gridDetail"); break;
+                            case "BITEM": UpdateGridDataWindow(this, "gridITEM"); break;
                         }
                     }
                 }
@@ -149,7 +147,93 @@
 
             },
             onRowUpdated: function (e) {
+                var idx = e.component.getRowIndexByKey(e.key);
+                e.rowIndex = idx;
                 GridRowUpdated(this, "gridDetail", e)
+            }
+        },
+        gridITEMOption: {
+            block: "BITEM",
+            dateSerializationFormat: "yyyy-MM-dd",
+            columnAutoWidth: true,
+            columns: [
+                { dataField: "LINE_RLOSP", caption: "行号", allowEditing: false, allowSorting: false, width: 50 },
+                { dataField: "CODE_ITEM", caption: "物料代码", allowEditing: true, allowSorting: false, width: 100, dataWindow: true },
+                { dataField: "DESC_ITEM", caption: "物料描述", allowEditing: false, allowSorting: false, width: 200 },
+                { dataField: "SPEC_ITEM", caption: "规格", allowEditing: false, allowSorting: false, width: 100 },
+                { dataField: "MODEL_ITEM", caption: "型号", allowEditing: false, allowSorting: false, width: 100 },
+                { dataField: "QTY_REQ", caption: "需求数量", allowEditing: true, allowSorting: false, width: 100 },
+                { dataField: "QTY_ISS", caption: "实发数量", allowEditing: false, allowSorting: false, width: 100 },
+                //{ dataField: "QTY_SP", caption: "自备数量", allowEditing: false, allowSorting: false, width: 100 },
+                { dataField: "CODE_LOC", caption: "货架", allowEditing: true, allowSorting: false, width: 100 },
+                //{ dataField: "F_WH", caption: "仓库申领", allowEditing: true, allowSorting: false, width: 100, dataType: "boolean" }
+                //{ dataField: "REMARK", caption: "备注", allowEditing: true, allowSorting: false, width: 100 },
+            ],
+            editing: {
+                allowDeleting: true,
+                allowUpdating: true,
+                mode: "cell"
+            },
+            selection: {
+                mode: "single"
+            },
+            paging: {
+                enabled: false
+            },
+            currentRow: 0,
+            onRowClick: function (e) {
+                var grid = e.component;
+                var row = e.rowIndex;
+                grid.editRow(row);
+            },
+            onCellClick: function (e) {
+                SetGridRowIndex("gridITEM", e.rowIndex);
+                if (e.column.dataWindow == true) {
+                    OpenGridDataWindow(this, "gridITEM", e);
+                }
+
+            },
+            onRowUpdated: function (e) {
+                var idx = e.component.getRowIndexByKey(e.key);
+                e.rowIndex = idx;
+                GridRowUpdated(this, "gridITEM", e)
+            },
+            onRowInserted: function (e) {
+                GridRowInsert(this, "gridITEM", e)
+            },
+            onRowRemoving: function (e) {
+                if (GridRowDelete(this, "gridITEM", e) == false) {
+                    e.cancel = true;
+                }
+            }
+        },
+        tabOptions: {
+            dataSource: [{ text: "保养项目", tid: "1" }, { text: "领用明细", tid: "2" }],
+            selectedIndex: 0,
+            onItemClick: function (e) {
+                var $block1 = $("#gridDetail")[0];
+                var $block2 = $("#gridITEM")[0];
+                var detailBar = $("#detailBar");
+                if (e.itemData.tid == "1") {
+                    $block1.style.display = "block";
+                    $block2.style.display = "none";
+                    detailBar.hide();
+                }
+                else if (e.itemData.tid == "2") {
+                    $block2.style.display = "block";
+                    $block1.style.display = "none";
+                    detailBar.show();
+                }
+            }
+        },
+        detailBarOption: {
+            items: [
+                { location: 'before', widget: 'button', name: "new", needComment: "0", options: { icon: "add" } }
+            ],
+            onItemClick: function (e) {
+                if (e.itemData.name == "new") {
+                    AddNewRow();
+                }
             }
         }
     };
@@ -158,8 +242,13 @@
         var toolItems;
         var form = $("#formMain").dxForm("instance");
         var gridDetail = $("#gridDetail").dxDataGrid("instance");
+        var gridITEM = $("#gridITEM").dxDataGrid("instance");
+        var detailBar = $("#detailBar").dxToolbar("instance");
+        $("#detailBar").hide();
 
         if (params.DEVPARAM == "PM") {
+            gridITEM.option("disabled", false);
+            detailBar.option("disabled", false);
             toolItems = [
                 //{ location: 'before', widget: 'button', name: 'save', options: { text: '保存' } },
                 //{ location: 'before', widget: 'button', name: 'A386', options: { text: '提交' } }];
@@ -175,6 +264,8 @@
             gridDetail.columnOption("EMP_SOL", "allowEditing", false);
             gridDetail.columnOption("EMP_PER", "allowEditing", false);
             form.option("readOnly", true);
+            gridITEM.option("disabled", true);
+            detailBar.option("disabled", true);
         }
         else if (params.DEVPARAM == "ECOF") {
             var btn = "";
@@ -192,6 +283,8 @@
             gridDetail.columnOption("EMP_SOL", "allowEditing", false);
             gridDetail.columnOption("EMP_PER", "allowEditing", false);
             form.option("readOnly", true);
+            gridITEM.option("disabled", true);
+            detailBar.option("disabled", true);
         }
 
         //var toolbar = $("#mainBar").dxToolbar("instance");
@@ -237,6 +330,7 @@
                 viewModel.winbox = data;
                 var form = $("#formMain").dxForm("instance");
                 var gridDetail = $("#gridDetail").dxDataGrid("instance");
+                var gridITEM = $("#gridITEM").dxDataGrid("instance");
 
                 for (var i = 0; i < data.length; i++){
                     if (data[i].IDNUM == "BMAINBLOCK") {
@@ -247,6 +341,11 @@
                     if (data[i].IDNUM == "BEMPROJ") {
                         gridDetail.option("dataSource", data[i].data);
                         gridDetail.refresh();
+                    }
+
+                    if (data[i].IDNUM == "BITEM") {
+                        gridITEM.option("dataSource", data[i].data);
+                        gridITEM.refresh();
                     }
                 }
 
@@ -291,7 +390,47 @@
 
     function ValidChange() {
         var gridDetail = $("#gridDetail").dxDataGrid("instance");
+        var gridITEM = $("#gridITEM").dxDataGrid("instance");
         gridDetail.closeEditCell();
+        gridITEM.closeEditCell();
+    }
+
+    function AddNewRow() {
+        viewModel.indicatorVisible(true);
+
+        var tab = $("#tabDetail").dxTabs("instance");
+        var index = tab.option("selectedIndex");
+        var grid;
+        if (index == "1") {
+            grid = $("#gridITEM").dxDataGrid("instance");
+        }
+        else {
+            return;
+        }
+
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/AddNewRow";
+        var postData = {
+            blockID: grid.option("block"),
+            userName: u
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: postData,
+            cache: false,
+            success: function (data, textStatus) {
+                var ds = grid.option("dataSource");
+                ds.push(data[0]);
+                grid.option("dataSource", ds);
+                viewModel.indicatorVisible(false);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
     }
 
     return viewModel;
