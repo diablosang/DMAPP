@@ -1,7 +1,7 @@
 ﻿// NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
 var keepPopUserInfo = false;
-var appVer = "1.19.1";
+var appVer = "1.19.2";
 var dbProfile = "IRCZ";
 var asUserList = [];
 var nullDeviceType = "PC";
