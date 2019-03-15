@@ -70,12 +70,12 @@
                     id: "ID_WO",
                     label: { text: "下料批号" },
                     dataField: "ID_WO",
-                    //editorOptions: {
-                    //    onFocusIn: function (e) {
-                    //        OpenDataWindow(this, "ID_WO", "BMAINBLOCK");
-                    //    }
-                    //},
-                    //dataWindow: true,
+                    colSpan: 1
+                },
+                {
+                    id: "BOXID",
+                    label: { text: "箱号" },
+                    dataField: "BOXID",
                     colSpan: 1
                 },
             ],
@@ -115,6 +115,7 @@
             tile = params.CODE_EQP + "Unloading";
             form.itemOption("ID_WO", "label", { text: "Work Order No." });
             form.itemOption("CODE_OP", "label", { text: "Operation Code" });
+            form.itemOption("BOXID", "label", { text: "Box No." });
         }
 
         viewModel.title(tile);
@@ -171,8 +172,6 @@
 
     function GetID_WO() {
         var form = $("#formMain").dxForm("instance");
-        form.updateData("ID_WO", "TEST");
-        return;
         var u = sessionStorage.getItem("username");
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
         var postData = {

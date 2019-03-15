@@ -87,61 +87,33 @@
                 url: url,
                 cache: false,
                 success: function (data, textStatus) {
-                    var r = 0;
-                    var c = 0;
-                    var maxR = 0;
-                    var maxC = 0;
-                    var table = $("#tbWorkShop");
-                    table.empty();
+                    //var r = 0;
+                    //var c = 0;
+                    //var maxR = 0;
+                    //var maxC = 0;
+                    //var table = $("#tbWorkShop");
+                    //table.empty();
 
+                    var gap = 10;
+                    var cols = parseInt(8);
+                    var pageWidth = 1600;
+                    var itemWidth = parseInt((pageWidth - gap) / cols - gap);
+                    var itemHeight = parseInt(itemWidth / 4 * 3);
+
+                    var divCanvas = $("#divCanvas");
+                    divCanvas.empty();
                     for (var i = 0; i < data.length; i++) {
-                        var d = data[i];
-                        if (d.POS_X > maxR) {
-                            maxR = d.POS_X;
-                        }
+                        var item = data[i];
+                        var itemInfo = {
+                            htmlItem: "<div id='item" + item.CODE_LINE + "' class='CavItem'/>",
+                            posX: (itemWidth + gap) * (item.POS_X - 1) + gap,
+                            posY: (itemHeight + gap) * (item.POS_Y - 1) + gap,
+                            w: itemWidth * item.SIZE_W + gap * (item.SIZE_W - 1),
+                            h: itemHeight * item.SIZE_H + gap * (item.SIZE_H - 1)
+                        };
 
-                        if (d.POS_Y > maxC) {
-                            maxC = d.POS_Y;
-                        }
-                    }
-
-                    for (var r = 1; r <= maxR; r++) {
-                        $('<tr>').attr('id', 'tr_' + r).attr('height', '75px').appendTo(table);
-                        var tr = $("#tr_" + r);
-                        for (var c = 1; c <= maxC; c++) {
-                            //$('<td>').attr('id', 'td_' + r + "_" + c).css('border', '1px solid').css('width', '100px').css('padding','5px 5px 5px 5px').appendTo(tr);
-                            $('<td>').attr('id', 'td_' + r + "_" + c).appendTo(tr);
-                        }
-                    }
-
-                    for (var i = 0; i < data.length; i++) {
-                        var d = data[i];
-                        var td = $("#td_" + d.POS_X + "_" + d.POS_Y);
-                        td.attr('CODE_EQP', d.CODE_EQP);
-                        td.attr('align', 'center');
-                        td.attr('valign', 'middle');
-                        td.attr('onclick', "OpenWorkShop('" + d.CODE_LINE + "','" + d.DESC_LINE + "','" + d.TYPE + "');");
-                        if (d.TYPE == "01" || d.TYPE == null) {
-                            td.css("background-color", "rgb(51, 232, 37)");
-                        }
-                        else if (d.TYPE == "02") {
-                            td.css("background-color", "yellow");
-                        }
-                        else if (d.TYPE == "03") {
-                            td.css("background-color", "rgb(238, 121, 89)");
-                        }
-                        else if (d.TYPE == "04") {
-                            td.css("background-color", "rgb(238, 121, 89)");
-                        }
-                        else {
-                            td.css("background-color", "rgb(245, 245, 245)");
-                        }
-
-                        td.css('border-radius', '7px');
-                        td.css('box-shadow', '3px 3px 3px #888888');
-                        $('<div>').html(d.DISP_WS).appendTo(td);
-                        $('<div>').html(d.DISP1).css("font-size", "small").appendTo(td);
-                        $('<div>').html(d.DISP2).appendTo(td);
+                        item.itemInfo = itemInfo;
+                        BindItem(item, divCanvas);
                     }
                 },
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -154,6 +126,74 @@
             DevExpress.ui.notify(e.message, "error", 1000);
         }
 
+    }
+
+    function BindItem(item, divCanvas) {
+        var itemInfo = item.itemInfo;
+        $(itemInfo.htmlItem).appendTo(divCanvas);
+        var divItem = $("#item" + item.CODE_LINE);
+        divItem.css("top", itemInfo.posY).css("left", itemInfo.posX).css("width", itemInfo.w).css("height", itemInfo.h);
+        divItem.attr('onclick', "OpenWorkShop('" + item.CODE_LINE + "','" + item.DESC_LINE + "','" + item.TYPE + "');");
+        var color = "rgb(51, 232, 37)";
+        switch (item.TYPE) {
+            case "01": color = "rgb(51, 232, 37)"; break;
+            case "02": color = "yellow"; break;
+            case "03": color = "rgb(238, 121, 89)"; break;
+            case "04": color = "rgb(238, 121, 89)"; break;
+            case "05": color = "rgb(245, 245, 245)"; break;
+        }
+        divItem.css("background-color", color);
+        var divBox = $("<div class='CavBox'>");
+        divBox.appendTo(divItem);
+
+        $("<div class='CavText'>").html(item.CODE_LINE).css("font-size", "20px").appendTo(divBox);
+        $("<div class='CavText'>").html(item.DISP_WS).appendTo(divBox);
+        $("<div class='CavText'>").html(item.DISP1).appendTo(divBox);
+        $("<div class='CavText'>").html(item.DISP2).appendTo(divBox);
+
+        //var titleHtml = "<div id='" + "title" + item.CODE_LINE + "'>";
+        //$(titleHtml).appendTo(divItem);
+        //var divTitle = $("#title" + item.ITEMID);
+        //divTitle.css("text-align", "center").css("width", "100%").css("font-size", "28px");
+        //divTitle.text(item.DES1);
+        //$("<div>").appendTo(divItem).dxDataGrid(option);
+
+
+        //for (var i = 0; i < data.length; i++) {
+        //    var d = data[i];
+        //    if (d.POS_X > maxR) {
+        //        maxR = d.POS_X;
+        //    }
+
+        //    if (d.POS_Y > maxC) {
+        //        maxC = d.POS_Y;
+        //    }
+        //}
+
+        //for (var r = 1; r <= maxR; r++) {
+        //    $('<tr>').attr('id', 'tr_' + r).attr('height', '75px').appendTo(table);
+        //    var tr = $("#tr_" + r);
+        //    for (var c = 1; c <= maxC; c++) {
+        //        //$('<td>').attr('id', 'td_' + r + "_" + c).css('border', '1px solid').css('width', '100px').css('padding','5px 5px 5px 5px').appendTo(tr);
+        //        $('<td>').attr('id', 'td_' + r + "_" + c).appendTo(tr);
+        //    }
+        //}
+
+        //for (var i = 0; i < data.length; i++) {
+        //    var d = data[i];
+        //    var td = $("#td_" + d.POS_X + "_" + d.POS_Y);
+        //    td.attr('CODE_EQP', d.CODE_EQP);
+        //    td.attr('align', 'center');
+        //    td.attr('valign', 'middle');
+        //    td.attr('onclick', "OpenWorkShop('" + d.CODE_LINE + "','" + d.DESC_LINE + "','" + d.TYPE + "');");
+            
+
+        //    td.css('border-radius', '7px');
+        //    td.css('box-shadow', '3px 3px 3px #888888');
+        //    $('<div>').html(d.DISP_WS).appendTo(td);
+        //    $('<div>').html(d.DISP1).css("font-size", "small").appendTo(td);
+        //    $('<div>').html(d.DISP2).appendTo(td);
+        //}
     }
 
     function OpenDevice(viewModel) {

@@ -4,20 +4,20 @@
     var viewModel = {
         title: ko.observable(""),
         indicatorVisible: ko.observable(false),
-        fieldList:[],
-        listFieldsOption:{
+        fieldList: [],
+        listFieldsOption: {
             selectionMode: "all",
             keyExpr: "FIELDNAME"
         },
         popupSelectOption: {
             toolbarItems: [{
-                   location: 'center', options: {
-                       text: '确定',
-                       onClick: function (e) {
-                           SelectOK();
-                       }
-                   }, widget: 'dxButton'
-               }],
+                location: 'center', options: {
+                    text: '确定',
+                    onClick: function (e) {
+                        SelectOK();
+                    }
+                }, widget: 'dxButton'
+            }],
             onShown: function (e) {
                 var list = $("#listSelect").dxList("instance");
                 list.option("dataSource", this.fieldList);
@@ -31,7 +31,7 @@
                         for (var j = 0; j < this.fieldList.length; j++) {
                             if (this.fieldList[j].FIELDNAME == fields[i]) {
                                 list.selectItem(j);
-                            }         
+                            }
                         }
                     }
                 }
@@ -45,12 +45,12 @@
         onLogoffClick: function (e) {
             Logoff();
         },
-        onFieldSelectClick:function(e){
+        onFieldSelectClick: function (e) {
             var pop = $("#popSelect").dxPopup("instance");
             pop.show();
         },
         onSelectOKClick: function (e) {
-           
+
         }
     };
 
@@ -71,8 +71,7 @@
         BindTable();
     }
 
-    function BindData()
-    {
+    function BindData() {
         try {
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
@@ -112,7 +111,7 @@
                     var table = $("#tbLegend");
                     table.empty();
                     $('<tr>').attr('id', 'trLegend').appendTo(table);
-                    var tr = $("#trLegend");                   
+                    var tr = $("#trLegend");
                     for (var i = 0; i < data.length; i++) {
                         var desc = DeviceLang() == "CHS" ? data[i].DES1 : data[i].DES2;
                         var color = "#" + data[i].COLOR;
@@ -131,10 +130,10 @@
         catch (e) {
             DevExpress.ui.notify(e.message, "error", 1000);
         }
-        
+
     }
 
-    function BindTable(){
+    function BindTable() {
         var sessionStorage = window.sessionStorage;
         var u = sessionStorage.getItem("username");
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
@@ -151,62 +150,87 @@
             url: url,
             cache: false,
             success: function (data, textStatus) {
-                var r = 0;
-                var c = 0;
-                var maxR = 0;
-                var maxC = 0;
-                var table = $("#tbDevice");
-                table.empty();
+                var gap = 10;
+                var cols = parseInt(8);
+                var pageWidth = 1440;
+                var itemWidth = parseInt((pageWidth - gap) / cols - gap);
+                var itemHeight = parseInt(itemWidth / 16 * 10);
 
+                var divCanvas = $("#divCanvasDevice");
+                divCanvas.empty();
                 for (var i = 0; i < data.length; i++) {
-                    var d = data[i];
-                    if (d.POS_X > maxR) {
-                        maxR = d.POS_X;
-                    }
+                    var item = data[i];
+                    var itemInfo = {
+                        htmlItem: "<div id='item" + item.CODE_EQP + "' class='CavItem'/>",
+                        posX: (itemWidth + gap) * (item.POS_X - 1) + gap,
+                        posY: (itemHeight + gap) * (item.POS_Y - 1) + gap,
+                        w: itemWidth * item.SIZE_W + gap * (item.SIZE_W - 1),
+                        h: itemHeight * item.SIZE_H + gap * (item.SIZE_H - 1)
+                        //w: itemWidth,
+                        //h: itemHeight 
+                    };
 
-                    if (d.POS_Y > maxC) {
-                        maxC = d.POS_Y;
-                    }
+                    item.itemInfo = itemInfo;
+                    BindItem(item, divCanvas);
                 }
 
-                for (var r = 1; r <= maxR; r++) {
-                    $('<tr>').attr('id', 'tr_' + r).attr('height', '75px').appendTo(table);
-                    var tr = $("#tr_" + r);
-                    for (var c = 1; c <= maxC; c++) {
-                        //$('<td>').attr('id', 'td_' + r + "_" + c).css('border', '1px solid').css('width', '100px').css('padding','5px 5px 5px 5px').appendTo(tr);
-                        $('<td>').attr('id', 'td_' + r + "_" + c).appendTo(tr);
-                    }
-                }
 
-                for (var i = 0; i < data.length; i++) {
-                    var d = data[i];
-                    var td = $("#td_" + d.POS_X + "_" + d.POS_Y);
-                    td.attr('CODE_EQP', d.CODE_EQP);
-                    td.attr('align', 'center');
-                    td.attr('valign', 'middle');
-                    td.attr('onclick', "DeivceClick('" + d.CODE_EQP + "');");
-                    var color = "#F5F5F5";
-                    if (d.COLOR != null && d.COLOR != "") {
-                        color = "#" + d.COLOR;
-                    }
-                    td.css("background-color", color);
-                    td.css('border-radius', '7px');
-                    td.css('box-shadow', '3px 3px 3px #888888');
+                //var r = 0;
+                //var c = 0;
+                //var maxR = 0;
+                //var maxC = 0;
+                //var table = $("#tbDevice");
+                //table.empty();
 
-                    $('<div>').html(d.CODE_EQP).appendTo(td);
+                //for (var i = 0; i < data.length; i++) {
+                //    var d = data[i];
+                //    if (d.POS_X > maxR) {
+                //        maxR = d.POS_X;
+                //    }
 
-                    var localStorage = window.localStorage;
-                    var selectedFields = localStorage.getItem("selectedFields");
-                    if (selectedFields != null) {
-                        var fields = JSON.parse(selectedFields);
-                        for (var s = 0; s < fields.length; s++) {
-                            $('<div>').html(d[fields[s]]).css("font-size", "small").appendTo(td);
-                        }
-                    }
+                //    if (d.POS_Y > maxC) {
+                //        maxC = d.POS_Y;
+                //    }
+                //}
 
-                    //$('<div>').html(d.DESC_DISP1).css("font-size", "small").appendTo(td);
-                    //$('<div>').html(d.DESC_DISP2).appendTo(td);
-                }
+                //for (var r = 1; r <= maxR; r++) {
+                //    $('<tr>').attr('id', 'tr_' + r).attr('height', '75px').appendTo(table);
+                //    var tr = $("#tr_" + r);
+                //    for (var c = 1; c <= maxC; c++) {
+                //        //$('<td>').attr('id', 'td_' + r + "_" + c).css('border', '1px solid').css('width', '100px').css('padding','5px 5px 5px 5px').appendTo(tr);
+                //        $('<td>').attr('id', 'td_' + r + "_" + c).appendTo(tr);
+                //    }
+                //}
+
+                //for (var i = 0; i < data.length; i++) {
+                //    var d = data[i];
+                //    var td = $("#td_" + d.POS_X + "_" + d.POS_Y);
+                //    td.attr('CODE_EQP', d.CODE_EQP);
+                //    td.attr('align', 'center');
+                //    td.attr('valign', 'middle');
+                //    td.attr('onclick', "DeivceClick('" + d.CODE_EQP + "');");
+                //    var color = "#F5F5F5";
+                //    if (d.COLOR != null && d.COLOR != "") {
+                //        color = "#" + d.COLOR;
+                //    }
+                //    td.css("background-color", color);
+                //    td.css('border-radius', '7px');
+                //    td.css('box-shadow', '3px 3px 3px #888888');
+
+                //    $('<div>').html(d.CODE_EQP).appendTo(td);
+
+                //    var localStorage = window.localStorage;
+                //    var selectedFields = localStorage.getItem("selectedFields");
+                //    if (selectedFields != null) {
+                //        var fields = JSON.parse(selectedFields);
+                //        for (var s = 0; s < fields.length; s++) {
+                //            $('<div>').html(d[fields[s]]).css("font-size", "small").appendTo(td);
+                //        }
+                //    }
+
+                //    //$('<div>').html(d.DESC_DISP1).css("font-size", "small").appendTo(td);
+                //    //$('<div>').html(d.DESC_DISP2).appendTo(td);
+                //}
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);
@@ -215,8 +239,35 @@
         });
     }
 
+    function BindItem(item, divCanvas) {
+        var itemInfo = item.itemInfo;
+        $(itemInfo.htmlItem).appendTo(divCanvas);
+        var divItem = $("#item" + item.CODE_EQP);
+        divItem.css("top", itemInfo.posY).css("left", itemInfo.posX).css("width", itemInfo.w).css("height", itemInfo.h);
+        divItem.attr('onclick', "DeivceClick('" + item.CODE_EQP + "');");
+        var color = "#F5F5F5";
+        if (item.COLOR != null && item.COLOR != "") {
+            color = "#" + item.COLOR;
+        }
+        divItem.css("background-color", color);
+        var divBox = $("<div class='CavBox'>");
+        divBox.appendTo(divItem);
+
+        $("<div class='CavText'>").html(item.CODE_EQP).css("font-size", "24px").appendTo(divBox);
+        var localStorage = window.localStorage;
+        var selectedFields = localStorage.getItem("selectedFields");
+        if (selectedFields != null) {
+            var fields = JSON.parse(selectedFields);
+            for (var s = 0; s < fields.length; s++) {
+                $("<div class='CavText'>").html(item[fields[s]]).appendTo(divBox);
+            }
+        }
+    }
+
     return viewModel;
 };
+
+
 
 function DeivceClick(e) {
     //var CODE_EQP = e.srcElement.attributes["CODE_EQP"].value;

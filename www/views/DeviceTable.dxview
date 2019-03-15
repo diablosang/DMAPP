@@ -15,8 +15,9 @@
       </table>
       <!--<div id="btnFieldSelect" class="Login_Btn" data-bind="dxButton: { text: '选择字段', onClick:onFieldSelectClick}" style="float:right;width:100px"></div>-->
     </div>
-    <div data-bind="dxScrollView: {useNative:false,showScrollbar:'never' }" class="ItemList-ScrollView2">
-      <table id="tbDevice" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>
+    <div data-bind="dxScrollView: {useNative:false,showScrollbar:'never',scrollByContent:true }" class="ItemList-ScrollView2">
+      <div id="divCanvasDevice"/>
+      <!--<table id="tbDevice" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>-->
     </div>
     <div id="popSelect" data-bind="dxPopup: popupSelectOption">
       <!--<div id="btnSelectOK" class="Login_Btn" data-bind="dxButton: { text: 'OK', onClick:onSelectOKClick}"></div>-->
