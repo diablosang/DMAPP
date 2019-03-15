@@ -152,9 +152,9 @@
             success: function (data, textStatus) {
                 var gap = 10;
                 var cols = parseInt(8);
-                var pageWidth = 1440;
+                var pageWidth = 1600;
                 var itemWidth = parseInt((pageWidth - gap) / cols - gap);
-                var itemHeight = parseInt(itemWidth / 16 * 10);
+                var itemHeight = parseInt(itemWidth / 4 * 3);
 
                 var divCanvas = $("#divCanvasDevice");
                 divCanvas.empty();
