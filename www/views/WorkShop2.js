@@ -96,7 +96,7 @@
 
                     var gap = 10;
                     var cols = parseInt(8);
-                    var pageWidth = 1600;
+                    var pageWidth = 400;
                     var itemWidth = parseInt((pageWidth - gap) / cols - gap);
                     var itemHeight = parseInt(itemWidth / 4 * 3);
 
