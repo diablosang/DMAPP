@@ -161,6 +161,9 @@
                 else if (e.itemData.DEVOBJ == "COMMAND") {
                     Command(e);
                 }
+                else if (e.itemData.DEVOBJ == "M_AMD") {
+                    OpenAMD();
+                }
                 else {
                     var view = e.itemData.DEVOBJ + "?NEW=1&DEVPARAM=" + e.itemData.DEVPARAM + "&CODE_EQP=" + params.CODE_EQP;
                     var form = $("#formDevice").dxForm("instance");
@@ -600,6 +603,39 @@
                 }
             });
         });
+    }
+
+    function OpenAMD() {
+        var form = $("#formMain").dxForm("instance");
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+        var postData = {
+            userName: u,
+            methodName: "EMS.EMS_T_AMD.CreateRandom",
+            param: params.CODE_EQP
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                var view = "M_AMD?DEVPARAM=&CODE_EQP=" + params.CODE_EQP;
+                var form = $("#formDevice").dxForm("instance");
+                var formData = form.option("formData");
+                view = view + "&CODE_OP=" + formData.CODE_OP;
+                viewModel.popUserVisible(false);
+                DMAPP.app.navigate(view);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+
+        
     }
 
     return viewModel;

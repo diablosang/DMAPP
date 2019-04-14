@@ -36,7 +36,7 @@
             }
 
             try {
-                GetWinbox(this, params);
+                GetWinbox();
             }
             catch (e) {
                 DevExpress.ui.notify("该单据未包含明细信息", "error", 1000);
@@ -180,7 +180,8 @@
 
     }
 
-    function GetWinbox(viewModel, params) {
+
+    function GetWinbox() {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetWinboxDataSimple";
