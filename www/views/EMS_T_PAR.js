@@ -56,53 +56,34 @@
         },
         formOption: {
             items: [
-                //{
-                //    id: "TYPE_OP",
-                //    label: { text: "参数类型" },
-                //    dataField: "TYPE_OP",
-                //    editorType: "dxLookup",
-                //    editorOptions: {
-                //        readOnly: true,
-                //        displayExpr: "DES1",
-                //        valueExpr: "IDLINE",
-                //        dataSource: (function () {
-                //            if (DeviceLang() == "CHS") {
-                //                return [
-                //                    { IDLINE: "31", DES1: "压力" },
-                //                    { IDLINE: "32", DES1: "主轴转速" },
-                //                    { IDLINE: "33", DES1: "料盘转速" }
-                //                ];
-                //            } else {
-                //                return [
-                //                    { IDLINE: "31", DES1: "Pressure" },
-                //                    { IDLINE: "32", DES1: "RPM Spindle" },
-                //                    { IDLINE: "33", DES1: "RPM Turntable" }
-                //                ];
-                //            }
-                //        })()
-                //    }
-                //},
                 {
                     id: "VAL_31",
-                    label: { text: "压力" },
+                    label: { text: SysMsg.yl },
                     dataField: "VAL_31",
                     editorType: "dxNumberBox",
                     colSpan: 1
                 },
                 {
                     id: "VAL_32",
-                    label: { text: "主轴转速" },
+                    label: { text: SysMsg.yl },
                     dataField: "VAL_32",
                     editorType: "dxNumberBox",
                     colSpan: 1
                 },
                 {
                     id: "VAL_33",
-                    label: { text: "料盘转速" },
+                    label: { text: SysMsg.lp },
                     dataField: "VAL_33",
                     editorType: "dxNumberBox",
                     colSpan: 1
                 },
+                {
+                    id: "VAL_34",
+                    label: { text: SysMsg.pzj },
+                    dataField: "VAL_34",
+                    editorType: "dxNumberBox",
+                    colSpan: 1
+                }
             ],
             onFieldDataChanged: function (e) {
                 if (this.keepCache == true) {

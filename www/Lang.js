@@ -46,6 +46,7 @@ var chsMsg = {
     yl: "压力",
     zz: "主轴转速",
     lp: "料盘转速",
+    pzj:"批直径变动量",
     load: "加载数据",
     cc: "尺寸",
     sxl: "上下料",
@@ -102,6 +103,8 @@ var chsMsg = {
     amd_methoddesc: "控制方法说明",
     amd_f_image: "是否上传图片",
     amd_value: "点检结果",
+    useInput: "应用输入值",
+    inputValueHolder: "输入自定义值"
     
 }
 var engMsg = {
@@ -132,6 +135,7 @@ var engMsg = {
     yl: "Pressure",
     zz: "RPM Spindle",
     lp: "RPM Turntable",
+    pzj: "Vdwl",
     load: "Load Data",
     cc: "Size",
     sxl: "Materials",
@@ -188,6 +192,8 @@ var engMsg = {
     amd_methoddesc:"Method Description",
     amd_f_image: "Need Photo",
     amd_value: "Value",
+    useInput: "Use Input Value",
+    inputValueHolder:"Input Customized Value"
 }
 
 
