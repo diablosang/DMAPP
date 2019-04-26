@@ -1,4 +1,4 @@
-﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.trusteem.DMAPP" version="1.21.1" versionCode="">
+﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.trusteem.DMAPP" version="1.21.1b" versionCode="">
   <name>DMAPP</name>
   <description>Asapment Device Management Client</description>
   <author email="dev@trusteem.com" href="http://www.trusteem.com.cn">Trusteem.com</author>
