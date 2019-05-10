@@ -170,8 +170,15 @@
                         dataField: "ROUND",
                         colSpan: 1
                     }
+
+                    var item3 = {
+                        label: { text: SysMsg.pzj },
+                        dataField: "PZJ",
+                        colSpan: 1
+                    }
                     items.push(item1);
                     items.push(item2);
+                    items.push(item3);
                 }
                 else if (params.DEVPARAM == "55") {
                     var item1 = {

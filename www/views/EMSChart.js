@@ -22,8 +22,8 @@
             series: [
                 { name: SysMsg.yl, type: "line", valueField: "YL" },
                 { name: SysMsg.lp, type: "line", valueField: "LP" },
-                { name: SysMsg.zz, type: "line", valueField: "ZZ" },
-                { name: SysMsg.pzj, type: "line", valueField: "PZJ" }
+                { name: SysMsg.zz, type: "line", valueField: "ZZ" }
+                //{ name: SysMsg.pzj, type: "line", valueField: "PZJ" }
             ],
             argumentAxis: {
                 argumentType: "datetime",
@@ -66,7 +66,7 @@
         var ckYL = $("#ckYL").dxCheckBox("instance");
         var ckZZ = $("#ckZZ").dxCheckBox("instance");
         var ckLP = $("#ckLP").dxCheckBox("instance");
-        var ckPZJ = $("#ckPZJ").dxCheckBox("instance");
+        //var ckPZJ = $("#ckPZJ").dxCheckBox("instance");
 
         if (ckYL.option("value") == true){
             var ser = { name: SysMsg.yl, type: "line", valueField: "YL" };
@@ -83,10 +83,10 @@
             series.push(ser);
         }
 
-        if (ckPZJ.option("value") == true) {
-            var ser = { name: SysMsg.pzj, type: "line", valueField: "PZJ" };
-            series.push(ser);
-        }
+        //if (ckPZJ.option("value") == true) {
+        //    var ser = { name: SysMsg.pzj, type: "line", valueField: "PZJ" };
+        //    series.push(ser);
+        //}
 
         var charPar = $("#chartPar").dxChart("instance");
         charPar.option("series", series);

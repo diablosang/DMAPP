@@ -36,9 +36,9 @@
           <td>
             <div id="ckZZ" data-bind="dxCheckBox: { value: true,text: SysMsg.zz,onValueChanged: checkChanged}"></div>
           </td>
-          <td>
+          <!--<td>
             <div id="ckPZJ" data-bind="dxCheckBox: { value: true,text: SysMsg.pzj,onValueChanged: checkChanged}"></div>
-          </td>
+          </td>-->
         </tr>
       </table>
     </div>

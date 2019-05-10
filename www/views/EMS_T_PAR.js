@@ -76,13 +76,6 @@
                     dataField: "VAL_33",
                     editorType: "dxNumberBox",
                     colSpan: 1
-                },
-                {
-                    id: "VAL_34",
-                    label: { text: SysMsg.pzj },
-                    dataField: "VAL_34",
-                    editorType: "dxNumberBox",
-                    colSpan: 1
                 }
             ],
             onFieldDataChanged: function (e) {

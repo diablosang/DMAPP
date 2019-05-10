@@ -42,6 +42,16 @@
                 },
                 { name: SysMsg.fltj, type: "scatter", valueField: "T13", point: { image: { url: "images/AA.png", width: 16, height: 16 } } },
                 { name: SysMsg.flgh, type: "scatter", valueField: "T14", point: { image: { url: "images/CC.png", width: 16, height: 16 } } },
+                {
+                    name: SysMsg.round, type: "scatter", valueField: "TROUND", point: {
+                        symbol: "circle"
+                    }
+                },
+                {
+                    name: SysMsg.pzj, type: "scatter", valueField: "TPZJ", point: {
+                        symbol: "square"
+                    }
+                },
             ],
             argumentAxis: {
                 argumentType: "datetime",

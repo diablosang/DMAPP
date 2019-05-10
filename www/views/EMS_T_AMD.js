@@ -49,7 +49,7 @@
             }
         },
         formOption: {
-            colCount:2,
+            colCount:1,
             items: [
                 {
                     id: "CODE_AMITEM",
@@ -60,65 +60,65 @@
                         readOnly:true
                     }
                 },
-                {
-                    id: "DESC_AMITEM",
-                    label: { text: SysMsg.amd_descitem },
-                    dataField: "DESC_AMITEM",
-                    colSpan: 1,
-                    editorOptions: {
-                        readOnly: true
-                    }
-                },
-                {
-                    id: "TYPE_AMITEM",
-                    label: { text: SysMsg.amd_type },
-                    dataField: "TYPE_AMITEM",
-                    editorType: "dxLookup",
-                    editorOptions: {
-                        readOnly: true,
-                        displayExpr: DESField(),
-                        valueExpr: "IDLINE",
-                        dataSource: asListData.TP_EMS_B_AMITEM
-                    }
-                },
-                {
-                    id: "CONFIG",
-                    label: { text: SysMsg.amd_config },
-                    dataField: "CONFIG",
-                    editorType: "dxLookup",
-                    editorOptions: {
-                        readOnly: true,
-                        displayExpr: DESField(),
-                        valueExpr: "IDLINE",
-                        dataSource: asListData.TP_EMS_B_AMITEM
-                    }
-                },
-                {
-                    id: "METHOD",
-                    label: { text: SysMsg.amd_method },
-                    dataField: "METHOD",
-                    editorType: "dxLookup",
-                    editorOptions: {
-                        readOnly: true,
-                        displayExpr: DESField(),
-                        valueExpr: "IDLINE",
-                        dataSource: asListData.TP_EMS_B_AMITEM
-                    }
-                },
-                {
-                    id: "DESC_METHOD",
-                    label: { text: SysMsg.amd_methoddesc },
-                    dataField: "DESC_METHOD",
-                    colSpan: 1,
-                    editorOptions: {
-                        readOnly: true
-                    }
-                },
+                //{
+                //    id: "DESC_AMITEM",
+                //    label: { text: SysMsg.amd_descitem },
+                //    dataField: "DESC_AMITEM",
+                //    colSpan: 1,
+                //    editorOptions: {
+                //        readOnly: true
+                //    }
+                //},
+                //{
+                //    id: "TYPE_AMITEM",
+                //    label: { text: SysMsg.amd_type },
+                //    dataField: "TYPE_AMITEM",
+                //    editorType: "dxLookup",
+                //    editorOptions: {
+                //        readOnly: true,
+                //        displayExpr: DESField(),
+                //        valueExpr: "IDLINE",
+                //        dataSource: asListData.TP_EMS_B_AMITEM
+                //    }
+                //},
+                //{
+                //    id: "CONFIG",
+                //    label: { text: SysMsg.amd_config },
+                //    dataField: "CONFIG",
+                //    editorType: "dxLookup",
+                //    editorOptions: {
+                //        readOnly: true,
+                //        displayExpr: DESField(),
+                //        valueExpr: "IDLINE",
+                //        dataSource: asListData.TP_EMS_B_AMITEM
+                //    }
+                //},
+                //{
+                //    id: "METHOD",
+                //    label: { text: SysMsg.amd_method },
+                //    dataField: "METHOD",
+                //    editorType: "dxLookup",
+                //    editorOptions: {
+                //        readOnly: true,
+                //        displayExpr: DESField(),
+                //        valueExpr: "IDLINE",
+                //        dataSource: asListData.TP_EMS_B_AMITEM
+                //    }
+                //},
+                //{
+                //    id: "DESC_METHOD",
+                //    label: { text: SysMsg.amd_methoddesc },
+                //    dataField: "DESC_METHOD",
+                //    colSpan: 1,
+                //    editorOptions: {
+                //        readOnly: true
+                //    }
+                //},
                 {
                     id: "VALUE",
                     label: { text: SysMsg.amd_value },
                     dataField: "VALUE",
-                    colSpan: 2,
+                    colSpan: 1,
                     editorOptions: {
                         readOnly: false
                     }
