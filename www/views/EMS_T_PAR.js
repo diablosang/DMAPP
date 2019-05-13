@@ -65,7 +65,7 @@
                 },
                 {
                     id: "VAL_32",
-                    label: { text: SysMsg.yl },
+                    label: { text: SysMsg.zz },
                     dataField: "VAL_32",
                     editorType: "dxNumberBox",
                     colSpan: 1
