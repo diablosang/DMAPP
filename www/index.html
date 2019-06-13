@@ -34,9 +34,9 @@
     <!--<script type="text/javascript" src="js/dx.all.debug.js"></script>-->
 
     <link rel="stylesheet" type="text/css" href="index.css" />
-    <script type="text/javascript" src="app.config.js?ver=1.22.2"></script>
-    <script src="js/Asapment.js?ver=1.22.2"></script>
-    <link href="css/Trusteem.css?ver=1.22.2" rel="stylesheet" />
+    <script type="text/javascript" src="app.config.js?ver=1.25.0"></script>
+    <script src="js/Asapment.js?ver=1.25.0"></script>
+    <link href="css/Trusteem.css?ver=1.25.0" rel="stylesheet" />
     <script src="Lang.js"></script>
     <script type="text/javascript" src="index.js"></script>
 
@@ -55,8 +55,8 @@
 
     <!-- Views -->
 
-    <script type="text/javascript" src="views/WorkShop.js"></script>
-    <link rel="dx-template" type="text/html" href="views/WorkShop.dxview" />
+    <script type="text/javascript" src="views/WorkShop.js?ver=1.25.0"></script>
+    <link rel="dx-template" type="text/html" href="views/WorkShop.dxview?ver=1.25.0" />
     <script type="text/javascript" src="views/DataWindow.js"></script>
     <link rel="dx-template" type="text/html" href="views/DataWindow.dxview" />
     <script type="text/javascript" src="views/Login.js"></script>
@@ -65,82 +65,18 @@
     <script type="text/javascript" src="views/Config.js"></script>
     <link rel="dx-template" type="text/html" href="views/Config.dxview" />
 
-    <script type="text/javascript" src="views/DeviceTable.js"></script>
-    <link rel="dx-template" type="text/html" href="views/DeviceTable.dxview" />
+    <script type="text/javascript" src="views/DeviceTable.js?ver=1.25.0"></script>
+    <link rel="dx-template" type="text/html" href="views/DeviceTable.dxview?ver=1.25.0" />
 
     <script type="text/javascript" src="views/DeviceInfo.js"></script>
     <link rel="dx-template" type="text/html" href="views/DeviceInfo.dxview" />
 
     <script type="text/javascript">
         DevExpress.config({ forceIsoDateParsing: true });
-
-                //var onDeviceReady = function () {
-                //    initiateUI();
-                //};
-                //var getRegistrationID = function () {
-                //    window.plugins.jPushPlugin.getRegistrationID(onGetRegistrationID);
-                //};
-                //var onGetRegistrationID = function (data) {
-                //    try {
-                //        if (data.length == 0) {
-                //            var t1 = window.setTimeout(getRegistrationID, 1000);
-                //        }
-                //        var chn = data;
-                //        var sessionStorage = window.sessionStorage;
-                //        sessionStorage.removeItem("baiduchn");
-                //        sessionStorage.setItem("baiduchn", chn);
-                //    } catch (exception) {
-                //        DevExpress.ui.notify(exception, "error", 3000);
-                //    }
-                //};
-
-                //var onOpenNotification = function (event) {
-
-                //};
-                //var onReceiveNotification = function (event) {
-                //    var alertContent;
-                //    if (device.platform == "Android") {
-                //        alertContent = event.alert;
-                //    } else {
-                //        alertContent = event.aps.alert;
-                //        DevExpress.ui.notify(alertContent, "info", 3000);
-                //    }
-                //};
-                //var onReceiveMessage = function (event) {
-                //    var message;
-                //    if (device.platform == "Android") {
-                //        message = event.message;
-                //    } else {
-                //        message = event.content;
-                //    }
-                //    DevExpress.ui.notify(message, "info", 3000);
-                //};
-                //var initiateUI = function () {
-                //    try {
-                //        window.plugins.jPushPlugin.init();
-                //        window.setTimeout(getRegistrationID, 1000);
-                //        if (device.platform != "Android") {
-                //            window.plugins.jPushPlugin.setDebugModeFromIos();
-                //            window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
-                //        } else {
-                //            //window.plugins.jPushPlugin.setDebugMode(true);
-                //            //window.plugins.jPushPlugin.setStatisticsOpen(true);
-                //        }
-
-
-                //    } catch (exception) {
-                //        DevExpress.ui.notify(exception, "error", 3000);
-                //    }
-                //};
-
-                //document.addEventListener("deviceready", onDeviceReady, false);
-                //document.addEventListener("jpush.openNotification", onOpenNotification, false);
-                //document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
-                //document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
     </script>
 
-    <script type="text/javascript" src="views/EMS_PRO_START.js"></script>
-    <link rel="dx-template" type="text/html" href="views/EMS_PRO_START.dxview" />
+    <script type="text/javascript" src="views/EMS_PRO_START.js?ver=1.25.0"></script>
+    <link rel="dx-template" type="text/html" href="views/EMS_PRO_START.dxview?ver=1.25.0" />
 
     <script type="text/javascript" src="views/EMS_PRO_MAT.js"></script>
     <link rel="dx-template" type="text/html" href="views/EMS_PRO_MAT.dxview" />
@@ -148,11 +84,11 @@
     <script type="text/javascript" src="views/EMS_PRO_END.js"></script>
     <link rel="dx-template" type="text/html" href="views/EMS_PRO_END.dxview" />
 
-    <script type="text/javascript" src="views/EMS_T_PAR.js?ver=1.22.2"></script>
-    <link rel="dx-template" type="text/html" href="views/EMS_T_PAR.dxview?ver=1.22.2" />
+    <script type="text/javascript" src="views/EMS_T_PAR.js?ver=1.25.0"></script>
+    <link rel="dx-template" type="text/html" href="views/EMS_T_PAR.dxview?ver=1.25.0" />
 
-    <script type="text/javascript" src="views/EMS_T_PQC.js?ver=1.22.2"></script>
-    <link rel="dx-template" type="text/html" href="views/EMS_T_PQC.dxview?ver=1.22.2" />
+    <script type="text/javascript" src="views/EMS_T_PQC.js?ver=1.25.0"></script>
+    <link rel="dx-template" type="text/html" href="views/EMS_T_PQC.dxview?ver=1.25.0" />
 
     <script type="text/javascript" src="views/M_REP.js"></script>
     <link rel="dx-template" type="text/html" href="views/M_REP.dxview" />
@@ -173,8 +109,8 @@
     <link rel="dx-template" type="text/html" href="views/M_DOC.dxview" />
 
 
-    <script type="text/javascript" src="views/WorkShop2.js"></script>
-    <link rel="dx-template" type="text/html" href="views/WorkShop2.dxview" />
+    <script type="text/javascript" src="views/WorkShop2.js?ver=1.25.0"></script>
+    <link rel="dx-template" type="text/html" href="views/WorkShop2.dxview?ver=1.25.0" />
 
     <script type="text/javascript" src="views/EQCEdit.js"></script>
     <link rel="dx-template" type="text/html" href="views/EQCEdit.dxview" />
@@ -191,8 +127,8 @@
     <script type="text/javascript" src="views/TOAPReplace.js"></script>
     <link rel="dx-template" type="text/html" href="views/TOAPReplace.dxview" />
 
-    <script type="text/javascript" src="views/EMSChart.js?ver=1.22.2"></script>
-    <link rel="dx-template" type="text/html" href="views/EMSChart.dxview?ver=1.22.2" />
+    <script type="text/javascript" src="views/EMSChart.js?ver=1.25.0"></script>
+    <link rel="dx-template" type="text/html" href="views/EMSChart.dxview?ver=1.25.0" />
 
     <script type="text/javascript" src="views/EMSChart2.js"></script>
     <link rel="dx-template" type="text/html" href="views/EMSChart2.dxview" />
@@ -225,9 +161,12 @@
 		<script type="text/javascript" src="views/M_AMD.js"></script>
 		<link rel="dx-template" type="text/html" href="views/M_AMD.dxview"/>
 
-		<script type="text/javascript" src="views/EMS_T_AMD.js?ver=1.22.2"></script>
-		<link rel="dx-template" type="text/html" href="views/EMS_T_AMD.dxview?ver=1.22.2"/>
+		<script type="text/javascript" src="views/EMS_T_AMD.js?ver=1.25.0"></script>
+		<link rel="dx-template" type="text/html" href="views/EMS_T_AMD.dxview?ver=1.25.0"/>
 
+
+		<script type="text/javascript" src="views/EMS_T_WG.js?ver=1.25.0"></script>
+		<link rel="dx-template" type="text/html" href="views/EMS_T_WG.dxview?ver=1.25.0"/>
 </head>
 <body>
     <input id="fileSelector" type="file" style="display:none" />

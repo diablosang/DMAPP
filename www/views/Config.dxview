@@ -3,7 +3,7 @@
         <div class="dx-fieldset">
             <div class="dx-field">
                 <div id="lblAddress" class="dx-field-label">服务器地址：</div>
-                <div class="dx-field-value"><div data-bind="dxTextArea: {value: serviceURL,height: '70px'}"></div></div>
+                <div class="dx-field-value"><div id="lookupService" data-bind="dxLookup: lookupServiceOption"></div></div>
             </div>
             <div id="btnSave" class="Login_Btn" data-bind="dxButton: { text: '保存', onClick:onSaveClick}"></div>
             <div><br /></div>

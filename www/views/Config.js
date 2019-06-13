@@ -3,6 +3,17 @@
     var viewModel = {
         title: ko.observable(""),
         serviceURL: ko.observable(""),
+        lookupServiceOption: {
+            dataSource: [
+                { SERVICE: "http://192.168.2.6/DMWebAPI", DES: "南通正式库" },
+                { SERVICE: "http://58.221.237.66:8005/DMWebAPI", DES: "南通正式库（外网）" },
+                { SERVICE: "http://192.168.152.1/DMWebAPI", DES: "US正式库" },
+                { SERVICE:"http://localhost:61862",DES:"开发调试"}
+                //{ SERVICE: "http://10.192.144.99/DMWebAPI", DES: "IR正式库" },
+            ],
+            displayExpr: "DES",
+            valueExpr: "SERVICE"
+        },
         viewShown: function () {
             SetLanguage();
 
@@ -15,8 +26,15 @@
                 url = $("#WebApiServerURL")[0].value;
                 this.serviceURL(url);
             }
+
+            var lookup = $("#lookupService").dxLookup("instance");
+            lookup.option("value",url);
         },
         onSaveClick: function () {
+            var lookup = $("#lookupService").dxLookup("instance");
+            var url = lookup.option("value");
+            this.serviceURL(url);
+
             var localStorage = window.localStorage;
             localStorage.setItem("dmappurl", this.serviceURL());
             $("#WebApiServerURL")[0].value = this.serviceURL();

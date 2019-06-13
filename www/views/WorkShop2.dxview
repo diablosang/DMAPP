@@ -18,6 +18,9 @@
           <td width="75px">
             <div data-bind="dxButton: { text:SysMsg.ws_4,view:'',onClick:buttonReportClick }"></div>
           </td>
+          <td width="75px">
+            <div data-bind="dxButton: { text:SysMsg.ws_5,view:'EMS_T_WG',onClick:buttonFuncClick }"></div>
+          </td>
           <!--<td id="td1" width="75px" align="center">图示:</td>
                     <td id="td2" width="100px" align="center" style="background-color:rgb(51, 232, 37)">设备</td>
                     <td id="td3" width="100px" align="center" style="background-color:yellow">质检</td>
