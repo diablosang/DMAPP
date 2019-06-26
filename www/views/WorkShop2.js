@@ -87,13 +87,6 @@
                 url: url,
                 cache: false,
                 success: function (data, textStatus) {
-                    //var r = 0;
-                    //var c = 0;
-                    //var maxR = 0;
-                    //var maxC = 0;
-                    //var table = $("#tbWorkShop");
-                    //table.empty();
-
                     var gap = 10;
                     var cols = parseInt(8);
                     var pageWidth = 400;
@@ -115,6 +108,8 @@
                         item.itemInfo = itemInfo;
                         BindItem(item, divCanvas);
                     }
+
+                    BindBar();
                 },
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
                     viewModel.indicatorVisible(false);
@@ -126,6 +121,54 @@
             DevExpress.ui.notify(e.message, "error", 1000);
         }
 
+    }
+
+    function BindBar() {
+        var sessionStorage = window.sessionStorage;
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+        var postData = {
+            userName: u,
+            methodName: "EMS.Common.GetWorkShopBarAuth",
+            param: ""
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            cache: false,
+            success: function (data, textStatus) {
+                workShopBarAuth = data;
+                for (var i = 0; i < workShopBarAuth.length; i++) {
+                    if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1") >= 0) {
+                        $("#ws_1").show();
+                        continue;
+                    }
+                    if (workShopBarAuth[i].CODE_MENU.indexOf("WS_2") >= 0) {
+                        $("#ws_2").show();
+                        continue;
+                    }
+                    if (workShopBarAuth[i].CODE_MENU.indexOf("WS_3") >= 0) {
+                        $("#ws_3").show();
+                        continue;
+                    }
+                    if (workShopBarAuth[i].CODE_MENU.indexOf("WS_4") >= 0) {
+                        $("#ws_4").show();
+                        continue;
+                    }
+                    if (workShopBarAuth[i].CODE_MENU.indexOf("WS_5") >= 0) {
+                        $("#ws_5").show();
+                        continue;
+                    }
+                }
+
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
     }
 
     function BindItem(item, divCanvas) {

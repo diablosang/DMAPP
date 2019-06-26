@@ -3,23 +3,6 @@
 
     var viewModel = {
         tileBarOption: {
-            items: (function () {
-                if (DeviceLang() == "CHS") {
-                    return [
-                        { name: 'OK', text: '合格' },
-                        { name: 'CG', text: '改制' },
-                        { name: 'RT', text: '返工' },
-                        { name: 'SC', text: '报废' }
-                    ];
-                } else {
-                    return [
-                        { name: 'OK', text: 'OK' },
-                        { name: 'CG', text: 'Change' },
-                        { name: 'RT', text: 'Return' },
-                        { name: 'SC', text: 'Scrap' }
-                    ];
-                }
-            })(),
             direction: 'vertical',
             height: "100%",
             baseItemHeight: 192,
@@ -34,8 +17,60 @@
                 var view = "EQCEdit?TYPE=" + e.itemData.name;
                 DMAPP.app.navigate(view);
             }
+        },
+        viewShown: function (e) {
+            BindItem();
         }
     };
+
+
+    function BindItem() {
+        var itm = [];
+        for (var i = 0; i < workShopBarAuth.length; i++) {
+            if (DeviceLang() == "CHS") {
+
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_OK") >= 0) {
+                    itm.push({ name: 'OK', text: '合格' });
+                    continue;
+                }
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_CG") >= 0) {
+                    itm.push({ name: 'CG', text: '改制' });
+                    continue;
+                }
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_RT") >= 0) {
+                    itm.push({ name: 'RT', text: '返工' });
+                    continue;
+                }
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_SC") >= 0) {
+                    itm.push({ name: 'SC', text: '报废' });
+                    continue;
+                }
+            }
+            else {
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_OK") >= 0) {
+                    itm.push({ name: 'OK', text: 'OK' });
+                    continue;
+                }
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_CG") >= 0) {
+                    itm.push({ name: 'CG', text: 'Change' });
+                    continue;
+                }
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_RT") >= 0) {
+                    itm.push({ name: 'RT', text: 'Return' });
+                    continue;
+                }
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_SC") >= 0) {
+                    itm.push({ name: 'SC', text: 'Scrap' });
+                    continue;
+                }
+            }
+        }
+
+
+
+        var tileBar = $("#tileBar").dxTileView("instance");
+        tileBar.option("dataSource", itm);
+    }
 
     return viewModel;
 };

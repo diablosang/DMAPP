@@ -6,19 +6,19 @@
           <td width="10px">
             &nbsp;
           </td>
-          <td width="75px">
+          <td id="ws_1" width="75px" style="display:none">
             <div data-bind="dxButton: { text: SysMsg.ws_1,view:'EQCMenu',onClick:buttonFuncClick }"></div>
           </td>
-          <td width="75px">
+          <td id="ws_2" width="75px" style="display:none">
             <div data-bind="dxButton: { text: SysMsg.ws_2,view:'TRFEdit',onClick:buttonFuncClick }"></div>
           </td>
-          <td width="75px">
+          <td id="ws_3" width="75px" style="display:none">
             <div data-bind="dxButton: { text: SysMsg.ws_3,view:'M_DOC2',onClick:buttonFuncClick }"></div>
           </td>
-          <td width="75px">
+          <td id="ws_4" width="75px" style="display:none">
             <div data-bind="dxButton: { text:SysMsg.ws_4,view:'',onClick:buttonReportClick }"></div>
           </td>
-          <td width="75px">
+          <td id="ws_5" width="75px" style="display:none">
             <div data-bind="dxButton: { text:SysMsg.ws_5,view:'EMS_T_WG',onClick:buttonFuncClick }"></div>
           </td>
           <!--<td id="td1" width="75px" align="center">图示:</td>

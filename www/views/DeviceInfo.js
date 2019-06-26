@@ -296,11 +296,11 @@
     function GetMenu(viewModel, params) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetData"
-        var sql = "select * from EMS_B_MENU where isnull(PAR_MENU,'')='"+viewModel.parentMenu()+"' order by DSPIDX";
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod"
         var postData = {
             userName: u,
-            sql:sql
+            methodName: "EMS.Common.GetDeviceMenu",
+            param: viewModel.parentMenu()
         }
 
         $.ajax({
@@ -311,7 +311,7 @@
             success: function (data, textStatus) {
                 var tile = $("#tileMenu").dxTileView("instance");
                 var items = data;
-                if(viewModel.parentMenu()!=""){
+                if (viewModel.parentMenu() != "") {
                     var back = { CODE_MENU: "SYS_BACK", DESC_CH: SysMsg.goback, DEVOBJ: "BACK", DSPIDX: 99 };
                     items.push(back);
                 }

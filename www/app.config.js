@@ -1,11 +1,12 @@
-﻿// NOTE object below must be a valid JSON
+// NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
-var keepPopUserInfo = false;
-var appVer = "1.25.0";
+var keepPopUserInfo = true;
+var appVer = "1.26.0";
 var dbProfile = "JGBR";
 var asUserList = [];
 var nullDeviceType = "PC";
 var asListData = {};
+var workShopBarAuth = [];
 
 
 window.DMAPP = $.extend(true, window.DMAPP, {
