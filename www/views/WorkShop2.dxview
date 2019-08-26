@@ -19,7 +19,7 @@
             <div data-bind="dxButton: { text:SysMsg.ws_4,view:'',onClick:buttonReportClick }"></div>
           </td>
           <td id="ws_5" width="75px" style="display:none">
-            <div data-bind="dxButton: { text:SysMsg.ws_5,view:'EMS_T_WG',onClick:buttonFuncClick }"></div>
+            <div id="btnWG" data-bind="dxButton: { text:SysMsg.ws_5,onClick:buttonWGClick }"></div>
           </td>
           <!--<td id="td1" width="75px" align="center">图示:</td>
                     <td id="td2" width="100px" align="center" style="background-color:rgb(51, 232, 37)">设备</td>
@@ -43,6 +43,7 @@
       <div id="divCanvas"/>
       <!--<table id="tbWorkShop" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>-->
     </div>
+    <div id="asWG" data-bind="dxActionSheet:actionSheetWGOption"></div>
     <!--<div style="position:absolute;top:50px;bottom:0;overflow-y:auto;height:auto;width:100%">
           <table id="tbWorkShop" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>
         </div>-->

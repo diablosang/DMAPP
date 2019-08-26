@@ -7,6 +7,8 @@
             dataSource: [
                 { SERVICE: "http://192.168.2.6/DMWebAPI", DES: "南通正式库" },
                 { SERVICE: "http://58.221.237.66:8005/DMWebAPI", DES: "南通正式库（外网）" },
+                { SERVICE: "http://192.168.2.6/DMWebAPITest", DES: "南通测试库" },
+                { SERVICE: "http://58.221.237.66:8005/DMWebAPITest", DES: "南通测试库（外网）" },
                 { SERVICE: "http://192.168.152.1/DMWebAPI", DES: "US正式库" },
                 { SERVICE:"http://localhost:61862",DES:"开发调试"}
                 //{ SERVICE: "http://10.192.144.99/DMWebAPI", DES: "IR正式库" },

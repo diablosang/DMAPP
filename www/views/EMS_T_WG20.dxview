@@ -1,4 +1,4 @@
-<div data-options="dxView : { name: 'EMS_T_WG', title: '称重' } " >
+<div data-options="dxView : { name: 'EMS_T_WG20', title: '冷镦称重' } " >
   <div data-bind="dxCommand: { icon: 'home', id: 'cmdHome', onExecute: cmdHomeExecute, title: '' }"></div>
   <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
     <div id="loadIndicator" class="indicator" data-bind="dxLoadIndicator: { visible: indicatorVisible }"></div>
@@ -8,6 +8,9 @@
     </div>
     <div style="overflow:hidden;">
       <div id="formMain" data-bind="dxForm:formOption" class="Margin5"></div>
+      <div id="detailBar" data-bind="dxToolbar: detailBarOption" class="Margin5"></div>
+      <div id="gridDetail" data-bind="dxDataGrid: gridDetailOption" class="Margin5"></div>
     </div>
+    
   </div>
 </div>

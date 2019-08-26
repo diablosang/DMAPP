@@ -5,6 +5,26 @@
         title: ko.observable(""),
         versionChecked: ko.observable(false),
         indicatorVisible: ko.observable(false),
+        actionSheetWGOption: {
+            usePopover: true,
+            target: '#btnWG',
+            dataSource: [
+                {
+                    text: "普通称重",
+                    onClick: function (e) {
+                        var view = "EMS_T_WG";
+                        DMAPP.app.navigate(view);
+                    }
+                },
+                {
+                    text: "冷镦称重",
+                    onClick: function (e) {
+                        var view = "EMS_T_WG20";
+                        DMAPP.app.navigate(view);
+                    }
+                }
+            ]
+        },
         viewShown: function () {
             SetLanguage();
 
@@ -67,7 +87,11 @@
         },
         buttonReportClick: function (e) {
             DMAPP.app.navigate("DMREPORT");
-        }
+        },
+        buttonWGClick: function (e) {
+            var asWG = $("#asWG").dxActionSheet("instance");
+            asWG.show();
+        },
     };
 
     function BindData(viewModel) {

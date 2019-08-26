@@ -202,7 +202,7 @@ function GridRowUpdated(viewModel,gridName,e) {
         cache: false,
         success: function (data, textStatus) {
             if (data.DATA != null) {
-                var dr = data[0]
+                var dr = data.DATA[0]
                 var dataSource = option.dataSource;
                 dataSource[option.currentRow] = dr;
                 grid.option("dataSource", dataSource);
@@ -363,10 +363,12 @@ function UpdateDataWindow(viewModel) {
             }
             catch(e){}
             //form.repaint();
+            viewModel.keepCache = true;
         },
         error: function (xmlHttpRequest, textStatus, errorThrown) {
             ServerError(xmlHttpRequest.responseText);
             viewModel.indicatorVisible(false);
+            viewModel.keepCache = true;
         }
     });
 
@@ -401,10 +403,12 @@ function UpdateGridDataWindow(viewModel,gridname) {
             dataSource[option.currentRow] = dr;
             grid.option("dataSource", dataSource);
             grid.refresh();
+            viewModel.keepCache = true;
         },
         error: function (xmlHttpRequest, textStatus, errorThrown) {
             ServerError(xmlHttpRequest.responseText);
             viewModel.indicatorVisible(false);
+            viewModel.keepCache = true;
         }
     });
 
