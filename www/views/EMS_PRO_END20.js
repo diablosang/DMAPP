@@ -55,8 +55,7 @@
             }
         },
         formOption: {
-            colCount: 3,
-            scrollingEnabled: true,
+            colCount: 2,
             items: [
                 {
                     id: "CODE_ITEM",
@@ -85,6 +84,10 @@
                     dataField: "F_CLS",
                     colSpan: 1,
                     editorType: "dxCheckBox",
+                },
+                {
+                    itemType: "empty",
+                    colSpan: 1
                 },
                 {
                     id: "BOX1",
