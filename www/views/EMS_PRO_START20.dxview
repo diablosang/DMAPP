@@ -7,7 +7,10 @@
             </div>
         </div>
         <div style="overflow:hidden;">
-            <div id="formMain" data-bind="dxForm:formOption" class="Margin5"></div>
+            <div data-bind="dxScrollView: {useNative: false}" class="ItemList-ScrollView">
+                <div id="formMain" data-bind="dxForm:formOption" class="Margin5"></div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -56,6 +56,7 @@
         },
         formOption: {
             colCount: 3,
+            scrollingEnabled: true,
             items: [
                 {
                     id: "CODE_ITEM",
@@ -79,7 +80,11 @@
                     }
                 },
                 {
-                    itemType: "empty"
+                    id: "F_CLS",
+                    label: { text: "是否全部下料" },
+                    dataField: "F_CLS",
+                    colSpan: 1,
+                    editorType: "dxCheckBox",
                 },
                 {
                     id: "BOX1",
@@ -116,14 +121,7 @@
                     label: { text: "箱号6" },
                     dataField: "BOX6",
                     colSpan: 1
-                },
-                {
-                    id: "F_CLS",
-                    label: { text: "是否全部下料" },
-                    dataField: "F_CLS",
-                    colSpan: 1,
-                    editorType: "dxCheckBox",
-                },
+                }
             ],
             onFieldDataChanged: function (e) {
                 if (this.keepCache == true) {

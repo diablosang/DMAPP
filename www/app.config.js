@@ -1,7 +1,7 @@
-﻿// NOTE object below must be a valid JSON
+// NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
-var keepPopUserInfo = false;
-var appVer = "1.29.2";
+var keepPopUserInfo = true;
+var appVer = "1.29.3";
 var dbProfile = "JGBR";
 var asUserList = [];
 var nullDeviceType = "PC";
