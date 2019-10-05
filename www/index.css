@@ -9,9 +9,7 @@ body {
     padding: 0;
 }
 
-input[readonly] {
-    background-color: rgb(245,245,245);
-}
+
 
 .CavItem {
     position: absolute;
@@ -37,4 +35,59 @@ input[readonly] {
 
 .CavText {
     font-size: 14px;
+}
+
+.div_deivce {
+    text-align: center;
+    box-shadow: 3px 3px 3px #888888;
+    border-radius: 7px;
+    background-color: #F5F5F5;
+    vertical-align: top;
+    display: inline-grid;
+    min-width: 120px;
+    min-height: 75px;
+    margin: 10px;
+    padding: 10px;
+}
+.div_deivce_item{
+    font-size:small;
+}
+@media screen and(-ms-high-contrast:active),(-ms-high-contrast:none) {
+    .div_deivce {
+        float:left; 
+        list-style-type:none;
+    }
+
+    .tbDevice {
+    }
+}
+
+.status_op_0 {
+    background-color: #33E825 !important;
+}
+.status_op_7 {
+    background-color: #FFFF00 !important;
+}
+.status_op_2 {
+    background-color: #FF2D2D !important;
+}
+.status_op_3 {
+    background-color: #2894FF !important;
+}
+.status_op_4 {
+    background-color: #F5F5F5 !important;
+}
+
+input[readonly] {
+    background-color: rgb(245,245,245);
+}
+
+.tileMenu dx-scrollable-content{
+    min-height:unset;
+}
+.dx-field-item-label-content{
+    width:65px;
+}
+.parameter_sub_btn{
+    margin-left:50px;
 }

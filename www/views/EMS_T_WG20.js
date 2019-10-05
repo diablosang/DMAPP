@@ -37,6 +37,16 @@
             catch (e) {
                 DevExpress.ui.notify(SysMsg.noDetail, "error", 1000);
             }
+            //$("#gridDetail .dx-texteditor-input").on("focusin", function (e) {
+            //    var $focused = $(':focus'), dataField;
+            //    if ($focused.length)
+            //        if ($focused[0].name)
+            //            dataField = $focused[0].name;
+            //        else {
+            //            dataField = $focused[0].id.substr($focused[0].id.lastIndexOf("_") + 1)
+            //        }
+            //    console.log(dataField);
+            //})
         },
         viewHidden: function (e) {
             if (viewModel.keepCache == false) {
@@ -103,6 +113,14 @@
                 }
 
             },
+            //onRowValidating: function (e) {
+            //    var idx = e.component.getRowIndexByKey(e.key);
+            //    e.rowIndex = idx;
+            //    if (e.key.QTY_WT <= 0) {
+            //        DevExpress.ui.notify("请填写重量", "error", 1500);
+            //        return false;
+            //    }
+            //},
             onRowUpdated: function (e) {
                 var idx = e.component.getRowIndexByKey(e.key);
                 e.rowIndex = idx;
@@ -115,7 +133,15 @@
                 if (GridRowDelete(this, "gridDetail", e) == false) {
                     e.cancel = true;
                 }
+            },
+            onEditorPreparing: function (e) {
+                if (e.parentType == 'dataRow' && e.dataField == 'QTY_WT') {
+                    e.editorOptions.onFocusIn = function (args) {
+                        args.element.find("input").select();
+                    }
+                }
             }
+
         },
         tileBarOption: {
             items: [
@@ -188,6 +214,7 @@
     }
 
     function BarItemClick(e) {
+        debugger;
         if (e.itemData.needComment == "1") {
             this.commentVisible(true);
             this.comment(e.itemData.options.text);
@@ -201,16 +228,18 @@
                 }
             }
 
-            ValidChange();
-            setTimeout(function () {
-                var par = { _noback: "1" };
-                var result = ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", par);
-                if (result == true) {
-                    DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
-                    viewModel.keepCache = false;
-                    GetWinbox(viewModel, params);
-                }
-            }, 200);
+            if (ValidChange(e)) {
+                setTimeout(function () {
+                    var par = { _noback: "1" };
+                    var result = ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", par);
+                    if (result == true) {
+                        DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+                        viewModel.keepCache = false;
+                        GetWinbox(viewModel, params);
+                    }
+                }, 200);
+            }
+            
         }
     }
 
@@ -242,9 +271,17 @@
         });
     }
 
-    function ValidChange() {
+    function ValidChange(e) {
         var gridDetail = $("#gridDetail").dxDataGrid("instance");
+        var rows = gridDetail.option().dataSource;
+        for (var i = 0; i < rows.length; i++) {
+            if (rows[i].QTY_WT <= 0) {
+                DevExpress.ui.notify("请填写重量", "error", 1500);
+                return false;
+            }
+        }
         gridDetail.closeEditCell();
+        return true;
     }
 
     return viewModel;

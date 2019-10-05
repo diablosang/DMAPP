@@ -14,8 +14,13 @@
                     "</div><div class=\"BKImage\" style=\"background-image: url('" + url + "/images/JGBR/" + itemData.text + ".jpg')\"></div>");
             },
             onItemClick: function (e) {
-                var view = "EQCEdit?TYPE=" + e.itemData.name;
-                DMAPP.app.navigate(view);
+                if (e.itemData.name == 'PAR') {
+                    DMAPP.app.navigate("Parameter");
+                } else {
+                    var view = "EQCEdit?TYPE=" + e.itemData.name;
+                    DMAPP.app.navigate(view);
+                }
+                
             }
         },
         viewShown: function (e) {
@@ -45,6 +50,11 @@
                     itm.push({ name: 'SC', text: '报废' });
                     continue;
                 }
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_PAR") >= 0) {
+                    itm.push({ name: 'PAR', text: '质检录入' });
+                    continue;
+                }
+                
             }
             else {
                 if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_OK") >= 0) {
@@ -61,6 +71,10 @@
                 }
                 if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_SC") >= 0) {
                     itm.push({ name: 'SC', text: 'Scrap' });
+                    continue;
+                }
+                if (workShopBarAuth[i].CODE_MENU.indexOf("WS_1_PAR") >= 0) {
+                    itm.push({ name: 'PAR', text: '质检录入' });
                     continue;
                 }
             }

@@ -1,4 +1,4 @@
-<div data-options="dxView : { name: 'REP_START', title: 'REP_START' } " >
+<div data-options="dxView : { name: 'EMS_T_QC201', title: 'EMS_T_QC201' } ">
     <div data-bind="dxCommand: { icon: 'home', id: 'cmdHome', onExecute: cmdHomeExecute, title: '' }"></div>
     <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
         <div id="loadIndicator" class="indicator" data-bind="dxLoadIndicator: { visible: indicatorVisible }"></div>

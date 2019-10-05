@@ -1,9 +1,10 @@
-﻿// NOTE object below must be a valid JSON
+// NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
-var keepPopUserInfo = false;
-var appVer = "1.29.4";
+var keepPopUserInfo = true;
+var appVer = "1.33.1";
 var dbProfile = "JGBR";
 var asUserList = [];
+var asRoles = [];
 var nullDeviceType = "PC";
 var asListData = {};
 var workShopBarAuth = [];

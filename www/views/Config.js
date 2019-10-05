@@ -10,17 +10,21 @@
                 { SERVICE: "http://192.168.2.6/DMWebAPITest", DES: "南通测试库" },
                 { SERVICE: "http://58.221.237.66:8005/DMWebAPITest", DES: "南通测试库（外网）" },
                 { SERVICE: "http://192.168.152.1/DMWebAPI", DES: "US正式库" },
-                { SERVICE:"http://localhost:61862",DES:"开发调试"}
+                { SERVICE: "http://66.180.234.58:8005/DMWebAPI", DES: "US正式库（外网）" },
+                { SERVICE: "http://localhost/WebAPI", DES: "开发调试" },
+                { SERVICE: "http://localhost:9080/ACWFService", DES: "开发调试2" }
                 //{ SERVICE: "http://10.192.144.99/DMWebAPI", DES: "IR正式库" },
             ],
             displayExpr: "DES",
             valueExpr: "SERVICE"
         },
+        interval: ko.observable(60),
         viewShown: function () {
             SetLanguage();
 
             var localStorage = window.localStorage;
             var url = localStorage.getItem("dmappurl");
+           
             if (url != null) {
                 this.serviceURL(url);
             }
@@ -29,8 +33,14 @@
                 this.serviceURL(url);
             }
 
+
             var lookup = $("#lookupService").dxLookup("instance");
-            lookup.option("value",url);
+            lookup.option("value", url);
+            var t = localStorage.getItem("workshopIntervalTime");
+            if (t&&!isNaN(t)) {
+                this.interval(t);
+            }
+
         },
         onSaveClick: function () {
             var lookup = $("#lookupService").dxLookup("instance");
@@ -39,6 +49,7 @@
 
             var localStorage = window.localStorage;
             localStorage.setItem("dmappurl", this.serviceURL());
+            localStorage.setItem("workshopIntervalTime", this.interval());
             $("#WebApiServerURL")[0].value = this.serviceURL();
             DevExpress.ui.notify(SysMsg.saveSuccess, "success", 1000);
         },
@@ -69,6 +80,7 @@
              viewModel.serviceURL(url);
              var localStorage = window.localStorage;
              localStorage.setItem("dmappurl", this.serviceURL());
+             
              $("#WebApiServerURL")[0].value = this.serviceURL();
              DevExpress.ui.notify(SysMsg.saveFailed, "success", 1000);
          },

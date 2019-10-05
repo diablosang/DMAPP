@@ -1,4 +1,6 @@
-﻿DMAPP.WorkShop2 = function (params) {
+﻿var intervalTime = 60;
+var timer = null;
+DMAPP.WorkShop2 = function (params) {
     "use strict";
 
     var viewModel = {
@@ -25,6 +27,9 @@
                 }
             ]
         },
+        viewHidden: function () {
+            clearTimeout(timer);
+        },
         viewShown: function () {
             SetLanguage();
 
@@ -46,8 +51,11 @@
                 DMAPP.app.navigate(view, option);
                 return;
             }
-
+            var t = window.localStorage.getItem("workshopIntervalTime");
+            if (!isNaN(t))
+                intervalTime = t;
             BindData(this); 
+            BindFieldData();
         },
         onLogoffClick: function () {
             var sessionStorage = window.sessionStorage;
@@ -92,16 +100,56 @@
             var asWG = $("#asWG").dxActionSheet("instance");
             asWG.show();
         },
+        listFieldsOption: {
+            selectionMode: "all",
+            keyExpr: "FIELDNAME"
+        },
+        popupSelectOption: {
+            toolbarItems: [{
+                location: 'center', options: {
+                    text: '确定',
+                    onClick: function (e) {
+                        SelectOK();
+                    }
+                }, widget: 'dxButton'
+            }],
+            onShown: function (e) {
+                var list = $("#listSelect").dxList("instance");
+                list.option("dataSource", this.fieldList);
+                list.unselectAll();
+
+                var localStorage = window.localStorage;
+                var selectedFields = localStorage.getItem("selectedFields");
+                if (selectedFields != null) {
+                    var fields = JSON.parse(selectedFields);
+                    for (var i = 0; i < fields.length; i++) {
+                        for (var j = 0; j < this.fieldList.length; j++) {
+                            if (this.fieldList[j].FIELDNAME == fields[i]) {
+                                list.selectItem(j);
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        onFieldSelectClick: function (e) {
+            var pop = $("#popSelect").dxPopup("instance");
+            pop.show();
+        },
+        onSelectOKClick: function (e) {
+
+        }
     };
 
-    function BindData(viewModel) {
+    function BindFieldData() {
         try {
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
             var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+
             var postData = {
                 userName: u,
-                methodName: "EMS.Common.GetWorkShop",
+                methodName: "EMS.Common.GetDeviceFields",
                 param: ""
             }
 
@@ -111,29 +159,35 @@
                 url: url,
                 cache: false,
                 success: function (data, textStatus) {
-                    var gap = 10;
-                    var cols = parseInt(8);
-                    var pageWidth = 400;
-                    var itemWidth = parseInt((pageWidth - gap) / cols - gap);
-                    var itemHeight = parseInt(itemWidth / 4 * 3);
+                    viewModel.fieldList = data;
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    viewModel.indicatorVisible(false);
+                    ServerError(xmlHttpRequest.responseText);
+                }
+            });
 
-                    var divCanvas = $("#divCanvas");
-                    divCanvas.empty();
+            postData = {
+                userName: u,
+                methodName: "EMS.Common.GetColorTable",
+                param: ""
+            };
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: postData,
+                cache: false,
+                success: function (data, textStatus) {
+                    var table = $("#tbLegend");
+                    table.empty();
+                    $('<tr>').attr('id', 'trLegend').appendTo(table);
+                    var tr = $("#trLegend");
                     for (var i = 0; i < data.length; i++) {
-                        var item = data[i];
-                        var itemInfo = {
-                            htmlItem: "<div id='item" + item.CODE_LINE + "' class='CavItem'/>",
-                            posX: (itemWidth + gap) * (item.POS_X - 1) + gap,
-                            posY: (itemHeight + gap) * (item.POS_Y - 1) + gap,
-                            w: itemWidth * item.SIZE_W + gap * (item.SIZE_W - 1),
-                            h: itemHeight * item.SIZE_H + gap * (item.SIZE_H - 1)
-                        };
-
-                        item.itemInfo = itemInfo;
-                        BindItem(item, divCanvas);
+                        var desc = DeviceLang() == "CHS" ? data[i].DES1 : data[i].DES2;
+                        var color = "#" + data[i].COLOR;
+                        var html = "<td align='center' style='width:100px;background-color:" + color + "'>" + desc + "</td>";
+                        $(html).appendTo(tr);
                     }
-
-                    BindBar();
                 },
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
                     viewModel.indicatorVisible(false);
@@ -146,8 +200,127 @@
         }
 
     }
+    function SelectOK() {
+        var list = $("#listSelect").dxList("instance");
+        var selectedFields = [];
+        var fieldList = viewModel.fieldList;
+        for (var i = 0; i < fieldList.length; i++) {
+            if (list.isItemSelected(i)) {
+                selectedFields.push(fieldList[i].FIELDNAME);
+            }
+        }
 
+        var localStorage = window.localStorage;
+        localStorage.setItem("selectedFields", JSON.stringify(selectedFields));
+        var pop = $("#popSelect").dxPopup("instance");
+        pop.hide();
+        BindData();
+    }
+    function BindData(viewModel) {
+        try {
+            var sessionStorage = window.sessionStorage;
+            var u = sessionStorage.getItem("username");
+            if (asRoles.indexOf("MFG_EMP") != -1) {
+                
+                //生产员工角色
+                var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+
+                var postData = {
+                    userName: u,
+                    methodName: "EMS.Common.GetAllDeviceTable",
+                    param: ''
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: postData,
+                    url: url,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var divDevices = $("#tbDevice");
+                        divDevices.empty();
+                        var localStorage = window.localStorage;
+                        var selectedFields = localStorage.getItem("selectedFields");
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var item_div = $("<div class='div_deivce'><div>" + item.CODE_EQP + "</div></div>");
+                            item_div.attr('onclick', "DeivceClick('" + item.CODE_EQP + "');");
+                            item_div.css('background-color', '#' + item.COLOR);
+                            if (selectedFields != null) {
+                                var fields = JSON.parse(selectedFields);
+                                for (var s = 0; s < fields.length; s++) {
+                                    if (item[fields[s]])
+                                        item_div.append("<div class='div_deivce_item'>" + item[fields[s]] + "</div>");
+                                }
+                            }
+                            $("#tbDevice").append(item_div);
+                        }
+                        
+                        BindBar();
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        viewModel.indicatorVisible(false);
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                });
+            }
+            //非生产员工角色
+            else {
+                $("#tbLegend").hide();
+                $("#tbDevice").hide();
+                var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+                var postData = {
+                    userName: u,
+                    methodName: "EMS.Common.GetWorkShop",
+                    param: ""
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: postData,
+                    url: url,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var gap = 10;
+                        var cols = parseInt(8);
+                        var pageWidth = 400;
+                        var itemWidth = parseInt((pageWidth - gap) / cols - gap);
+                        var itemHeight = parseInt(itemWidth / 4 * 3);
+
+                        var divCanvas = $("#divCanvas");
+                        divCanvas.empty();
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var itemInfo = {
+                                htmlItem: "<div id='item" + item.CODE_LINE + "' class='CavItem'/>",
+                                posX: (itemWidth + gap) * (item.POS_X - 1) + gap,
+                                posY: (itemHeight + gap) * (item.POS_Y - 1) + gap,
+                                w: itemWidth * item.SIZE_W + gap * (item.SIZE_W - 1),
+                                h: itemHeight * item.SIZE_H + gap * (item.SIZE_H - 1)
+                            };
+
+                            item.itemInfo = itemInfo;
+                            BindItem(item, divCanvas);
+                        }
+
+                        BindBar();
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        viewModel.indicatorVisible(false);
+                        ServerError(xmlHttpRequest.responseText);
+                    }
+                });
+            }
+            
+        }
+        catch (e) {
+            DevExpress.ui.notify(e.message, "error", 1000);
+        }
+
+    }
+    
     function BindBar() {
+        clearTimeout(timer);
         var sessionStorage = window.sessionStorage;
         var u = sessionStorage.getItem("username");
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
@@ -186,7 +359,16 @@
                         continue;
                     }
                 }
-
+                if (asRoles.indexOf("MFG_EMP") != -1) {
+                    $("#ws_6").show();
+                }
+                var t = localStorage.getItem("workshopIntervalTime");
+                if (!isNaN(t)) {
+                    t = 60;
+                }
+                timer = setTimeout(function () {
+                    BindData(this);
+                }, t * 1000);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);
@@ -302,7 +484,12 @@
 
     function SetLanguage() {
         if (DeviceLang() == "CHS") {
-            viewModel.title("产线列表");
+            
+            if (asRoles.indexOf("MFG_EMP") != -1) {
+                viewModel.title("设备列表");
+            } else {
+                viewModel.title("产线列表");
+            }
         }
         else {
             viewModel.title("Product Line");
@@ -335,4 +522,10 @@ function OpenWorkShop(CODE_LINE, DESC_LINE, TYPE) {
         var view = "M_DOC2";
         DMAPP.app.navigate(view);
     }
+}
+
+function DeivceClick(e) {
+    //var CODE_EQP = e.srcElement.attributes["CODE_EQP"].value;
+    var view = "DeviceInfo?CODE_EQP=" + e;
+    DMAPP.app.navigate(view);
 }

@@ -1,5 +1,6 @@
-﻿DMAPP.DeviceInfo = function (params) {
+﻿DMAPP.Process = function (params) {
     "use strict";
+
     var viewModel = {
         title: ko.observable(""),
         indicatorVisible: ko.observable(false),
@@ -20,150 +21,121 @@
         },
         formOption: {
             colCount: 2,
-            itemType: "group",
             items: [
                 {
-                    itemType: "group",
-                    template: function (data, itemElement) {
-                        if (data.formData.IMAGE)
-                            itemElement.append("<img src='data:image;base64," + data.formData.IMAGE + "' style='max-height:220px;max-width:250px;' />");
+                    id: "CODE_EQP",
+                    label: { text: "设备编号" },
+                    editorOptions: {
+                        readOnly: true
                     },
-                    colSpan: 1,
+                    dataField: "CODE_EQP",
+                    colSpan: 1
                 },
                 {
-                    itemType: "group",
-                    colCount: 2,
-                    items: [
-                        {
-                            id: "CODE_EQP",
-                            label: { text: "设备编号" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "CODE_EQP",
-                            colSpan: 2,
-                        },
-                        {
-                            id: "CODE_OP",
-                            label: { text: "工序" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "CODE_OP",
-                            colSpan: 1,
-                        },
-                        {
-                            id: "STATUS_OP",
-                            label: { text: "状态" },
-                            dataField: "STATUS_OP",
-                            template: function (data, itemElement) {
-                                itemElement.append("<input  class='dx-texteditor-input status_op_" + data.editorOptions.value + "' type='text' readonly='true' aria-readonly='true' spellcheck='false' role='textbox' tabindex='0' name='STATUS_OP' value='" + StatusEnum(data.editorOptions.value)+"' aria-required='false'>");
+                    id: "STATUS_OP",
+                    label: { text: "状态" },
+                    editorType: "dxLookup",
+                    editorOptions: {
+                        readOnly: true,
+                        dataSource: (function () {
+                            if (DeviceLang() == "CHS") {
+                                return [
+                                    { IDLINE: 0, DES: "运行" },
+                                    { IDLINE: 1, DES: "维护" },
+                                    { IDLINE: 2, DES: "维修" },
+                                    { IDLINE: 3, DES: "大修" },
+                                    { IDLINE: 4, DES: "空闲中" }
+                                ];
                             }
-                        },
-                        {
-                            id: "NAME_EQP",
-                            label: { text: "设备名称" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "NAME_EQP",
-                            colSpan: 2,
-                        },
-                        {
-                            id: "SPEC_EQP",
-                            label: { text: "规格" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "SPEC_EQP",
-                            colSpan: 2,
-                        },
-                        {
-                            id: "MODEL_EQP",
-                            label: { text: "型号" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "MODEL_EQP",
-                            colSpan: 2,
-                        },
-                        {
-                            itemType: "button",
-                            label: { text: "文档" },
-                            dataField: "CODE_DOC",
-                            template: function (data, itemElement) {
-                                if (data.editorOptions.value) {
-                                    var u = sessionStorage.getItem("username");
-                                    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/DownloadFile?UserName=" + u + "&FILEID=" + data.editorOptions.value;
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: url,
-                                        cache: false,
-                                        success: function (data, textStatus) {
-                                            var furl = $("#WebApiServerURL")[0].value + "/Asapment/Temp/" + data.file;
-                                            itemElement.append("<a href='" + furl + "' target='_blank'>" + data.file + "</a>");
-                                        },
-                                        error: function (xmlHttpRequest, textStatus, errorThrown) {
-                                        }
-                                    });
-                                }
+                            else {
+                                return [
+                                    { IDLINE: 0, DES: "Running" },
+                                    { IDLINE: 1, DES: "Maintenance" },
+                                    { IDLINE: 2, DES: "Repair" },
+                                    { IDLINE: 3, DES: "Overhaul" },
+                                    { IDLINE: 4, DES: "Free" }
+                                ];
                             }
-                        }
-                    ]
+                        })(),
+                        displayExpr: "DES",
+                        valueExpr: "IDLINE"
+                    },
+                    dataField: "STATUS_OP",
+                    colSpan: 1
                 },
                 {
-                    id: "DESC_DISP1",
-                    label: { text: "加工物料" },
+                    id: "POSITION",
+                    label: { text: "位置" },
                     editorOptions: {
                         readOnly: true
                     },
-                    dataField: "DESC_DISP1",
-                    colSpan: 2
-                },
-                {
-                    id: "DESC_DISP3",
-                    label: { text: "工单" },
-                    editorOptions: {
-                        readOnly: true
-                    },
-                    dataField: "DESC_DISP3",
-                    colSpan: 2
-                },
-                {
-                    id: "DESC_DISP5",
-                    label: { text: "操作工" },
-                    editorOptions: {
-                        readOnly: true
-                    },
-                    dataField: "DESC_DISP5",
-                    colSpan: 2
-                },
-                {
-                    id: "DESC_DISP4",
-                    label: { text: "持续时间" },
-                    editorOptions: {
-                        readOnly: true
-                    },
-                    dataField: "DESC_DISP4",
-                    colSpan: 2
-                },
-                {
-                    id: "DESC_DISP7",
-                    label: { text: "备注" },
-                    editorOptions: {
-                        readOnly: true
-                    },
-                    dataField: "DESC_DISP7",
+                    dataField: "POSITION",
                     colSpan: 2
                 }
             ]
         },
+        gridOption: {
+            dateSerializationFormat: "yyyy-MM-ddTHH:mm:ss",
+            columnAutoWidth: true,
+            columns: [
+                { dataField: "ID_WO", caption: "工单号", allowEditing: false, allowSorting: false },
+                {
+                    dataField: "TYPE_OP", caption: "类型", allowEditing: false, allowSorting: false,
+                    lookup: {
+                        dataSource: (function () {
+                            if (DeviceLang() == "CHS") {
+                                return [
+                                    { IDLINE: "11", DES: "上料" },
+                                    { IDLINE: "12", DES: "下料" },
+                                    { IDLINE: "13", DES: "辅料添加" },
+                                    { IDLINE: "14", DES: "辅料更换" },
+                                    { IDLINE: "31", DES: "压力" },
+                                    { IDLINE: "32", DES: "主轴转速" },
+                                    { IDLINE: "33", DES: "料盘转速" },
+                                    { IDLINE: "51", DES: "产品检验" },
+                                    { IDLINE: "52", DES: "产品检验结论" },
+                                    { IDLINE: "53", DES: "辅料检验" },
+                                    { IDLINE: "54", DES: "辅料检验结论" },
+                                ];
+                            }
+                            else {
+                                return [
+                                    { IDLINE: "11", DES: "Loading" },
+                                    { IDLINE: "12", DES: "Unloading" },
+                                    { IDLINE: "13", DES: "Add Cut Media" },
+                                    { IDLINE: "14", DES: "Change Coolant" },
+                                    { IDLINE: "31", DES: "Pressure" },
+                                    { IDLINE: "32", DES: "RPMspindle" },
+                                    { IDLINE: "33", DES: "RPMturntable" },
+                                    { IDLINE: "51", DES: "QC" },
+                                    { IDLINE: "52", DES: "QCR" },
+                                    { IDLINE: "53", DES: "Cut QC" },
+                                    { IDLINE: "54", DES: "Cut QCR" },
+                                ];
+                            }
+                        })(),
+                        displayExpr: "DES",
+                        valueExpr: "IDLINE",
+                    }
+                },
+                { dataField: "CODE_ITEM", caption: "零件", allowEditing: false, allowSorting: false },
+                { dataField: "DESC_ITEM", caption: "描述", allowEditing: false, allowSorting: false },
+                { dataField: "QTY_ORD", caption: "计划数量", allowEditing: false, allowSorting: false },
+                { dataField: "DATE_START", caption: "加工时间", allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd HH:mm" },
+            ],
+            selection: {
+                mode: "single"
+            },
+            paging: {
+                enabled: false
+            }
+        },
         tileViewOption: {
             items: [],
             direction: 'vertical',
-            height:"100%",
+            height: "100%",
             baseItemWidth: window.screen.width / 6,
-            baseItemHeight:window.screen.width / 6,
+            baseItemHeight: window.screen.width / 6,
             itemMargin: 5,
             itemTemplate: function (itemData, itemIndex, itemElement) {
                 var url = $("#WebApiServerURL")[0].value;
@@ -177,8 +149,8 @@
                 itemElement.append("<div class=\"ItemDesc\">" + desc +
                     "</div><div class=\"BKImage\" style=\"background-image: url('" + url + "/images/JGBR/" + itemData.CODE_MENU + ".jpg')\"></div>");
             },
-            onItemClick: function(e){
-                if (e.itemData.DEVOBJ == "MENU"){
+            onItemClick: function (e) {
+                if (e.itemData.DEVOBJ == "MENU") {
                     this.parentMenu(e.itemData.CODE_MENU);
                     GetMenu(this, params);
                 }
@@ -208,7 +180,7 @@
         buttonClick: function (e) {
 
         },
-        onPopCancelClick:function(e){
+        onPopCancelClick: function (e) {
             this.popUserVisible(false);
         },
         onPopOKClick: function (e) {
@@ -219,7 +191,7 @@
 
             var popUser = $("#txtPopUser").dxTextBox("instance").option("value");
             var popPwd = $("#txtPopPwd").dxTextBox("instance").option("value");
-            var popParam = popUser + ";" + popPwd+";"+argu.itemData.CODE_MENU;
+            var popParam = popUser + ";" + popPwd + ";" + argu.itemData.CODE_MENU;
             var postData = {
                 userName: u,
                 methodName: "EMS.EMS.CheckValid",
@@ -230,9 +202,9 @@
                 type: 'POST',
                 data: postData,
                 url: url,
-                async:false,
+                async: false,
                 cache: false,
-                success: function (data, textStatus) {                  
+                success: function (data, textStatus) {
                     var form = $("#formDevice").dxForm("instance");
                     var formData = form.option("formData");
                     view = view + "&CODE_OP=" + formData.CODE_OP;
@@ -272,35 +244,6 @@
 
     }
 
-    function StatusEnum(num) {
-        var list = [];
-        if (DeviceLang() == "CHS") {
-            list= [
-                { IDLINE: 0, DES: "运行" },
-                { IDLINE: 7, DES: "待修审" },
-                { IDLINE: 2, DES: "待维修" },
-                { IDLINE: 3, DES: "磨修" },
-                { IDLINE: 4, DES: "空闲中" }
-            ];
-        }
-        else {
-            list= [
-                { IDLINE: 0, DES: "Running" },
-                { IDLINE: 7, DES: "Maintenance" },
-                { IDLINE: 2, DES: "Repair" },
-                { IDLINE: 3, DES: "Overhaul" },
-                { IDLINE: 4, DES: "Free" }
-            ];
-        }
-        var s = list.filter(function (x) {
-            return x.IDLINE == num;
-        });
-        if (s.length > 0)
-            return s[0].DES;
-        else
-            return "none";
-    }
-
     function GetWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
@@ -326,7 +269,16 @@
                         form.option("formData", data[i].data[0]);
                         form.repaint();
                     }
+
+                    if (data[i].IDNUM == "BOP") {
+                        grid.option({
+                            dataSource: data[i].data
+                        });
+
+                        grid.repaint();
+                    }
                 }
+
                 viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -348,7 +300,7 @@
         var postData = {
             userName: u,
             methodName: "EMS.Common.GetDeviceMenu",
-            param: viewModel.parentMenu()
+            param: "M_PRO"
         }
 
         $.ajax({
@@ -490,7 +442,7 @@
             var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
             var postData = {
                 userName: u,
-                methodName: "EMS.EMS_REP."+m,
+                methodName: "EMS.EMS_REP." + m,
                 param: params.CODE_EQP
             }
 
@@ -683,9 +635,8 @@
             }
         });
 
-        
+
     }
 
-    
     return viewModel;
 };

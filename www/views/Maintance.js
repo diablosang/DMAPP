@@ -1,5 +1,6 @@
-﻿DMAPP.DeviceInfo = function (params) {
+﻿DMAPP.Maintance = function (params) {
     "use strict";
+
     var viewModel = {
         title: ko.observable(""),
         indicatorVisible: ko.observable(false),
@@ -18,152 +19,31 @@
                 DevExpress.ui.notify(SysMsg.noDetail, "error", 1000);
             }
         },
-        formOption: {
-            colCount: 2,
-            itemType: "group",
-            items: [
-                {
-                    itemType: "group",
-                    template: function (data, itemElement) {
-                        if (data.formData.IMAGE)
-                            itemElement.append("<img src='data:image;base64," + data.formData.IMAGE + "' style='max-height:220px;max-width:250px;' />");
-                    },
-                    colSpan: 1,
-                },
-                {
-                    itemType: "group",
-                    colCount: 2,
-                    items: [
-                        {
-                            id: "CODE_EQP",
-                            label: { text: "设备编号" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "CODE_EQP",
-                            colSpan: 2,
-                        },
-                        {
-                            id: "CODE_OP",
-                            label: { text: "工序" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "CODE_OP",
-                            colSpan: 1,
-                        },
-                        {
-                            id: "STATUS_OP",
-                            label: { text: "状态" },
-                            dataField: "STATUS_OP",
-                            template: function (data, itemElement) {
-                                itemElement.append("<input  class='dx-texteditor-input status_op_" + data.editorOptions.value + "' type='text' readonly='true' aria-readonly='true' spellcheck='false' role='textbox' tabindex='0' name='STATUS_OP' value='" + StatusEnum(data.editorOptions.value)+"' aria-required='false'>");
-                            }
-                        },
-                        {
-                            id: "NAME_EQP",
-                            label: { text: "设备名称" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "NAME_EQP",
-                            colSpan: 2,
-                        },
-                        {
-                            id: "SPEC_EQP",
-                            label: { text: "规格" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "SPEC_EQP",
-                            colSpan: 2,
-                        },
-                        {
-                            id: "MODEL_EQP",
-                            label: { text: "型号" },
-                            editorOptions: {
-                                readOnly: true
-                            },
-                            dataField: "MODEL_EQP",
-                            colSpan: 2,
-                        },
-                        {
-                            itemType: "button",
-                            label: { text: "文档" },
-                            dataField: "CODE_DOC",
-                            template: function (data, itemElement) {
-                                if (data.editorOptions.value) {
-                                    var u = sessionStorage.getItem("username");
-                                    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/DownloadFile?UserName=" + u + "&FILEID=" + data.editorOptions.value;
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: url,
-                                        cache: false,
-                                        success: function (data, textStatus) {
-                                            var furl = $("#WebApiServerURL")[0].value + "/Asapment/Temp/" + data.file;
-                                            itemElement.append("<a href='" + furl + "' target='_blank'>" + data.file + "</a>");
-                                        },
-                                        error: function (xmlHttpRequest, textStatus, errorThrown) {
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    id: "DESC_DISP1",
-                    label: { text: "加工物料" },
-                    editorOptions: {
-                        readOnly: true
-                    },
-                    dataField: "DESC_DISP1",
-                    colSpan: 2
-                },
-                {
-                    id: "DESC_DISP3",
-                    label: { text: "工单" },
-                    editorOptions: {
-                        readOnly: true
-                    },
-                    dataField: "DESC_DISP3",
-                    colSpan: 2
-                },
-                {
-                    id: "DESC_DISP5",
-                    label: { text: "操作工" },
-                    editorOptions: {
-                        readOnly: true
-                    },
-                    dataField: "DESC_DISP5",
-                    colSpan: 2
-                },
-                {
-                    id: "DESC_DISP4",
-                    label: { text: "持续时间" },
-                    editorOptions: {
-                        readOnly: true
-                    },
-                    dataField: "DESC_DISP4",
-                    colSpan: 2
-                },
-                {
-                    id: "DESC_DISP7",
-                    label: { text: "备注" },
-                    editorOptions: {
-                        readOnly: true
-                    },
-                    dataField: "DESC_DISP7",
-                    colSpan: 2
-                }
-            ]
+        gridOption: {
+            dateSerializationFormat: "yyyy-MM-ddTHH:mm:ss",
+            columnAutoWidth: true,
+            columns: [
+                { dataField: "SID", caption: "SID", allowEditing: false, allowSorting: false, width: 60 },
+                { dataField: "TYPE_OP", caption: "类型", allowEditing: false, allowSorting: false, width: 50},
+                { dataField: "EMP_START", caption: "申请人", allowEditing: false, allowSorting: false,width: 90},
+                { dataField: "DATE_START", caption: "开始时间", allowEditing: false, allowSorting: false, width: 130, dataType: "date", format: "yyyy-MM-dd HH:mm" },
+                { dataField: "DATE_STOP", caption: "结束时间", allowEditing: false, allowSorting: false, width: 130, dataType: "date", format: "yyyy-MM-dd HH:mm" },
+                { dataField: "REASON", caption: "原因", allowEditing: false, allowSorting: false},
+                { dataField: "CONCLUSION", caption: "结论", allowEditing: false, allowSorting: false },
+            ],
+            selection: {
+                mode: "single"
+            },
+            paging: {
+                enabled: false
+            }
         },
         tileViewOption: {
             items: [],
             direction: 'vertical',
-            height:"100%",
+            height: "100%",
             baseItemWidth: window.screen.width / 6,
-            baseItemHeight:window.screen.width / 6,
+            baseItemHeight: window.screen.width / 6,
             itemMargin: 5,
             itemTemplate: function (itemData, itemIndex, itemElement) {
                 var url = $("#WebApiServerURL")[0].value;
@@ -177,8 +57,8 @@
                 itemElement.append("<div class=\"ItemDesc\">" + desc +
                     "</div><div class=\"BKImage\" style=\"background-image: url('" + url + "/images/JGBR/" + itemData.CODE_MENU + ".jpg')\"></div>");
             },
-            onItemClick: function(e){
-                if (e.itemData.DEVOBJ == "MENU"){
+            onItemClick: function (e) {
+                if (e.itemData.DEVOBJ == "MENU") {
                     this.parentMenu(e.itemData.CODE_MENU);
                     GetMenu(this, params);
                 }
@@ -194,9 +74,8 @@
                 }
                 else {
                     var view = e.itemData.DEVOBJ + "?NEW=1&DEVPARAM=" + e.itemData.DEVPARAM + "&CODE_EQP=" + params.CODE_EQP;
-                    var form = $("#formDevice").dxForm("instance");
-                    var formData = form.option("formData");
-                    view = view + "&CODE_OP=" + formData.CODE_OP;
+
+                    view = view + "&CODE_OP=" + params.CODE_OP;
                     viewModel.popUserVisible(false);
                     DMAPP.app.navigate(view);
 
@@ -208,7 +87,7 @@
         buttonClick: function (e) {
 
         },
-        onPopCancelClick:function(e){
+        onPopCancelClick: function (e) {
             this.popUserVisible(false);
         },
         onPopOKClick: function (e) {
@@ -219,7 +98,7 @@
 
             var popUser = $("#txtPopUser").dxTextBox("instance").option("value");
             var popPwd = $("#txtPopPwd").dxTextBox("instance").option("value");
-            var popParam = popUser + ";" + popPwd+";"+argu.itemData.CODE_MENU;
+            var popParam = popUser + ";" + popPwd + ";" + argu.itemData.CODE_MENU;
             var postData = {
                 userName: u,
                 methodName: "EMS.EMS.CheckValid",
@@ -230,12 +109,10 @@
                 type: 'POST',
                 data: postData,
                 url: url,
-                async:false,
+                async: false,
                 cache: false,
-                success: function (data, textStatus) {                  
-                    var form = $("#formDevice").dxForm("instance");
-                    var formData = form.option("formData");
-                    view = view + "&CODE_OP=" + formData.CODE_OP;
+                success: function (data, textStatus) {
+                    view = view + "&CODE_OP=" + params.CODE_OP;
                     viewModel.popUserVisible(false);
                     DMAPP.app.navigate(view);
                 },
@@ -253,63 +130,28 @@
     };
 
     function SetLanguage() {
-        var form = $("#formDevice").dxForm("instance");
-        if (DeviceLang() == "ENG") {
-            form.itemOption("CODE_EQP", "label", { text: "Equipment Code" });
-            form.itemOption("STATUS_OP", "label", { text: "Status" });
-            form.itemOption("POSITION", "label", { text: "Position" });
-        }
 
         var grid = $("#gridDevice").dxDataGrid("instance");
         if (DeviceLang() == "ENG") {
-            grid.columnOption("ID_WO", "caption", "Work Order No");
+            grid.columnOption("SID", "caption", "SID");
             grid.columnOption("TYPE_OP", "caption", "OP Type");
-            grid.columnOption("CODE_ITEM", "caption", "Item Code");
-            grid.columnOption("DESC_ITEM", "caption", "Item Description");
-            grid.columnOption("QTY_ORD", "caption", "Planed Quantity");
-            grid.columnOption("DATE_START", "caption", "Plan Date");
+            grid.columnOption("EMP_START", "caption", "Apply");
+            grid.columnOption("DATE_START", "caption", "Start Time");
+            grid.columnOption("DATE_STOP", "caption", "End Time");
+            grid.columnOption("REASON", "caption", "Reason");
+            grid.columnOption("CONCLUSION", "caption", "Conclusion");
         }
 
-    }
-
-    function StatusEnum(num) {
-        var list = [];
-        if (DeviceLang() == "CHS") {
-            list= [
-                { IDLINE: 0, DES: "运行" },
-                { IDLINE: 7, DES: "待修审" },
-                { IDLINE: 2, DES: "待维修" },
-                { IDLINE: 3, DES: "磨修" },
-                { IDLINE: 4, DES: "空闲中" }
-            ];
-        }
-        else {
-            list= [
-                { IDLINE: 0, DES: "Running" },
-                { IDLINE: 7, DES: "Maintenance" },
-                { IDLINE: 2, DES: "Repair" },
-                { IDLINE: 3, DES: "Overhaul" },
-                { IDLINE: 4, DES: "Free" }
-            ];
-        }
-        var s = list.filter(function (x) {
-            return x.IDLINE == num;
-        });
-        if (s.length > 0)
-            return s[0].DES;
-        else
-            return "none";
     }
 
     function GetWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetWinboxDataSimple"
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod"
         var postData = {
             userName: u,
-            func: "EMS_T_OP",
-            group: "GADMIN",
-            doc: params.CODE_EQP
+            methodName: "EMS.Common.GetMaintanceData",
+            param: params.CODE_EQP
         }
 
         $.ajax({
@@ -319,14 +161,11 @@
             cache: false,
             success: function (data, textStatus) {
                 viewModel.winbox = data;
-                var form = $("#formDevice").dxForm("instance");
                 var grid = $("#gridDevice").dxDataGrid("instance");
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].IDNUM == "BMAINBLOCK") {
-                        form.option("formData", data[i].data[0]);
-                        form.repaint();
-                    }
-                }
+                grid.option({
+                    dataSource: data
+                });
+
                 viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -348,7 +187,7 @@
         var postData = {
             userName: u,
             methodName: "EMS.Common.GetDeviceMenu",
-            param: viewModel.parentMenu()
+            param: "M_REPJ"
         }
 
         $.ajax({
@@ -490,7 +329,7 @@
             var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
             var postData = {
                 userName: u,
-                methodName: "EMS.EMS_REP."+m,
+                methodName: "EMS.EMS_REP." + m,
                 param: params.CODE_EQP
             }
 
@@ -654,7 +493,6 @@
     }
 
     function OpenAMD() {
-        var form = $("#formMain").dxForm("instance");
         var u = sessionStorage.getItem("username");
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
         var postData = {
@@ -671,9 +509,7 @@
             cache: false,
             success: function (data, textStatus) {
                 var view = "M_AMD?DEVPARAM=&CODE_EQP=" + params.CODE_EQP;
-                var form = $("#formDevice").dxForm("instance");
-                var formData = form.option("formData");
-                view = view + "&CODE_OP=" + formData.CODE_OP;
+                view = view + "&CODE_OP=" + params.CODE_OP;
                 viewModel.popUserVisible(false);
                 DMAPP.app.navigate(view);
             },
@@ -683,9 +519,8 @@
             }
         });
 
-        
+
     }
 
-    
     return viewModel;
 };

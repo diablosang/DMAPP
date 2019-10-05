@@ -107,6 +107,7 @@
                     keepAlive = true;
                     KeepAlive();
                     GetUserList(u);
+                    GetUserRoles(u);
                     DMAPP.app.navigate(view, option);
                 },
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -137,6 +138,8 @@
                     var option = { root: true };
                     keepAlive = true;
                     KeepAlive();
+                    GetUserList(u);
+                    GetUserRoles(u);
                     DMAPP.app.navigate(view, option);
 
                 },
@@ -165,6 +168,31 @@
             }
         });
     }
+
+    function GetUserRoles(u) {
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserRoles";
+        var postData = {
+            userName: u
+        };
+
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            cache: false,
+            success: function (data, textStatus) {
+                asRoles = [];
+                for (var i = 0; i < data.length; i++) {
+                    asRoles.push(data[i].ROLEID);
+                }
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
+
 
     function CheckServerVersion()
     {
