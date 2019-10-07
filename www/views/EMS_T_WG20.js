@@ -113,14 +113,6 @@
                 }
 
             },
-            //onRowValidating: function (e) {
-            //    var idx = e.component.getRowIndexByKey(e.key);
-            //    e.rowIndex = idx;
-            //    if (e.key.QTY_WT <= 0) {
-            //        DevExpress.ui.notify("请填写重量", "error", 1500);
-            //        return false;
-            //    }
-            //},
             onRowUpdated: function (e) {
                 var idx = e.component.getRowIndexByKey(e.key);
                 e.rowIndex = idx;
@@ -214,7 +206,6 @@
     }
 
     function BarItemClick(e) {
-        debugger;
         if (e.itemData.needComment == "1") {
             this.commentVisible(true);
             this.comment(e.itemData.options.text);

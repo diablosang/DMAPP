@@ -142,8 +142,9 @@
             ],
             direction: 'vertical',
             height: "100%",
-            baseItemWidth: window.screen.width/6,
-            baseItemHeight: window.screen.width/6,
+            baseItemWidth: (window.screen.width / 6) - 10,
+            baseItemHeight: (window.screen.width / 6) - 10,
+            width: window.screen.width / 3,
             itemMargin: 5,
             itemTemplate: function (itemData, itemIndex, itemElement) {
                 var url = $("#WebApiServerURL")[0].value;
