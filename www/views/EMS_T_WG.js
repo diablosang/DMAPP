@@ -71,6 +71,14 @@
                     editorOptions: {
                         readOnly: false
                     },
+                    validationRules: [{
+                        type: "required",
+                        message: "请填写重量"
+                    }, {
+                        type: "range",
+                        max: 400,
+                        message: "最大值不能超过400"
+                    }],
                     colSpan: 1
                 },
             ],
@@ -86,9 +94,10 @@
             ],
             direction: 'vertical',
             height: "100%",
-            baseItemHeight: 192,
-            baseItemWidth: 192,
-            itemMargin: 10,
+            baseItemWidth: (window.screen.width / 6) - 10,
+            baseItemHeight: (window.screen.width / 6) - 10,
+            width: window.screen.width / 6,
+            itemMargin: 5,
             itemTemplate: function (itemData, itemIndex, itemElement) {
                 var url = $("#WebApiServerURL")[0].value;
                 itemElement.append("<div class=\"ItemDesc\">" + itemData.DES +

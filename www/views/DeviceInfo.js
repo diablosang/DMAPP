@@ -21,6 +21,9 @@
         formOption: {
             colCount: 2,
             itemType: "group",
+            onContentReady: function (e) {
+
+            },
             items: [
                 {
                     itemType: "group",
