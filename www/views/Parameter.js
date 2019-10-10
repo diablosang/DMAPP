@@ -262,6 +262,7 @@
                     $("#formMain").dxForm("instance").itemOption("item_group", "items", items);
                     
                     $("#formMain").dxForm("instance").repaint();
+                    viewModel.instance.option("formData.CODE_OP",json.CODE_OP);
                     viewModel.instance.getEditor("ID_WO").focus(); 
                 }
                 else {

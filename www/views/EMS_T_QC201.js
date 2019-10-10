@@ -25,28 +25,39 @@
             colCount: 2,
             items: [
                 {
-                    label: { text: "拉后尺寸" },
-                    dataField: "PAR1",
-                },
-                {
-                    label: { text: "切料长度" },
-                    dataField: "PAR2",
-                },
-                {
-                    label: { text: "极柱直径" },
-                    dataField: "PAR3",
-                },
-                {
-                    label: { text: "两极高" },
-                    dataField: "PAR4",
-                },
-                {
-                    label: { text: "环带宽" },
-                    dataField: "PAR5",
-                },
-                {
-                    label: { text: "环带厚" },
-                    dataField: "PAR6",
+                    itemType: "group",
+                    colCount: 2,
+                    items: [
+                        {
+                            label: { text: "拉后尺寸" },
+                            dataField: "PAR1",
+                            colSpan: 1,
+                        },
+                        {
+                            label: { text: "切料长度" },
+                            dataField: "PAR2",
+                            colSpan: 1,
+                        },
+                        {
+                            label: { text: "极柱直径" },
+                            dataField: "PAR3",
+                            colSpan: 1,
+                        },
+                        {
+                            label: { text: "两极高" },
+                            dataField: "PAR4",
+                            colSpan: 1,
+                        },
+                        {
+                            label: { text: "环带宽" },
+                            dataField: "PAR5",
+                            colSpan: 1,
+                        },
+                        {
+                            label: { text: "环带厚" },
+                            dataField: "PAR6",
+                            colSpan: 1,
+                        }]
                 }
             ],
             onFieldDataChanged: function (e) {
