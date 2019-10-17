@@ -116,7 +116,11 @@
             onRowUpdated: function (e) {
                 var idx = e.component.getRowIndexByKey(e.key);
                 e.rowIndex = idx;
-                GridRowUpdated(this, "gridDetail", e)
+                console.log(111);
+                GridRowUpdated(this, "gridDetail", e);
+            },
+            keyDown: function (e) {
+                debugger;
             },
             onRowInserted: function (e) {
                 GridRowInsert(this, "gridDetail", e)

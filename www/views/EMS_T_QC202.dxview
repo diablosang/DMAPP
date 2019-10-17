@@ -5,7 +5,7 @@
         <div id="divP" style="float:left;height:100%;background-color:#acd8fb;">
             <div id="tileBar" data-bind="dxTileView: tileBarOption"></div>
         </div>
-        <div data-bind="dxScrollView: {direction: 'both'}" style="width:82%;float:right;">
+        <div data-bind="dxScrollView: {direction: 'both'}" style="width:60%;float:left;">
             <div id="formMain" data-bind="dxForm:formOption" style="margin: 5px 5px 5px 5px"></div>
         </div>
     </div>

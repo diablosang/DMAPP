@@ -94,37 +94,37 @@
                     label: { text: "箱号1" },
                     dataField: "BOX1",
                     colSpan: 1
-                },
-                {
-                    id: "BOX2",
-                    label: { text: "箱号2" },
-                    dataField: "BOX2",
-                    colSpan: 1
-                },
-                {
-                    id: "BOX3",
-                    label: { text: "箱号3" },
-                    dataField: "BOX3",
-                    colSpan: 1
-                },
-                {
-                    id: "BOX4",
-                    label: { text: "箱号4" },
-                    dataField: "BOX4",
-                    colSpan: 1
-                },
-                {
-                    id: "BOX5",
-                    label: { text: "箱号5" },
-                    dataField: "BOX5",
-                    colSpan: 1
-                },
-                {
-                    id: "BOX6",
-                    label: { text: "箱号6" },
-                    dataField: "BOX6",
-                    colSpan: 1
                 }
+                //{
+                //    id: "BOX2",
+                //    label: { text: "箱号2" },
+                //    dataField: "BOX2",
+                //    colSpan: 1
+                //},
+                //{
+                //    id: "BOX3",
+                //    label: { text: "箱号3" },
+                //    dataField: "BOX3",
+                //    colSpan: 1
+                //},
+                //{
+                //    id: "BOX4",
+                //    label: { text: "箱号4" },
+                //    dataField: "BOX4",
+                //    colSpan: 1
+                //},
+                //{
+                //    id: "BOX5",
+                //    label: { text: "箱号5" },
+                //    dataField: "BOX5",
+                //    colSpan: 1
+                //},
+                //{
+                //    id: "BOX6",
+                //    label: { text: "箱号6" },
+                //    dataField: "BOX6",
+                //    colSpan: 1
+                //}
             ],
             onFieldDataChanged: function (e) {
                 if (this.keepCache == true) {

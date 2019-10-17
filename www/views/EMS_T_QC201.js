@@ -26,7 +26,7 @@
             items: [
                 {
                     itemType: "group",
-                    colCount: 2,
+                    colCount: 1,
                     items: [
                         {
                             label: { text: "拉后尺寸" },

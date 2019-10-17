@@ -51,7 +51,7 @@
         <!--<div style="position:absolute;top:50px;bottom:0;overflow-y:auto;height:auto;width:100%">
           <table id="tbWorkShop" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></table>
         </div>-->
-        <div data-bind="dxScrollView: {useNative:false,showScrollbar:'never' }" class="ItemList-ScrollView2">
+        <div id="dev_device" data-bind="dxScrollView: {useNative:false,showScrollbar:'never' }" class="ItemList-ScrollView2" style="">
             <div id="tbDevice" class="tbDevice" width="100%" style="border-spacing:8px;border-collapse: separate;font-size:larger;font-weight:bold"></div>
         </div>
         <div id="popSelect" data-bind="dxPopup: popupSelectOption">

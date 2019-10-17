@@ -220,8 +220,9 @@ DMAPP.WorkShop2 = function (params) {
         try {
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
+            console.log(u);
             if (asRoles.indexOf("MFG_EMP") != -1) {
-                
+                //$("#divCanvas").hide();
                 //生产员工角色
                 var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
 
@@ -230,7 +231,6 @@ DMAPP.WorkShop2 = function (params) {
                     methodName: "EMS.Common.GetAllDeviceTable",
                     param: ''
                 }
-
                 $.ajax({
                     type: 'POST',
                     data: postData,
@@ -268,6 +268,7 @@ DMAPP.WorkShop2 = function (params) {
             else {
                 $("#tbLegend").hide();
                 $("#tbDevice").hide();
+                $("#dev_device").css("height", "0px");
                 var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
                 var postData = {
                     userName: u,

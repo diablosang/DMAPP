@@ -143,17 +143,18 @@
                             return;
                         }
                         var form = $("#formMain").dxForm("instance");
-                        form.updateData("CODE_BAR", result.text);
+                        form.option("formData.CODE_BAR", result.text);
                     },
                     function (error) {
                         DevExpress.ui.notify(SysMsg.scanFailed + error, "error", 3000);
                     }
                 );
+                //var form = $("#formMain").dxForm("instance");
+                //form.option("formData.CODE_BAR", "0001,CL-090-SW-X2,T900512K,1702,66110");
             }
             catch (e) {
                 DevExpress.ui.notify(e, "error", 3000);
             }
-
         }
     };
 
