@@ -265,7 +265,7 @@
         }
 
         var grid = $("#gridDevice").dxDataGrid("instance");
-        if (DeviceLang() == "ENG") {
+        if (grid&&DeviceLang() == "ENG") {
             grid.columnOption("ID_WO", "caption", "Work Order No");
             grid.columnOption("TYPE_OP", "caption", "OP Type");
             grid.columnOption("CODE_ITEM", "caption", "Item Code");
