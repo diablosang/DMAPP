@@ -16,7 +16,8 @@ body {
     z-index: 9;
     border: 1px solid;
     border-radius: 7px;
-    box-shadow: 3px 3px 3px #888888;
+    box-shadow: 3px 3px 3px #9b9b9b;
+    background-color: #dadada;
 }
 
     .CavItem:hover {
@@ -90,4 +91,57 @@ input[readonly] {
 }
 .parameter_sub_btn{
     margin-left:50px;
+}
+.chart_div{
+    border:2px solid #848484;
+    padding:5px;
+    margin-bottom:10px;
+    border-radius:5px;
+}
+.item_flex_content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin:10px;
+}
+.item_flex .keyWord {
+    background-color: #FFF;
+    color: #000;
+    font-size: 18px;
+    text-align: center;
+}
+.item_flex .CODEWS {
+    font-weight: bold;
+    margin-top:10px;
+    margin-left:5px;
+}
+.item_flex .lineName {
+    flex-basis: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top:10px;
+}
+    .item_flex .lineStatus {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+    }
+        .item_flex .lineStatus div {
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            text-align: center;
+            line-height: 24px;
+            color: #fff;
+            margin-top: 5px;
+        }
+.COUNTR {
+    background-color: #5fb742;
+}
+.COUNTS {
+    background-color: #808080;
+}
+.COUNTU {
+    background-color: #e01c18;
 }

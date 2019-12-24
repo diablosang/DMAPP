@@ -12,8 +12,9 @@
                 { SERVICE: "http://192.168.152.1/DMWebAPI", DES: "US正式库" },
                 { SERVICE: "http://66.180.234.58:8005/DMWebAPI", DES: "US正式库（外网）" },
                 { SERVICE: "http://localhost/WebAPI", DES: "开发调试" },
-                { SERVICE: "http://localhost:9080/ACWFService", DES: "开发调试2" }
+                { SERVICE: "http://localhost:9080/ACWFService", DES: "开发调试2" },
                 //{ SERVICE: "http://10.192.144.99/DMWebAPI", DES: "IR正式库" },
+                { SERVICE: "http://dev.trusteem.com:20020/IRCZWEBAPI", DES: "IR开发库" },
             ],
             displayExpr: "DES",
             valueExpr: "SERVICE"

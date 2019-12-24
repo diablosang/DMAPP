@@ -40,7 +40,7 @@
         var grid = $("#gridAMD").dxDataGrid("instance");
         var columns = [
             { dataField: "SID", caption: SysMsg.sid, allowEditing: false, allowSorting: false },
-            { dataField: "DATE_PLAN", caption: SysMsg.amd_dateplan, allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd" },
+            { dataField: "DATE_PLAN", caption: SysMsg.amd_dateplan, allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd HH:mm" },
             { dataField: "CODE_AMITEM", caption: SysMsg.amd_codeitem, allowEditing: false, allowSorting: false },
             { dataField: "DESC_AMITEM", caption: SysMsg.amd_descitem, allowEditing: false, allowSorting: false },
             {

@@ -68,7 +68,7 @@
             items: [
                 {
                     id: "ID_WO",
-                    label: { text: "工单" },
+                    label: { text: SysMsg.codeop },
                     dataField: "ID_WO",
                     colSpan: 1
                 }
@@ -84,10 +84,10 @@
             dateSerializationFormat: "yyyy-MM-dd",
             columnAutoWidth: false,
             columns: [
-                { dataField: "BOXNO", caption: "箱号", allowEditing: true, allowSorting: false, width: 100 },
-                { dataField: "CODE_ITEM", caption: "物料号", allowEditing: false, allowSorting: false, width: 150 },
+                { dataField: "BOXNO", caption: SysMsg.boxNum, allowEditing: true, allowSorting: false, width: 100 },
+                { dataField: "CODE_ITEM", caption: SysMsg.wlh, allowEditing: false, allowSorting: false, width: 150 },
                 { dataField: "CODE_LOT", caption: "炉号", allowEditing: false, allowSorting: false, width: 200 },
-                { dataField: "QTY_WT", caption: "重量", allowEditing: true, allowSorting: false, width: 100, dataType:'number' }
+                { dataField: "QTY_WT", caption: SysMsg.weight, allowEditing: true, allowSorting: false, width: 100, dataType:'number' }
             ],
             editing: {
                 allowDeleting: true,

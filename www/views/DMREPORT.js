@@ -14,7 +14,7 @@
             keyExpr: "FUNCID",
             columnAutoWidth: true,
             columns: [
-                { dataField: "FUNCID", caption: "报表代码", allowEditing: false, allowSorting: false, width: "200px" },
+                { dataField: "FUNCID", caption: SysMsg.reportCode, allowEditing: false, allowSorting: false, width: "200px" },
                 {
                     dataField: (function () {
                         if (DeviceLang() == "CHS") {
@@ -23,7 +23,7 @@
                         else {
                             return "DES2";
                         }
-                    })(), caption: "报表名称", allowEditing: false, allowSorting: false, width: "300px"
+                    })(), caption: SysMsg.reportName, allowEditing: false, allowSorting: false, width: "300px"
                 },
             ],
             selection: {

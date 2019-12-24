@@ -41,7 +41,7 @@
             colCount: 2,
             items: [
                 {
-                    label: { text: "物料编号" },
+                    label: { text: SysMsg.wlh },
                     dataField: "CODE_ITEM",
                     editorOptions: {
                         onFocusIn: function (e) {
@@ -52,7 +52,7 @@
                     colSpan: 1
                 },
                 {
-                    label: { text: "工序" },
+                    label: { text: SysMsg.codeop },
                     dataField: "CODE_CMMT",
                     colSpan: 1
                 }
@@ -68,12 +68,12 @@
             keyExpr: "ID_DOC",
             columnAutoWidth: true,
             columns: [
-                 { dataField: "CODE_ITEM", caption: "物料号", allowEditing: false, allowSorting: false, width: "150px" },
-                 { dataField: "CODE_CMMT", caption: "工序", allowEditing: false, allowSorting: false, width: "60px" },
-                       { dataField: "ID_DOC", caption: "ID", allowEditing: false, allowSorting: false, width: "75px" },
-                       { dataField: "DESC_CMMT", caption: "信息内容", allowEditing: false, allowSorting: false, width: "150px" },
-                       {
-                           dataField: "TYPE", caption: "类型", allowEditing: false, allowSorting: false, width: "75px",
+                { dataField: "CODE_ITEM", caption: SysMsg.wlh, allowEditing: false, allowSorting: false, width: "150px" },
+                { dataField: "CODE_CMMT", caption: SysMsg.codeop, allowEditing: false, allowSorting: false, width: "60px" },
+                { dataField: "ID_DOC", caption: "ID", allowEditing: false, allowSorting: false, width: "75px" },
+                { dataField: "DESC_CMMT", caption: SysMsg.comment, allowEditing: false, allowSorting: false, width: "150px" },
+                {
+                    dataField: "TYPE", caption: SysMsg.amd_type, allowEditing: false, allowSorting: false, width: "75px",
                            lookup: {
                                dataSource: [
                                    { IDLINE: "01", DES: "手册类" },
@@ -83,8 +83,8 @@
                                displayExpr: "DES",
                                valueExpr: "IDLINE",
                            }
-                       },
-                       { dataField: "CODE_DOC", caption: "文档名", allowEditing: false, allowSorting: false, width: "100%" }
+                },
+                { dataField: "CODE_DOC", caption: SysMsg.fileName, allowEditing: false, allowSorting: false, width: "100%" }
             ],
             selection: {
                 mode: "single"
@@ -98,7 +98,7 @@
         },
         toolBarOption: {
             items: [
-               { location: 'before', widget: 'button', name: 'find', options: { icon: 'find', text: '查找' } },
+                { location: 'before', widget: 'button', name: 'find', options: { icon: 'find', text: 'Search' } },
             ],
             onItemClick: function (e) {
                 BindData(this);

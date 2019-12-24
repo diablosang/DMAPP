@@ -106,8 +106,23 @@ var chsMsg = {
     amd_f_image: "是否上传图片",
     amd_value: "点检结果",
     useInput: "应用输入值",
-    inputValueHolder: "输入自定义值"
-    
+    inputValueHolder: "输入自定义值",
+    wlh: "物料号",
+    bmmj: "表面质量",
+    burn: "烧伤检查",
+    deviceName: "设备名称",
+    spec: "规格",
+    model:"型号",
+    document: "文档",
+    czr: "操作工",
+    gzsj: "工作时间",
+    bzcs: "标准参数",
+    qcItem: "质检项目",
+    fileName: "文件名",
+    reportName: "报表名称",
+    reportCode: "报表代码",
+    boxNum: "箱号",
+    weight: "重量",
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -197,7 +212,23 @@ var engMsg = {
     amd_f_image: "Need Photo",
     amd_value: "Value",
     useInput: "Use Input Value",
-    inputValueHolder:"Input Customized Value"
+    inputValueHolder: "Input Customized Value",
+    wlh: "Item Code",
+    bmmj: "surface",
+    burn: "burn",
+    deviceName: "Device Name",
+    spec: "Specification",
+    model: "Model",
+    document: "Document",
+    czr: "Operator",
+    gzsj: "Work Time",
+    bzcs: "Standard Value",
+    qcItem: "QC Items",
+    fileName: "File Name",
+    reportName: "Report Name",
+    reportCode: "Report Code",
+    boxNum: "Box Number",
+    weight:"Weight",
 }
 
 

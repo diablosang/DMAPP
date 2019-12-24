@@ -39,18 +39,18 @@
                     items: [
                         {
                             id: "ID_QP",
-                            label: { text: "质检项" },
+                            label: { text: SysMsg.ws_1 },
                             dataField: "ID_QP",
                         },
                         {
                             id: "CODE_OP",
-                            label: { text: "工序" },
+                            label: { text: SysMsg.codeop },
                             dataField: "CODE_OP"
                         },
                         {
                             id: "ID_WO",
-                            name:"ID_WO",
-                            label: { text: "批号" },
+                            name: "ID_WO",
+                            label: { text: SysMsg.woid },
                             dataField: "ID_WO",
                             tabIndex: 1
                         }
@@ -59,14 +59,14 @@
                 {
                     itemType: "group",
                     name:"item_group",
-                    caption: "质检项目",
+                    caption: "Items",
                     cssClass:"item_group",
                     items: [],
                     colSpan: 1
                 },
                 {
                     itemType: "group",
-                    caption: "标准参数",
+                    caption: SysMsg.bzcs,
                     colSpan: 1,
                     items: [{
                         name: "op_items",
@@ -169,7 +169,7 @@
             }
         },
         subBtnOption: {
-            text: "提交",
+            text: SysMsg.submit,
             type: "success",
             height: "60px",
             width: "120px",

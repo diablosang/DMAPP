@@ -367,9 +367,9 @@ DMAPP.WorkShop2 = function (params) {
                 if (!isNaN(t)) {
                     t = 60;
                 }
-                timer = setTimeout(function () {
-                    BindData(this);
-                }, t * 1000);
+                //timer = setTimeout(function () {
+                //    BindData(this);
+                //}, t * 1000);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);
@@ -382,24 +382,35 @@ DMAPP.WorkShop2 = function (params) {
         var itemInfo = item.itemInfo;
         $(itemInfo.htmlItem).appendTo(divCanvas);
         var divItem = $("#item" + item.CODE_LINE);
-        divItem.css("top", itemInfo.posY).css("left", itemInfo.posX).css("width", itemInfo.w).css("height", itemInfo.h);
+        divItem.css("top", itemInfo.posY).css("left", itemInfo.posX).css("width", itemInfo.w).css("height", itemInfo.h).css("background-color", "#" + item.COLOR_BG);
+        divItem.addClass("item_flex");
         divItem.attr('onclick', "OpenWorkShop('" + item.CODE_LINE + "','" + item.DESC_LINE + "','" + item.TYPE + "');");
-        var color = "rgb(51, 232, 37)";
-        switch (item.TYPE) {
-            case "01": color = "rgb(51, 232, 37)"; break;
-            case "02": color = "yellow"; break;
-            case "03": color = "rgb(238, 121, 89)"; break;
-            case "04": color = "rgb(238, 121, 89)"; break;
-            case "05": color = "rgb(245, 245, 245)"; break;
-        }
-        divItem.css("background-color", color);
-        var divBox = $("<div class='CavBox'>");
-        divBox.appendTo(divItem);
+        //var color = "rgb(51, 232, 37)";
+        //switch (item.TYPE) {
+        //    case "01": color = "rgb(51, 232, 37)"; break;
+        //    case "02": color = "yellow"; break;
+        //    case "03": color = "rgb(238, 121, 89)"; break;
+        //    case "04": color = "rgb(238, 121, 89)"; break;
+        //    case "05": color = "rgb(245, 245, 245)"; break;
+        //}
+        //divItem.css("background-color", color);
+        //var divBox = $("<div class='CavBox'>");
+        //divBox.appendTo(divItem);
 
-        $("<div class='CavText'>").html(item.CODE_LINE).css("font-size", "20px").appendTo(divBox);
-        $("<div class='CavText'>").html(item.DISP_WS).appendTo(divBox);
-        $("<div class='CavText'>").html(item.DISP1).appendTo(divBox);
-        $("<div class='CavText'>").html(item.DISP2).appendTo(divBox);
+        //$("<div class='CavText'>").html(item.CODE_LINE).css("font-size", "20px").appendTo(divBox);
+        //$("<div class='CavText'>").html(item.DISP_WS).appendTo(divBox);
+        //$("<div class='CavText'>").html(item.DISP1).appendTo(divBox);
+        //$("<div class='CavText'>").html(item.DISP2).appendTo(divBox);
+        var kww = 40;
+        if (itemInfo.w < 40) kww = itemInfo.w;
+
+        var statusStr = "";
+        if (item.COUNT_R > 0) statusStr += "<div class='COUNTR'>" + item.COUNT_R + "</div>";
+        if (item.COUNT_S > 0) statusStr += "<div class='COUNTS'>" + item.COUNT_S + "</div>";
+        if (item.COUNT_U > 0) statusStr += "<div class='COUNTU'>" + item.COUNT_U + "</div>";
+
+        var divBox = $("<div class='item_flex_content' ><div class='keyWord' style='width:" + kww + "px;height:" + kww + "px;border-radius: " + kww / 2 + "px;line-height:" + kww + "px;color:#" + item.COLOR_FONT+"'>" + item.DESC_KEY + "</div><div class='CODEWS'>" + item.DESC_LINE + "</div><div class='lineName'>" + item.CODE_LINE + "</div><div class='lineStatus'>" + statusStr + "</div></div>");
+        divBox.appendTo(divItem);
 
         //var titleHtml = "<div id='" + "title" + item.CODE_LINE + "'>";
         //$(titleHtml).appendTo(divItem);

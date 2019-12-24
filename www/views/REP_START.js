@@ -5,7 +5,7 @@
         title: ko.observable(""),
         indicatorVisible: ko.observable(false),
         tileBarOption: {
-            items: [{ name: 'SUBMIT', text: '提交' }],
+            items: [{ name: 'SUBMIT', text: SysMsg.submit }],
             direction: 'vertical',
             height: "100%",
             baseItemWidth: (window.screen.width / 6) - 10,
@@ -24,7 +24,7 @@
         formOption: {
             items: [
                 {
-                    label: { text: "备注" },
+                    label: { text: SysMsg.remark },
                     dataField: "REMARK",
                     editorType:"dxTextArea"
                 }

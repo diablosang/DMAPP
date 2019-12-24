@@ -177,9 +177,21 @@
                         dataField: "PZJ",
                         colSpan: 1
                     }
+                    var item4 = {
+                        label: { text: SysMsg.bmmj },
+                        dataField: "SURFACE",
+                        colSpan: 1
+                    }
+                    var item5 = {
+                        label: { text: SysMsg.burn },
+                        dataField: "BURN",
+                        colSpan: 1
+                    }
                     items.push(item1);
                     items.push(item2);
                     items.push(item3);
+                    items.push(item4);
+                    items.push(item5);
                 }
                 else if (params.DEVPARAM == "55") {
                     var item1 = {

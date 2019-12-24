@@ -5,7 +5,7 @@
         title: ko.observable(""),
         indicatorVisible: ko.observable(false),
         tileBarOption: {
-            items: [{ name: 'BTNSUBMIT', text: '提交' }],
+            items: [{ name: 'BTNSUBMIT', text: SysMsg.submit }],
             direction: 'vertical',
             height: "100%",
             baseItemWidth: (window.screen.width / 6) - 10,
@@ -38,11 +38,11 @@
                             dataField: "PAR2",
                             colSpan: 1,
                         },
-                        {
-                            label: { text: "极柱直径" },
-                            dataField: "PAR3",
-                            colSpan: 1,
-                        },
+                        //{
+                        //    label: { text: "极柱直径" },
+                        //    dataField: "PAR3",
+                        //    colSpan: 1,
+                        //},
                         {
                             label: { text: "两极高" },
                             dataField: "PAR4",

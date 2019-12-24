@@ -48,7 +48,7 @@
                         },
                         {
                             id: "CODE_OP",
-                            label: { text: "工序" },
+                            label: { text: SysMsg.codeop },
                             editorOptions: {
                                 readOnly: true
                             },
@@ -65,7 +65,7 @@
                         },
                         {
                             id: "NAME_EQP",
-                            label: { text: "设备名称" },
+                            label: { text: SysMsg.deviceName },
                             editorOptions: {
                                 readOnly: true
                             },
@@ -74,7 +74,7 @@
                         },
                         {
                             id: "SPEC_EQP",
-                            label: { text: "规格" },
+                            label: { text: SysMsg.spec },
                             editorOptions: {
                                 readOnly: true
                             },
@@ -83,7 +83,7 @@
                         },
                         {
                             id: "MODEL_EQP",
-                            label: { text: "型号" },
+                            label: { text: SysMsg.model },
                             editorOptions: {
                                 readOnly: true
                             },
@@ -92,7 +92,7 @@
                         },
                         {
                             itemType: "button",
-                            label: { text: "文档" },
+                            label: { text: SysMsg.document },
                             dataField: "CODE_DOC",
                             template: function (data, itemElement) {
                                 if (data.editorOptions.value) {
@@ -116,7 +116,7 @@
                 },
                 {
                     id: "DESC_DISP1",
-                    label: { text: "加工物料" },
+                    label: { text: SysMsg.wlh },
                     editorOptions: {
                         readOnly: true
                     },
@@ -125,7 +125,7 @@
                 },
                 {
                     id: "DESC_DISP3",
-                    label: { text: "工单" },
+                    label: { text: SysMsg.woid },
                     editorOptions: {
                         readOnly: true
                     },
@@ -134,7 +134,7 @@
                 },
                 {
                     id: "DESC_DISP5",
-                    label: { text: "操作工" },
+                    label: { text: SysMsg.czr },
                     editorOptions: {
                         readOnly: true
                     },
@@ -143,7 +143,7 @@
                 },
                 {
                     id: "DESC_DISP4",
-                    label: { text: "持续时间" },
+                    label: { text: SysMsg.gzsj },
                     editorOptions: {
                         readOnly: true
                     },
@@ -152,7 +152,7 @@
                 },
                 {
                     id: "DESC_DISP7",
-                    label: { text: "备注" },
+                    label: { text: SysMsg.remark },
                     editorOptions: {
                         readOnly: true
                     },
