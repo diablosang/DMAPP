@@ -6,7 +6,7 @@
                 <tr>
                     <td id="td0">Type：</td>
                     <td>
-                        <div id="listDetail" style="width:120px;" data-bind="dxTagBox:{displayExpr: 'DES1',valueExpr: 'IDLINE',maxDisplayedTags:1,showSelectionControls: true}"></div>
+                        <div id="listDetail" style="width:120px;" data-bind="dxTagBox:{displayExpr: 'DESC_QP',valueExpr: 'ID_QP',maxDisplayedTags:1,showSelectionControls: true}"></div>
                     </td>
                     <td id="td1">日期：</td>
                     <td>

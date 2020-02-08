@@ -314,7 +314,7 @@
                 $("#formMain").dxForm("instance").option("formData", { ID_QP: op, CODE_OP: code });
                 $("#formMain").dxForm("instance").getEditor("ID_QP").focus();
                 viewModel.emptyFlag = false;
-                DevExpress.ui.notify("保存成功", "success", 1000);
+                DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);

@@ -17,7 +17,7 @@
         keepCache: false,
         viewShown: function (e) {
             SetLanguage();
-            GetAsapmentListData(["TP_EMS_T_PAREP"]);
+            //GetAsapmentListData(["TP_EMS_T_PAREP"]);
             this.viewKey = e.viewInfo.key;
             if (viewModel.keepCache == true) {
                 viewModel.keepCache = false;
@@ -43,7 +43,7 @@
 
             try {
                 GetWinbox(this, params);
-                BindData();
+                getQPdata();
             }
             catch (e) {
                 DevExpress.ui.notify("该单据未包含明细信息", "error", 1000);
@@ -58,9 +58,9 @@
         formOption:{
             items: [],
             onFieldDataChanged: function (e) {
-                if (this.keepCache == true) {
-                    MainValueChanged(viewModel, e);
-                }
+                //if (this.keepCache == true) {
+                //    MainValueChanged(viewModel, e);
+                //}
             }
         },
         tileBarOption: {
@@ -83,7 +83,30 @@
             },
         },
     };
+    function getQPdata() {
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+        var postData = {
+            userName: u,
+            methodName: "EMS.EMS_T_PARIT.GetQcParameters",
+            param: params.CODE_EQP + ";DE"
+        }
 
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                BindData(data);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
     function SetLanguage() {
         var par = "";
         var form = $("#formMain").dxForm("instance");
@@ -121,31 +144,72 @@
             //form.itemOption("VAL_PAR", "label", { text: "Value" });
         }
     }
-    function BindData() {
-        console.log(asListData.TP_EMS_T_PAREP);
+    function BindData(data) {
         var items = [
             {
-                id: "TYPE_PAR",
                 label: { text: SysMsg.cslx },
-                dataField: "TYPE_PAR",
+                dataField: "cslx",
                 editorType: "dxLookup",
                 editorOptions: {
-                    displayExpr: "DES1",
-                    valueExpr: "IDLINE",
-                    dataSource: asListData.TP_EMS_T_PAREP
-                }
+                    displayExpr: "DESC_QP",
+                    valueExpr: "ID_QP",
+                    dataSource: data,
+                    onValueChanged: QpChanged
+                },
             },
             {
-                id: "VALUE",
-                label: { text: SysMsg.scz },
-                dataField: "VALUE",
-                editorType: "dxNumberBox",
-                colSpan: 1
-            }]
+                itemType: "group",
+                caption: " ",
+                cssClass: "form_items",
+                name: "form_items",
+                items: [
+                ]
+            },
+        ]
         var form = $("#formMain").dxForm("instance");
         form.option("items", items);
     }
+    var cslx = null;
+    var paramArr = [];
+    function QpChanged(e) {
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+        var postData = {
+            userName: u,
+            methodName: "EMS.EMS_T_PARIT.GetEMS_B_QPD",
+            param: e.value
+        }
+        cslx = e.value;
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            async: false,
+            cache: false,
+            success: function (data, textStatus, e) {
+                var items = [];
+                for (var i = 0; i < data.length; i++) {
+                    var o = data[i];
+                    paramArr.push(o.LINE_QPD);
+                    items.push({
+                        label: { text: o.PARAMETER },
+                        editorType: "dxTextBox",
+                        dataField: o.LINE_QPD,
+                    });
+                }
 
+                $("#formMain").dxForm("instance").itemOption("form_items", "items", items);
+                $("#formMain").dxForm("instance").option('cslx', cslx);
+
+
+                //$("#formMain").dxForm("instance").repaint();
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
     function GetWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
@@ -191,21 +255,43 @@
     }
 
     function BarItemClick(e) {
-        if (e.itemData.needComment == "1") {
-            this.commentVisible(true);
-            this.comment(e.itemData.options.text);
-            this.commentButton(e.itemData.name);
-        }
-        else {
-            if (e.itemData.EXTPROP != null) {
-                if (e.itemData.EXTPROP.RUNAT == "DEVICE") {
-                    ButtonClickDevice(e.itemData);
-                    return;
-                }
+        var obj = $("#formMain").dxForm("instance").option("formData");
+        var u = sessionStorage.getItem("username");
+        var items = [];
+        paramArr.forEach(function (prop) {
+            var value = obj[prop];
+            if (value) {
+                items.push({
+                    PARA: cslx + "-" + prop,
+                    VALUE: value
+                })
             }
-
-            ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+        })
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+        var postData = {
+            userName: u,
+            methodName: "EMS.EMS_T_PAREP.SaveParameterData",
+            param: params.CODE_OP + ";" + params.CODE_EQP,
+            data: items
         }
+
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data.Success) {
+                    $("#formMain").dxForm("instance").option("formData", {});
+                    DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+                }
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
     }
 
     return viewModel;

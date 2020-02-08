@@ -82,7 +82,7 @@
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
         var dateFrom = $("#dateFrom").dxDateBox("instance");
         var dateTo = $("#dateTo").dxDateBox("instance");
-        var selected = $("#listDetail").dxTagBox("instance").option("selectedItems").map(function (x) { return x.IDLINE; });
+        var selected = $("#listDetail").dxTagBox("instance").option("selectedItems").map(function (x) { return x.ID_QP; });
 
         var dFrom = dateFrom.option("value");
         var dTo = dateTo.option("value");
@@ -101,8 +101,13 @@
             cache: false,
             success: function (data, textStatus) {
                 $("#charts").empty();
-                $("#listDetail").dxTagBox("instance").option("selectedItems").forEach(function (op) {
-                    var list = data.filter(function (x) { return x.TYPE_OP == op.IDLINE; }).map(function (d) {
+                var arr = data.map(function (t) {
+                    return t.TYPE_OP;
+                })
+                arr = Array.from(new Set(arr));
+                console.log(arr);
+                arr.forEach(function (val) {
+                    var list = data.filter(function (x) { return x.TYPE_OP == val; }).map(function (d) {
                         d.VALUE = Number(d.VALUE);
                         d.MAX = d.MAX == null ? null : Number(d.MAX);
                         d.MIN = d.MIN == null ? null :Number(d.MIN);
@@ -119,7 +124,7 @@
                             },
                             title: {
                                 horizontalAlignment:'left',
-                                text: op.DES1,
+                                text: list[0].DESC_PAR,
                                 font: {
                                     size:14
                                 }
