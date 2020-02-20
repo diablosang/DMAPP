@@ -20,6 +20,9 @@
             keyExpr: "SID",
             columnAutoWidth: true,
             columns: [],
+            height: function () {
+                return window.innerHeight*0.82;
+            },
             selection: {
                 mode: "single"
             },
@@ -38,6 +41,7 @@
         viewModel.indicatorVisible(true);
         GetAsapmentListData(["TP_EMS_B_AMITEM", "TP_EMS_B_AMCONFIG","TP_EMS_B_AMMETHOD"]);
         var grid = $("#gridAMD").dxDataGrid("instance");
+
         var columns = [
             { dataField: "SID", caption: SysMsg.sid, allowEditing: false, allowSorting: false },
             { dataField: "DATE_PLAN", caption: SysMsg.amd_dateplan, allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd HH:mm" },

@@ -68,7 +68,7 @@
             items: [
                 {
                     id: "ID_WO",
-                    label: { text: SysMsg.codeop },
+                    label: { text: SysMsg.wo },
                     dataField: "ID_WO",
                     colSpan: 1
                 }

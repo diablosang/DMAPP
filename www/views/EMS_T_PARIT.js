@@ -291,6 +291,10 @@
                     $("#formMain").dxForm("instance").option("formData", {});
                     DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
                 }
+
+                cslx = null;
+                paramArr = [];
+                GetWinbox(viewModel, params);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);
