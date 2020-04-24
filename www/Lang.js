@@ -124,6 +124,14 @@ var chsMsg = {
     reportCode: "报表代码",
     boxNum: "箱号",
     weight: "重量",
+    status: "状态",
+    name: "名称",
+    usage:"用途",
+    addNew: "添加",
+    del: '删除',
+    NDRF: '草稿',
+    TAPR: '待审核',
+    TREL:'待发放'
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -230,7 +238,15 @@ var engMsg = {
     reportName: "Report Name",
     reportCode: "Report Code",
     boxNum: "Box Number",
-    weight:"Weight",
+    weight: "Weight",
+    status: "Status",
+    name: "Name",
+    usage: "Usage",
+    addNew: "New",
+    del: 'Delete',
+    NDRF: 'Draft',
+    TAPR: 'Auditing',
+    TREL: 'Processing'
 }
 
 

@@ -169,7 +169,7 @@
             func: "EMS_T_WG",
             group: "GDRAFT",
             initdata: {
-                CODE_OP:"20"
+                CODE_OP: settings["MFG.ISSOP"]
             }
         }
 

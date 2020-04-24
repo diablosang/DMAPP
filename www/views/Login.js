@@ -83,8 +83,10 @@
                 UserName: u,
                 Password: p,
                 CHN: viewModel.chn(),
-                DeviceID: viewModel.deviceid(),
-                DeviceType: devicetype,
+                //DeviceID: viewModel.deviceid(),
+                //DeviceType: devicetype,
+                DeviceID: "1234567",
+                DeviceType: "android",
                 Lang: DeviceLang()
             };
             var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon2";
@@ -108,6 +110,7 @@
                     KeepAlive();
                     GetUserList(u);
                     GetUserRoles(u);
+                    GetSettings(u);
                     DMAPP.app.navigate(view, option);
                 },
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -140,6 +143,7 @@
                     KeepAlive();
                     GetUserList(u);
                     GetUserRoles(u);
+                    GetSettings(u);
                     DMAPP.app.navigate(view, option);
 
                 },
@@ -161,6 +165,30 @@
             cache: false,
             success: function (data, textStatus) {
                 asUserList = data;
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
+
+    function GetSettings(u) {
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+        var postData = {
+            userName: u,
+            methodName: "EMS.Common.GetCode_Op",
+            param:''
+        };
+
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                settings=data[0]
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);

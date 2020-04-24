@@ -39,7 +39,7 @@
                     items: [
                         {
                             id: "CODE_EQP",
-                            label: { text: "设备编号" },
+                            label: { text: SysMsg.wlh },
                             editorOptions: {
                                 readOnly: true
                             },
@@ -57,7 +57,7 @@
                         },
                         {
                             id: "STATUS_OP",
-                            label: { text: "状态" },
+                            label: { text: SysMsg.status },
                             dataField: "STATUS_OP",
                             template: function (data, itemElement) {
                                 itemElement.append("<input  class='dx-texteditor-input status_op_" + data.editorOptions.value + "' type='text' readonly='true' aria-readonly='true' spellcheck='false' role='textbox' tabindex='0' name='STATUS_OP' value='" + StatusEnum(data.editorOptions.value)+"' aria-required='false'>");
