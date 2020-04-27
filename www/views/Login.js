@@ -83,10 +83,8 @@
                 UserName: u,
                 Password: p,
                 CHN: viewModel.chn(),
-                //DeviceID: viewModel.deviceid(),
-                //DeviceType: devicetype,
-                DeviceID: "1234567",
-                DeviceType: "android",
+                DeviceID: viewModel.deviceid(),
+                DeviceType: devicetype,
                 Lang: DeviceLang()
             };
             var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon2";
