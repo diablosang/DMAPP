@@ -1,7 +1,7 @@
 // NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
 var keepPopUserInfo = true;
-var appVer = "1.37.2";
+var appVer = "1.37.3";
 var dbProfile = "JGBR";
 var asUserList = [];
 var asRoles = [];
@@ -9,7 +9,7 @@ var nullDeviceType = "PC";
 var asListData = {};
 var workShopBarAuth = [];
 var settings = {};
-
+var deviceid = "";
 
 window.DMAPP = $.extend(true, window.DMAPP, {
     "config": {
