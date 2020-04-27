@@ -1,4 +1,4 @@
-﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.trusteem.DMAPP" version="1.37.3" versionCode="">
+﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.trusteem.DMAPP" version="1.37.4" versionCode="">
   <name>DMAPP</name>
   <description>Asapment Device Management Client</description>
   <author email="dev@trusteem.com" href="http://www.trusteem.com.cn">Trusteem.com</author>
@@ -22,9 +22,10 @@
   <plugin name="cordova-plugin-camera" spec="~4.0.3" /> 
   <plugin name="phonegap-plugin-barcodescanner" />  
   <!--<plugin name="jpush-phonegap-plugin">
-    <param name="APP_KEY" value="9778069f5c87a852647d1c05" />
+    <param name="APP_KEY" value="e9df91ac59cb92be9286f685" />
   </plugin>-->
   <plugin name="cordova-plugin-app-version" />
+  <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0" />
 
   <icon src="res/icon/icon.png" />
   <platform name="ios">

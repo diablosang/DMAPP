@@ -3,8 +3,6 @@
     var viewModel = {
         //hideLayout: true,
         title: ko.observable(""),
-        chn: ko.observable(""),
-        deviceid: ko.observable(""),
         versionChecked: ko.observable(false),
         indicatorVisible:ko.observable(false),
         viewShown: function () {
@@ -77,81 +75,43 @@
         }
 
         var devicetype = DevExpress.devices.real().platform;
+        var postData = {
+            UserName: u,
+            Password: p,
+            CHN: pushChn,
+            DeviceID: deviceid,
+            DeviceType: devicetype,
+            Lang: DeviceLang()
+        };
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon2";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: postData,
+            cache: false,
+            success: function (data, textStatus) {
 
-        if (serverVer >= "2") {
-            var postData = {
-                UserName: u,
-                Password: p,
-                CHN: viewModel.chn(),
-                DeviceID: viewModel.deviceid(),
-                DeviceType: devicetype,
-                Lang: DeviceLang()
-            };
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon2";
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: postData,
-                cache: false,
-                success: function (data, textStatus) {
+                sessionStorage.removeItem("username");
+                sessionStorage.setItem("username", u);
 
-                    sessionStorage.removeItem("username");
-                    sessionStorage.setItem("username", u);
-
-                    var localStorage = window.localStorage;
-                    localStorage.setItem("username", u);
-                    localStorage.setItem("password", p);
-                    viewModel.indicatorVisible(false);
-                    var view = appStartView;
-                    var option = { root: true };
-                    keepAlive = true;
-                    KeepAlive();
-                    GetUserList(u);
-                    GetUserRoles(u);
-                    GetSettings(u);
-                    DMAPP.app.navigate(view, option);
-                },
-                error: function (xmlHttpRequest, textStatus, errorThrown) {
-                    viewModel.indicatorVisible(false);
-                    ServerError(xmlHttpRequest.responseText);
-                }
-            });
-        }
-        else {
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon?UserName=" + u + "&Password=" + p
-                + "&CHN=" + viewModel.chn() + "&DeviceID=" + viewModel.deviceid() + "&DeviceType=" + devicetype;
-
-            $.ajax({
-                type: 'GET',
-                url: url,
-                data: postData,
-                cache: false,
-                success: function (data, textStatus) {
-
-                    sessionStorage.removeItem("username");
-                    sessionStorage.setItem("username", u);
-
-                    var localStorage = window.localStorage;
-                    localStorage.setItem("username", u);
-                    localStorage.setItem("password", p);
-                    viewModel.indicatorVisible(false);
-                    var view = appStartView;
-                    var option = { root: true };
-                    keepAlive = true;
-                    KeepAlive();
-                    GetUserList(u);
-                    GetUserRoles(u);
-                    GetSettings(u);
-                    DMAPP.app.navigate(view, option);
-
-                },
-                error: function (xmlHttpRequest, textStatus, errorThrown) {
-                    viewModel.indicatorVisible(false);
-                    ServerError(xmlHttpRequest.responseText);
-                }
-            });
-        }
-        
+                var localStorage = window.localStorage;
+                localStorage.setItem("username", u);
+                localStorage.setItem("password", p);
+                viewModel.indicatorVisible(false);
+                var view = appStartView;
+                var option = { root: true };
+                keepAlive = true;
+                KeepAlive();
+                GetUserList(u);
+                GetUserRoles(u);
+                GetSettings(u);
+                DMAPP.app.navigate(view, option);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
     }
 
     function GetUserList(u) {
