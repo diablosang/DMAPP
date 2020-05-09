@@ -131,7 +131,8 @@ var chsMsg = {
     del: '删除',
     NDRF: '草稿',
     TAPR: '待审核',
-    TREL:'待发放'
+    TREL: '待发放',
+    emptydata:'没有查找到数据'
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -246,7 +247,8 @@ var engMsg = {
     del: 'Delete',
     NDRF: 'Draft',
     TAPR: 'Auditing',
-    TREL: 'Processing'
+    TREL: 'Processing',
+    emptydata: 'No data found'
 }
 
 

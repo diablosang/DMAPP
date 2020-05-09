@@ -123,6 +123,9 @@
                 { dataField: "QTY_ORD", caption: "计划数量", allowEditing: false, allowSorting: false },
                 { dataField: "DATE_START", caption: "加工时间", allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd HH:mm" },
             ],
+            height: function () {
+                return window.innerHeight * 0.6;
+            },
             selection: {
                 mode: "single"
             },

@@ -6,7 +6,7 @@
             <div id="tileBar" data-bind="dxTileView: tileBarOption">
             </div>
         </div>
-        <div style="overflow:hidden;">
+        <div data-bind="dxScrollView: {direction: 'both'}">
             <div id="formMain" data-bind="dxForm:formOption" class="Margin5"></div>
         </div>
         <div></div>

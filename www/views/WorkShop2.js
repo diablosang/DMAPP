@@ -132,12 +132,75 @@ DMAPP.WorkShop2 = function (params) {
                 }
             }
         },
+        popFromOption: {
+            onShown: function (e) {
+                
+            }
+        },
+        onPopFromClick: function (e) {
+            var pop = $("#popFrom").dxPopup("instance");
+            pop.show();
+        },
+        popFromSearch: function (e) {
+            var sessionStorage = window.sessionStorage;
+            var u = sessionStorage.getItem("username");
+            var idwo = $("#popFrom_ID_WO").dxTextBox("instance").option("value");
+            console.log(idwo)
+            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+            var postData = {
+                userName: u,
+                methodName: "EMS.Common.GetCODE_ITEM",
+                param: idwo
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: postData,
+                url: url,
+                cache: false,
+                success: function (data, textStatus) {
+                    if (data.length == 0) {
+                        viewModel.indicatorVisible(false);
+                        ServerError(SysMsg.emptydata);
+                    } else {
+                        $("#popFrom_codeItem").text(data[0].CODE_ITEM)
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    viewModel.indicatorVisible(false);
+                    ServerError(xmlHttpRequest.responseText);
+                }
+            });
+        },
         onFieldSelectClick: function (e) {
             var pop = $("#popSelect").dxPopup("instance");
             pop.show();
         },
+        onPopFromExit: function (e) {
+            var pop = $("#popFrom").dxPopup("instance");
+            pop.hide();
+        },
         onSelectOKClick: function (e) {
 
+        },
+        onScan: function () {
+            try {
+                cordova.plugins.barcodeScanner.scan(
+                    function (result) {
+                        if (result.text == null || result.text == "") {
+                            return;
+                        }
+                        var idwo = $("#popFrom_ID_WO").dxTextBox("instance");
+                        idwo.option("value", result.text);
+                    },
+                    function (error) {
+                        DevExpress.ui.notify(SysMsg.scanFailed + error, "error", 3000);
+                    }
+                );
+            }
+            catch (e) {
+                DevExpress.ui.notify(e, "error", 3000);
+            }
         }
     };
 
