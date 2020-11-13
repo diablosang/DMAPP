@@ -60,7 +60,7 @@
                             label: { text: SysMsg.status },
                             dataField: "STATUS_OP",
                             template: function (data, itemElement) {
-                                itemElement.append("<input  class='dx-texteditor-input status_op_" + data.editorOptions.value + "' type='text' readonly='true' aria-readonly='true' spellcheck='false' role='textbox' tabindex='0' name='STATUS_OP' value='" + StatusEnum(data.editorOptions.value)+"' aria-required='false'>");
+                                itemElement.append("<input style='width:80%' class='dx-texteditor-input status_op_" + data.editorOptions.value + "' type='text' readonly='true' aria-readonly='true' spellcheck='false' role='textbox' tabindex='0' name='STATUS_OP' value='" + StatusEnum(data.editorOptions.value) + "' aria-required='false'><div id='status_icon' name='" + data.editorOptions.value + "' style='width: 20%;float: right;line-height: 34px;text-align: center;background-color: #879c85!important;border-radius: 5px;'><i class='dx-icon dx-icon-" + (data.editorOptions.value == 5 ? 'arrowdown': 'arrowup') + "'></i></div>");
                             }
                         },
                         {
@@ -332,6 +332,38 @@
                     }
                 }
                 viewModel.indicatorVisible(false);
+                $("#status_icon").on('click', function (e) {
+                    var status = $("#status_icon").attr("name");
+                    if (status == 0) status = 5;
+                    else if (status == 5) status = 0;
+                    console.log(status);
+                    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod"
+                    var postData = {
+                        userName: u,
+                        methodName: "EMS.Common.UpdateEQP_Status",
+                        param: status + '^' + params.CODE_EQP
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        data: postData,
+                        url: url,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            DevExpress.ui.notify(SysMsg.subSuccess, "success", 1000);
+                            $("#formDevice").dxForm("instance").repaint();
+                        },
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            viewModel.indicatorVisible(false);
+                            if (xmlHttpRequest.responseText == "NO SESSION") {
+                                ServerError(xmlHttpRequest.responseText);
+                            }
+                            else {
+                                DevExpress.ui.notify("无法读取数据", "error", 1000);
+                            }
+                        }
+                    });
+                })
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);

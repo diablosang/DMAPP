@@ -1,7 +1,7 @@
 <div data-options="dxView : { name: 'Login', title: '' } ">
-  <div id="divContent" data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background" style="background-repeat:no-repeat;background-position:center">
-    <div class="indicator" data-bind="dxLoadIndicator: { visible: indicatorVisible }"></div>
-    <!--<div style="background-color:white;height:55px;line-height:35px">
+    <div id="divContent" data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background" style="background-repeat:no-repeat;background-position:center">
+        <div class="indicator" data-bind="dxLoadIndicator: { visible: indicatorVisible }"></div>
+        <!--<div style="background-color:white;height:55px;line-height:35px">
       <div id="lblUser" class="Login_Header">用户名:</div>
       <div class="Login_Header" style="width:150px;" id="txtUser" data-bind="dxTextBox: {
                  maxLength: 24,
@@ -18,9 +18,8 @@
       <div id="btnSetting" class="Login_HeaderR"  data-bind="dxButton: { text: '设置',onClick:onSettingClick}"></div>
       <div id="appver" class="Login_HeaderR" >1.5.1</div>
     </div>-->
-
-    <!--<img id="logoImg" style="margin-top:20px;" src="" onerror="javascript:this.src='images/logo.png'"  width="100%" />-->
-    <div class="Logindiv">
+        <!--<img id="logoImg" style="margin-top:20px;" src="" onerror="javascript:this.src='images/logo.png'"  width="100%" />-->
+        <div class="Logindiv">
             <div style="margin-top:20px;" class="dx-fieldset">
                 <div class="dx-field">
                     <div class="dx-field-label"></div>
@@ -43,12 +42,12 @@
                     <tr>
                         <td width="100%" align="center">
                             <div>
-                                <div id="appver">1.36.2</div>
+                                <div id="appver"></div>
                             </div>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-  </div>
+    </div>
 </div>
