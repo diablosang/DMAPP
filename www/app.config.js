@@ -1,6 +1,6 @@
 // NOTE object below must be a valid JSON
 var appStartView = "WorkShop2";
-var keepPopUserInfo = false;
+var keepPopUserInfo = true;
 var appVer = "1.39.1";
 var dbProfile = "JGBR";
 var asUserList = [];
