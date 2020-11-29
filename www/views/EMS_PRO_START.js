@@ -163,7 +163,7 @@
                             return;
                         }
                         var form = $("#formMain").dxForm("instance");
-                        form.option("formData.CODE_BAR", result.text);
+                        form.option("formData.ID_WO", result.text);
                     },
                     function (error) {
                         DevExpress.ui.notify(SysMsg.scanFailed + error, "error", 3000);
