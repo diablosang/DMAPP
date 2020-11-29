@@ -7,8 +7,7 @@
         indicatorVisible: ko.observable(false),
         toolBarOption: {
             items: [
-                { location: 'before', widget: 'button', name: 'BTNSUBMIT', options: { text: SysMsg.submit } },
-                { location: 'before', widget: 'button', name: 'BTNSCAN', options: { text: SysMsg.scanID_WO } },
+                { location: 'before', widget: 'button', name: 'BTNSUBMIT', options: { text: SysMsg.submit } }
             ],
             onItemClick: function (e) {
                 BarItemClick(e);
@@ -88,7 +87,8 @@
         },
         tileBarOption: {
             items: [
-                { DES: SysMsg.submit, name: "BTNSUBMIT" }
+                { DES: SysMsg.submit, name: "BTNSUBMIT" },
+                { DES: SysMsg.scanID_WO, name: 'BTNSCAN'},
             ],
             direction: 'vertical',
             height: "100%",
