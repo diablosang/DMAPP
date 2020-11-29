@@ -7,7 +7,8 @@
         indicatorVisible: ko.observable(false),
         toolBarOption: {
             items: [
-                 { location: 'before', widget: 'button', name: 'BTNSUBMIT', options: { text: SysMsg.submit } },
+                { location: 'before', widget: 'button', name: 'BTNSUBMIT', options: { text: SysMsg.submit } },
+                { location: 'before', widget: 'button', name: 'BTNSCAN', options: { text: SysMsg.scanID_WO } },
             ],
             onItemClick: function (e) {
                 BarItemClick(e);
@@ -208,6 +209,10 @@
             this.commentButton(e.itemData.name);
         }
         else {
+            if (e.itemData.name == "BTNSCAN") {
+                ScanID_WO();
+            }
+
             if (e.itemData.EXTPROP != null) {
                 if (e.itemData.EXTPROP.RUNAT == "DEVICE") {
                     ButtonClickDevice(e.itemData);
@@ -217,6 +222,24 @@
 
             ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
         }
+    }
+
+    function ScanID_WO() {
+        cordova.plugins.barcodeScanner.scan(
+            function (result) {
+                if (result.text == null || result.text == "") {
+                    return;
+                }
+
+                var wo = result.text;
+                var form = $("#formMain").dxForm("instance");
+                form.updateData("ID_WO", wo);
+                form.repaint();
+            },
+            function (error) {
+                DevExpress.ui.notify(SysMsg.scanFailed + error, "error", 3000);
+            }
+        );
     }
 
     return viewModel;

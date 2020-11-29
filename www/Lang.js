@@ -132,7 +132,8 @@ var chsMsg = {
     NDRF: '草稿',
     TAPR: '待审核',
     TREL: '待发放',
-    emptydata:'没有查找到数据'
+    emptydata: '没有查找到数据',
+    scanID_WO:'扫描批号'
 }
 var engMsg = {
     saveSuccess: "Save success",
@@ -248,7 +249,9 @@ var engMsg = {
     NDRF: 'Draft',
     TAPR: 'Auditing',
     TREL: 'Processing',
-    emptydata: 'No data found'
+    emptydata: 'No data found',
+    scanID_WO:'Scan WO'
+
 }
 
 
