@@ -15,7 +15,7 @@
                 { SERVICE: "http://58.221.237.66:8005/DMWebAPIJYTEST", DES: "金燕测试库（外网）" },
                 { SERVICE: "http://192.168.152.1/DMWebAPI", DES: "US正式库" },
                 { SERVICE: "http://66.180.234.58:8005/DMWebAPI", DES: "US正式库（外网）" },
-                { SERVICE: "http://localhost:9080/ACWFService", DES: "开发调试" },
+                { SERVICE: "http://localhost:61862/", DES: "开发调试" },
                 //{ SERVICE: "http://10.0.1.103/WEBAPI", DES: "开发调试-云" },
                 //{ SERVICE: "http://10.192.144.99/DMWebAPI", DES: "IR正式库" },
                 //{ SERVICE: "http://dev.trusteem.com:20020/IRCZWEBAPI", DES: "IR开发库" },

@@ -51,17 +51,18 @@
                     id: "CODE_OP",
                     label: { text: "加工工序" },
                     dataField: "CODE_OP",
-                    editorOptions: {
-                        readOnly: (function () {
-                            if (params.DEVPARAM.indexOf("IR")>=0) {
-                                return false;
-                            }
-                            else {
-                                return true;
-                            }
-                        })(),
-                    },
-                    dataWindow:true,
+                    editorType: "dxLookup",
+                    //editorOptions: {
+                    //    readOnly: (function () {
+                    //        if (params.DEVPARAM.indexOf("IR")>=0) {
+                    //            return false;
+                    //        }
+                    //        else {
+                    //            return true;
+                    //        }
+                    //    })(),
+                    //},
+                    dataWindow: false,
                     colSpan: 1
                 },
                 {
@@ -225,6 +226,8 @@
                     }
                 }
 
+                GetOPList();
+
                 viewModel.keepCache = true;
                 viewModel.indicatorVisible(false);
             },
@@ -236,6 +239,47 @@
                 else {
                     DevExpress.ui.notify(SysMsg.nodata, "error", 1000);
                 }
+            }
+        });
+    }
+
+    function GetOPList() {
+        var u = sessionStorage.getItem("username");
+        var url;
+        if (params.NEW == "1") {
+            url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallMethod";
+            var postData = {
+                userName: u,
+                methodName: "EMS.EMS_PRO_START.GetOPList",
+                param: params.CODE_EQP + ";" + params.CODE_OP
+            }
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: postData,
+            url: url,
+            cache: false,
+            success: function (data, textStatus) {
+                viewModel.winbox = data;
+                var form = $("#formMain").dxForm("instance");
+                var option = {
+                    displayExpr: "CODE_OP",
+                    valueExpr: "CODE_OP",
+                    dataSource: data
+                };
+
+                if (data.length > 1) {
+                    option.readOnly = false;
+                }
+                else {
+                    option.readOnly = true;
+                }
+
+                var editor = form.itemOption("CODE_OP", "editorOptions", option);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                ServerError(xmlHttpRequest.responseText);
             }
         });
     }

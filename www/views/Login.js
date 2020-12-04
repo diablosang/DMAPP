@@ -81,7 +81,8 @@
             CHN: pushChn,
             DeviceID: deviceid,
             DeviceType: devicetype,
-            Lang: DeviceLang()
+            Lang: DeviceLang(),
+            appVer: appVer
         };
         var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon2";
         $.ajax({
