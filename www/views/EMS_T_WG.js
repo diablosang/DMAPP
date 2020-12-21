@@ -107,6 +107,25 @@
                 BarItemClick(e);
             },
         },
+        onScan: function () {
+            try {
+                cordova.plugins.barcodeScanner.scan(
+                    function (result) {
+                        if (result.text == null || result.text == "") {
+                            return;
+                        }
+                        var form = $("#formMain").dxForm("instance");
+                        form.option("formData.ID_WO", result.text);
+                    },
+                    function (error) {
+                        DevExpress.ui.notify(SysMsg.scanFailed + error, "error", 3000);
+                    }
+                );
+            }
+            catch (e) {
+                DevExpress.ui.notify(e, "error", 3000);
+            }
+        }
     };
 
     function SetLanguage() {

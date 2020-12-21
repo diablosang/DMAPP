@@ -7,6 +7,7 @@
       </div>
     </div>
     <div data-bind="dxScrollView: {direction: 'both'}" style="width:82%;float:right;">
+        <div id="scanBtn" class="Login_Btn" data-bind="dxButton: { text: '扫码', onClick:onScan}"></div>
         <div id="formMain" data-bind="dxForm:formOption" class="Margin5"></div>
     </div>
   </div>
