@@ -58,7 +58,10 @@
                     label: { text: "加工工序" },
                     dataField: "CODE_OP",
                     editorOptions: {
-                        readOnly:false
+                        readOnly: false,
+                        onFocusIn: function (e) {
+                            OpenDataWindow(this, "CODE_OP", "BMAINBLOCK");
+                        }
                     },
                     dataWindow: true,
                     colSpan: 1
