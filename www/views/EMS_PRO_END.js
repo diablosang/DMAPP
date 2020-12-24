@@ -87,7 +87,8 @@
         },
         tileBarOption: {
             items: [
-                { DES: SysMsg.submit, name: "BTNSUBMIT" }
+                { DES: SysMsg.submit, name: "BTNSUBMIT" },
+                { DES: SysMsg.submit0, name: "BTNSUBMIT0" }
             ],
             direction: 'vertical',
             height: "100%",
